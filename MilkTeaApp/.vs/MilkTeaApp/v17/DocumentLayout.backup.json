@@ -1,0 +1,241 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\models\\report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\models\\report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\controllers\\discountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\controllers\\discountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\controllers\\importcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\controllers\\importcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\controllers\\invoicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\controllers\\invoicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\milktea.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\milktea.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{234D181A-5090-4F7A-824F-2CA833F94B4B}|MilkTea.Server\\MilkTea.Server.csproj|solutionrelative:milktea.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5012D040-F664-43F3-B579-6E3262FF66DE}|MilkTea.Cilent\\MilkTea.Cilent.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.cilent\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5012D040-F664-43F3-B579-6E3262FF66DE}|MilkTea.Cilent\\MilkTea.Cilent.csproj|solutionrelative:milktea.cilent\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5012D040-F664-43F3-B579-6E3262FF66DE}|MilkTea.Cilent\\MilkTea.Cilent.csproj|d:\\c#\\\u0111\u1ED3 \u00E1n\\c_hash\\milkteaapp\\milktea.cilent\\forms\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5012D040-F664-43F3-B579-6E3262FF66DE}|MilkTea.Cilent\\MilkTea.Cilent.csproj|solutionrelative:milktea.cilent\\forms\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Report.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Models\\Report.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Models\\Report.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Models\\Report.cs",
+              "RelativeToolTip": "MilkTea.Server\\Models\\Report.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:47:13.783Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Order.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Models\\Order.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Models\\Order.cs",
+              "RelativeToolTip": "MilkTea.Server\\Models\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:46:24.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "MilkTea.Server\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:45:38.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DiscountController.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\DiscountController.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Controllers\\DiscountController.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\DiscountController.cs",
+              "RelativeToolTip": "MilkTea.Server\\Controllers\\DiscountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:45:17.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ImportController.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\ImportController.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Controllers\\ImportController.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\ImportController.cs",
+              "RelativeToolTip": "MilkTea.Server\\Controllers\\ImportController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:43:58.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ReportController.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\ReportController.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Controllers\\ReportController.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\ReportController.cs",
+              "RelativeToolTip": "MilkTea.Server\\Controllers\\ReportController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:43:42.059Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "InvoiceController.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\InvoiceController.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Controllers\\InvoiceController.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\InvoiceController.cs",
+              "RelativeToolTip": "MilkTea.Server\\Controllers\\InvoiceController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:43:27.759Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Controllers\\OrderController.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "MilkTea.Server\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:43:05.146Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "MilkTea.Server\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:42:33.79Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Program.cs",
+              "RelativeDocumentMoniker": "MilkTea.Server\\Program.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\Program.cs",
+              "RelativeToolTip": "MilkTea.Server\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T08:38:52.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MilkTea.Server",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\MilkTea.Server.csproj",
+              "RelativeDocumentMoniker": "MilkTea.Server\\MilkTea.Server.csproj",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Server\\MilkTea.Server.csproj*",
+              "RelativeToolTip": "MilkTea.Server\\MilkTea.Server.csproj*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-22T08:35:54.946Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Cilent\\Forms\\MainForm.cs",
+              "RelativeDocumentMoniker": "MilkTea.Cilent\\Forms\\MainForm.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Cilent\\Forms\\MainForm.cs",
+              "RelativeToolTip": "MilkTea.Cilent\\Forms\\MainForm.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAmwCcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T04:02:40.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MainForm.Designer.cs",
+              "DocumentMoniker": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Cilent\\Forms\\MainForm.Designer.cs",
+              "RelativeDocumentMoniker": "MilkTea.Cilent\\Forms\\MainForm.Designer.cs",
+              "ToolTip": "D:\\C#\\\u0111\u1ED3 \u00E1n\\C_hash\\MilkTeaApp\\MilkTea.Cilent\\Forms\\MainForm.Designer.cs",
+              "RelativeToolTip": "MilkTea.Cilent\\Forms\\MainForm.Designer.cs",
+              "ViewState": "AgIAAMwAAAAAAAAAAAAewMgAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T04:12:58.5Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

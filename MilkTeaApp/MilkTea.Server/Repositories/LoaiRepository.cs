@@ -24,7 +24,7 @@ namespace MilkTea.Server.Repositories
 
             while (await reader.ReadAsync())
             {
-                list.Add(reader.GetString("TenLoai"));
+                list.Add(reader.GetString(reader.GetOrdinal("TenLoai")));        
             }
 
             return list;

@@ -9,5 +9,6 @@ namespace MilkTea.Server.Data
 
         // Mỗi DbSet tương ứng với 1 bảng trong DB
         public DbSet<Loai> Loais { get; set; }
+        public DbSet<SanPham> SanPhams { get; set; }
     }
 }

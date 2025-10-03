@@ -1,6 +1,6 @@
 ﻿namespace MilkTea.Server.Models
 {
-    public class Order
+    public class Import
     {
     }
 }

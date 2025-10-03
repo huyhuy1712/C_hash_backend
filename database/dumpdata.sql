@@ -11,16 +11,16 @@ INSERT IGNORE INTO Loai (TenLoai, MoTa) VALUES
 
 -- 2. SanPham
 INSERT IGNORE INTO SanPham (TenSP, Gia, Anh, SLDuKien, TrangThai, MaLoai) VALUES
-('Trà sữa truyền thống', 25000, '', 50, 1, 1),
-('Trà sữa matcha truyền thống', 30000, '', 40, 1, 2),
-('Trà sữa socola', 28000, '', 30, 1, 3),
-('Trà sữa caramel', 32000, '', 20, 1, 3),
-('Trà sữa dâu', 27000, '', 25, 1, 4),
-('Trà sữa khoai môn', 30000, '', 15, 1, 5),
-('Trà sữa hạt dẻ', 35000, '', 10, 1, 5),
-('Trà sữa bạc hà', 33000, '', 12, 1, 1),
-('Trà sữa matcha socola', 36000, '', 8, 1, 2),
-('Trà sữa hoàng kim', 40000, '', 5, 1, 6);
+('Trà sữa truyền thống', 25000, 'tra_sua_truyen_thong.png', 50, 1, 1),
+('Trà sữa matcha truyền thống', 30000, 'tra_sua_matcha_truyen_thong.png', 40, 1, 2),
+('Trà sữa socola', 28000, 'tra_sua_socola.png', 30, 1, 3),
+('Trà sữa caramel', 32000, 'tra_sua_caramel.png', 20, 1, 3),
+('Trà sữa dâu', 27000, 'tra_sua_dau.png', 25, 1, 4),
+('Trà sữa khoai môn', 30000, 'tra_sua_khoai_mon.png', 15, 1, 5),
+('Trà sữa hạt dẻ', 35000, 'tra_sua_hat_de.png', 10, 1, 5),
+('Trà sữa bạc hà', 33000, 'tra_sua_bac_ha.png', 12, 1, 1),
+('Trà sữa matcha socola', 36000, 'tra_sua_matcha_socola.png', 8, 1, 2),
+('Trà sữa hoàng kim', 40000, 'tra_sua_hoang_kim.png', 5, 1, 6);
 
 -- 3. Size
 INSERT IGNORE INTO Size (TenSize, PhuThu) VALUES
@@ -69,16 +69,16 @@ INSERT IGNORE INTO ChucNang (TenChucNang, MoTa) VALUES
 
 -- 6. TaiKhoan
 INSERT IGNORE INTO TaiKhoan (TenTaiKhoan, Anh, TrangThai, MaQuyen) VALUES
-('nv_banhang1', '', 1, 2),
-('nv_banhang2', '', 1, 2),
-('nv_banhang3', '', 1, 2),
-('nv_kho1', '', 1, 3),
-('nv_kho2', '', 1, 3),
-('admin1', '', 1, 1),
-('kt1', '', 1, 4),
-('ql1', '', 1, 5),
-('nv_banhang4', '', 1, 2),
-('nv_banhang5', '', 1, 2);
+('nv_banhang1', 'nv_banhang1.jpg', 1, 2),
+('nv_banhang2', 'nv_banhang2.jpg', 1, 2),
+('nv_banhang3', 'nv_banhang3.jpg', 1, 2),
+('nv_kho1', 'nv_kho1.jpg', 1, 3),
+('nv_kho2', 'nv_kho2.jpg', 1, 3),
+('admin1', 'admin1.jpg', 1, 1),
+('kt1', 'kt1.jpg', 1, 4),
+('ql1', 'ql1.jpg', 1, 5),
+('nv_banhang4', 'nv_banhang4.jpg', 1, 2),
+('nv_banhang5', 'nv_banhang5.jpg', 1, 2);
 
 -- 7. Quyen_ChucNang
 INSERT IGNORE INTO Quyen_ChucNang (MaQuyen, MaChucNang) VALUES

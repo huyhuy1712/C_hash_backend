@@ -1,4 +1,6 @@
 using MilkTea.Server.Data; // namespace DbConnection
+using MilkTea.Server.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Đọc connection string từ appsettings.json
@@ -11,7 +13,9 @@ builder.Services.AddSingleton(new DbConnection(connectionString));
 builder.Services.AddControllersWithViews();
 
 // Nếu có Repository thì đăng ký ở đây (ví dụ LoaiRepository)
-// builder.Services.AddScoped<LoaiRepository>();
+builder.Services.AddScoped<LoaiRepository>();
+builder.Services.AddScoped<SanPhamRepository>();
+
 
 var app = builder.Build();
 

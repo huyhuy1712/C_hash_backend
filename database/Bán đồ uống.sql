@@ -146,6 +146,7 @@ CREATE TABLE `ChiPhi` (
   `Ngay` int NOT NULL,
   `Thang` int NOT NULL,
   `Nam` int NOT NULL,
+  `Gio` time NOT NULL,
   `MaSP` int,
   `MaLoai` int,
   `MaKM` int,

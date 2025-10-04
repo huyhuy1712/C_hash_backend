@@ -14,6 +14,9 @@ namespace MilkTea.Server.Models
         // Năm chi phí (ví dụ: 2025)
         public int Nam { get; set; }
 
+        // Giờ bán (map từ SQL TIME sang TimeSpan trong C#)
+        public TimeSpan Gio { get; set; }
+
         // Mã sản phẩm (FK tới SanPham) - có thể null
         public int? MaSP { get; set; }
 

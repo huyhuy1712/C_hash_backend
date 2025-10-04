@@ -235,3 +235,4 @@ INSERT IGNORE INTO ChiPhi (Ngay, Thang, Nam, Gio, MaSP, MaLoai, MaKM, TongChiPhi
 (26,9,2025,'18:00:00',9,9,9,140000,90000),
 (26,9,2025,'19:00:00',10,10,10,40000,25000);
 
+

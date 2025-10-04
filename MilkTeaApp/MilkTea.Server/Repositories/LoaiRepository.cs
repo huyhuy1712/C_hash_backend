@@ -1,7 +1,6 @@
 using MilkTea.Server.Data;
 using MySql.Data.MySqlClient;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace MilkTea.Server.Repositories
 {

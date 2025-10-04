@@ -15,6 +15,25 @@ builder.Services.AddControllersWithViews();
 // Nếu có Repository thì đăng ký ở đây (ví dụ LoaiRepository)
 builder.Services.AddScoped<LoaiRepository>();
 builder.Services.AddScoped<SanPhamRepository>();
+builder.Services.AddScoped<BuzzerRepository>();
+builder.Services.AddScoped<ChiPhiRepository>();
+builder.Services.AddScoped<ChiTietCongThucRepository>();
+builder.Services.AddScoped<ChiTietDonHangRepository>();
+builder.Services.AddScoped<ChiTietPhieuNhapRepository>();
+builder.Services.AddScoped<ChucNangRepository>();
+builder.Services.AddScoped<CongThucRepository>();
+builder.Services.AddScoped<CTKhuyenMaiRepository>();
+builder.Services.AddScoped<DoanhThuRepository>();
+builder.Services.AddScoped<DonHangRepository>();
+builder.Services.AddScoped<NguyenLieuRepository>();
+builder.Services.AddScoped<NhanVienRepository>();
+builder.Services.AddScoped<PhieuNhapRepository>();
+builder.Services.AddScoped<QuyenChucNangRepository>();
+builder.Services.AddScoped<QuyenRepository>();
+builder.Services.AddScoped<SanPhamKhuyenMaiRepository>();
+builder.Services.AddScoped<SizeRepository>();
+builder.Services.AddScoped<TaiKhoanRepository>();
+
 
 
 var app = builder.Build();

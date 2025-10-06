@@ -28,5 +28,20 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi lấy dữ liệu size: {ex.Message}");
             }
         }
+
+        // GET: api/size
+        [HttpGet("ten/{tenSize}")]
+        public async Task<IActionResult> GetSizeByTenAsync(string tenSize)
+        {
+            try
+            {
+                var list = await _repo.GetSizeByTenAsync(tenSize);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy dữ liệu size: {ex.Message}");
+            }
+        }
     }
 }

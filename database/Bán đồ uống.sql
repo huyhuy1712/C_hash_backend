@@ -24,6 +24,7 @@ CREATE TABLE `TaiKhoan` (
   `MaTK` int PRIMARY KEY AUTO_INCREMENT,
   `TenTaiKhoan` varchar(50) UNIQUE NOT NULL,
   `anh` varchar(50),
+  `MatKhau` int,
   `TrangThai` int,
   `MaQuyen` int
 );

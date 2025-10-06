@@ -1,4 +1,4 @@
-SizeCREATE TABLE `SanPham` (
+CREATE TABLE `SanPham` (
   `MaSP` int PRIMARY KEY AUTO_INCREMENT,
   `TenSP` varchar(100) NOT NULL,
   `Gia` decimal(12,2) NOT NULL,

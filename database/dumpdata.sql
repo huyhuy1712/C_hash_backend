@@ -68,17 +68,17 @@ INSERT IGNORE INTO ChucNang (TenChucNang, MoTa) VALUES
 
 
 -- 6. TaiKhoan
-INSERT IGNORE INTO TaiKhoan (TenTaiKhoan, Anh, TrangThai, MaQuyen) VALUES
-('nv_banhang1', 'nv_banhang1.jpg', 1, 2),
-('nv_banhang2', 'nv_banhang2.jpg', 1, 2),
-('nv_banhang3', 'nv_banhang3.jpg', 1, 2),
-('nv_kho1', 'nv_kho1.jpg', 1, 3),
-('nv_kho2', 'nv_kho2.jpg', 1, 3),
-('admin1', 'admin1.jpg', 1, 1),
-('kt1', 'kt1.jpg', 1, 4),
-('ql1', 'ql1.jpg', 1, 5),
-('nv_banhang4', 'nv_banhang4.jpg', 1, 2),
-('nv_banhang5', 'nv_banhang5.jpg', 1, 2);
+INSERT IGNORE INTO TaiKhoan (TenTaiKhoan, Anh, MatKhau, TrangThai, MaQuyen) VALUES
+('Nguyen Van A','nv_banhang1.jpg','0901234561', 1, 2),
+('Nguyen Van B', 'nv_banhang2.jpg','0901234562', 1, 2),
+('Nguyen Van C', 'nv_banhang3.jpg','0901234563', 1, 2),
+('Tran Thi D', 'nv_kho1.jpg','0901234564', 1, 3),
+('Le Van E', 'nv_kho2.jpg','0901234565', 1, 3),
+('Pham Thi F', 'admin1.jpg','0901234566', 1, 1),
+('Nguyen Van G', 'kt1.jpg','0901234567', 1, 4),
+('Tran Thi H', 'ql1.jpg', '0901234568', 1, 5),
+('Le Van I', 'nv_banhang4.jpg','0901234569', 1, 2),
+('Pham Thi K', 'nv_banhang5.jpg','0901234570', 1, 2);
 
 -- 7. Quyen_ChucNang
 INSERT IGNORE INTO Quyen_ChucNang (MaQuyen, MaChucNang) VALUES

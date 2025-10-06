@@ -87,5 +87,37 @@ namespace MilkTea.Server.Repositories
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
         }
+
+       // 6. Tìm kiếm chương trình khuyến mãi theo MaSP
+        public async Task<CTKhuyenMai?> GetByMaSPAsync(int maSP)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = @"
+        SELECT km.MaCTKhuyenMai, km.TenCTKhuyenMai, km.MoTa,
+        km.NgayBatDau, km.NgayKetThuc, km.PhanTramKhuyenMai, km.TrangThai
+        FROM sanpham_khuyenmai spkm
+        JOIN ctkhuyenmai km ON spkm.MaCTKhuyenMai = km.MaCTKhuyenMai
+        WHERE spkm.MaSP = @MaSP
+        LIMIT 1;";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new CTKhuyenMai
+                {
+                    MaCTKhuyenMai = reader.GetInt32(reader.GetOrdinal("MaCTKhuyenMai")),
+                    TenCTKhuyenMai = reader.GetString(reader.GetOrdinal("TenCTKhuyenMai")),
+                    MoTa = reader.GetString(reader.GetOrdinal("MoTa")),
+                    NgayBatDau = reader.GetDateTime(reader.GetOrdinal("NgayBatDau")),
+                    NgayKetThuc = reader.GetDateTime(reader.GetOrdinal("NgayKetThuc")),
+                    PhanTramKhuyenMai = reader.GetInt32(reader.GetOrdinal("PhanTramKhuyenMai")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+                };
+            }
+            return null;
+        }
+
     }
 }

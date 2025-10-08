@@ -124,23 +124,6 @@ namespace MilkTea.Server.Repositories
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
         }
-        
-        // 7. hàm cộng nguyên liệu
-        public async Task<bool> CongSoLuongAsync(int maNL, int soLuongCong)
-        {
-            using var conn = await _db.GetConnectionAsync();
-            var query = @"
-        UPDATE nguyenlieu
-        SET SoLuong = SoLuong + @SL
-        WHERE MaNL = @MaNL";
-            var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@SL", soLuongCong);
-            cmd.Parameters.AddWithValue("@MaNL", maNL);
-
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
-        }
-
 
     }
 }

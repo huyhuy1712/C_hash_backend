@@ -79,24 +79,6 @@ namespace MilkTea.Server.Controllers
             }
         }
 
-        // PUT: api/nguyenlieu/cong/{maNL}/{soLuong}
-        [HttpPut("cong/{maNL:int}/{soLuong:int}")]
-        public async Task<IActionResult> CongNguyenLieu(int maNL, int soLuong)
-        {
-            try
-            {
-                bool result = await _repo.CongSoLuongAsync(maNL, soLuong);
-                return result
-                    ? Ok(new { Message = $"Đã cộng lại {soLuong} nguyên liệu (mã {maNL}) thành công!" })
-                    : NotFound($"Không tìm thấy nguyên liệu có mã {maNL}.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Lỗi khi hoàn nguyên nguyên liệu: {ex.Message}");
-            }
-        }
-
-
         // DELETE: api/nguyenlieu/{maNL}
         [HttpDelete("{maNL}")]
         public async Task<IActionResult> Delete(int maNL)

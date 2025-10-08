@@ -109,5 +109,38 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+
+        // 6. hàm trừ nguyên liệu
+        public async Task<bool> TruSoLuongAsync(int maNL, int soLuongCanTru)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = @"UPDATE nguyenlieu
+                  SET SoLuong = SoLuong - @SL
+                  WHERE MaNL = @MaNL AND SoLuong >= @SL";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@SL", soLuongCanTru);
+            cmd.Parameters.AddWithValue("@MaNL", maNL);
+
+            var rows = await cmd.ExecuteNonQueryAsync();
+            return rows > 0;
+        }
+        
+        // 7. hàm cộng nguyên liệu
+        public async Task<bool> CongSoLuongAsync(int maNL, int soLuongCong)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = @"
+        UPDATE nguyenlieu
+        SET SoLuong = SoLuong + @SL
+        WHERE MaNL = @MaNL";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@SL", soLuongCong);
+            cmd.Parameters.AddWithValue("@MaNL", maNL);
+
+            var rows = await cmd.ExecuteNonQueryAsync();
+            return rows > 0;
+        }
+
+
     }
 }

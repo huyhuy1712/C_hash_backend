@@ -83,15 +83,59 @@ namespace MilkTea.Server.Repositories
         }
 
         // 5. Xóa toàn bộ chi tiết công thức theo mã công thức
-            public async Task<bool> DeleteByMaCTAsync(int maCT)
-            {
-                using var conn = await _db.GetConnectionAsync();
-                var query = "DELETE FROM chitietcongthuc WHERE MaCT = @MaCT";
-                var cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@MaCT", maCT);
+        public async Task<bool> DeleteByMaCTAsync(int maCT)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "DELETE FROM chitietcongthuc WHERE MaCT = @MaCT";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaCT", maCT);
 
-                var rows = await cmd.ExecuteNonQueryAsync();
-                return rows > 0; // Trả về true nếu có ít nhất một dòng bị xóa
-            }
+            var rows = await cmd.ExecuteNonQueryAsync();
+            return rows > 0; // Trả về true nếu có ít nhất một dòng bị xóa
+        }
+            
+        // 6. Lấy danh sách chi tiết công thức theo mã sản phẩm
+public async Task<List<CTCongThucSP>> GetChiTietCongThucByMaSPAsync(int maSP)
+{
+    var list = new List<CTCongThucSP>();
+
+    using var conn = await _db.GetConnectionAsync();
+
+    var query = @"
+        SELECT 
+            ct.MaCT,
+            ct.Ten AS TenCongThuc,
+            nl.MaNL,
+            nl.Ten AS TenNguyenLieu,
+            ctc.SL AS SoLuongCanDung,
+            nl.SoLuong AS SoLuongTonKho,
+            nl.GiaBan
+        FROM congthuc ct
+        INNER JOIN chitietcongthuc ctc ON ct.MaCT = ctc.MaCT
+        INNER JOIN nguyenlieu nl ON ctc.MaNL = nl.MaNL
+        WHERE ct.MaSP = @MaSP;
+    ";
+
+    var cmd = new MySqlCommand(query, conn);
+    cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+    using var reader = await cmd.ExecuteReaderAsync();
+
+    while (await reader.ReadAsync())
+    {
+        list.Add(new CTCongThucSP
+        {
+            MaCT = reader.GetInt32(reader.GetOrdinal("MaCT")),
+            TenCongThuc = reader.GetString(reader.GetOrdinal("TenCongThuc")),
+            MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
+            TenNguyenLieu = reader.GetString(reader.GetOrdinal("TenNguyenLieu")),
+            SoLuongCanDung = reader.GetInt32(reader.GetOrdinal("SoLuongCanDung")),
+            SoLuongTonKho = reader.GetInt32(reader.GetOrdinal("SoLuongTonKho")),
+            GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan"))
+        });
+    }
+
+    return list;
+}
     }
 }

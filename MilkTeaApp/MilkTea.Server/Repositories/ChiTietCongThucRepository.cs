@@ -95,9 +95,9 @@ namespace MilkTea.Server.Repositories
         }
             
         // 6. Lấy danh sách chi tiết công thức theo mã sản phẩm
-public async Task<List<dynamic>> GetChiTietCongThucByMaSPAsync(int maSP)
+public async Task<List<CTCongThucSP>> GetChiTietCongThucByMaSPAsync(int maSP)
 {
-    var list = new List<dynamic>();
+    var list = new List<CTCongThucSP>();
 
     using var conn = await _db.GetConnectionAsync();
 
@@ -123,7 +123,7 @@ public async Task<List<dynamic>> GetChiTietCongThucByMaSPAsync(int maSP)
 
     while (await reader.ReadAsync())
     {
-        list.Add(new
+        list.Add(new CTCongThucSP
         {
             MaCT = reader.GetInt32(reader.GetOrdinal("MaCT")),
             TenCongThuc = reader.GetString(reader.GetOrdinal("TenCongThuc")),

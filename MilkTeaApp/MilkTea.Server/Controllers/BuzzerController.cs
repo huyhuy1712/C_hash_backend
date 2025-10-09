@@ -23,7 +23,7 @@ namespace MilkTea.Server.Controllers
                 if (trangThai != 0 && trangThai != 1)
                     return BadRequest("Trạng thái chỉ có thể là 0 hoặc 1.");
 
-                var list = await _buzzerRepo.GetSoHieuByTrangThaiAsync(trangThai);
+                var list = await _buzzerRepo.GetBuzzersByTrangThaiAsync(trangThai);
                 return Ok(list);
             }
             catch (Exception ex)

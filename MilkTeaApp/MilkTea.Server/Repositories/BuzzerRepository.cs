@@ -13,22 +13,31 @@ namespace MilkTea.Server.Repositories
             _db = db;
         }
 
-       //lấy danh sách theo trạng thái (0 hoặc 1)
-        public async Task<List<string>> GetSoHieuByTrangThaiAsync(int trangThai)
+      // Lấy danh sách buzzer theo trạng thái (0 hoặc 1)
+public async Task<List<Buzzer>> GetBuzzersByTrangThaiAsync(int trangThai)
+{
+    var list = new List<Buzzer>();
+
+    using var conn = await _db.GetConnectionAsync();
+    var query = "SELECT MaBuzzer, SoHieu, TrangThai FROM buzzer WHERE TrangThai = @TrangThai";
+    var cmd = new MySqlCommand(query, conn);
+    cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+
+    using var reader = await cmd.ExecuteReaderAsync();
+    while (await reader.ReadAsync())
+    {
+        var buzzer = new Buzzer
         {
-            var list = new List<string>();
-            using var conn = await _db.GetConnectionAsync();
-            var cmd = new MySqlCommand("SELECT SoHieu FROM buzzer WHERE TrangThai = @TrangThai", conn);
-            cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+            MaBuzzer = reader.GetInt32(reader.GetOrdinal("MaBuzzer")),
+            SoHieu = reader.GetString(reader.GetOrdinal("SoHieu")),
+            TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+        };
+        list.Add(buzzer);
+    }
 
-            using var reader = await cmd.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                list.Add(reader.GetString(reader.GetOrdinal("SoHieu")));
-            }
+    return list;
+}
 
-            return list;
-        }
 
         // Cập nhật trạng thái buzzer (theo số hiệu)
         public async Task<bool> UpdateTrangThaiAsync(string soHieu, int trangThai)

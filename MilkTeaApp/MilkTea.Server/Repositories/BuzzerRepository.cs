@@ -38,7 +38,6 @@ public async Task<List<Buzzer>> GetBuzzersByTrangThaiAsync(int trangThai)
     return list;
 }
 
-
         // Cập nhật trạng thái buzzer (theo số hiệu)
         public async Task<bool> UpdateTrangThaiAsync(string soHieu, int trangThai)
         {
@@ -49,6 +48,22 @@ public async Task<List<Buzzer>> GetBuzzersByTrangThaiAsync(int trangThai)
 
             var rowsAffected = await cmd.ExecuteNonQueryAsync();
             return rowsAffected > 0; // true nếu có ít nhất 1 dòng bị ảnh hưởng
+        }
+
+                // Lấy MaMay theo số hiệu
+        public async Task<int?> GetMaMayBySoHieuAsync(string sohieu)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT MaBuzzer FROM buzzer WHERE SoHieu = @SoHieu LIMIT 1";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@SoHieu", sohieu);
+
+            var result = await cmd.ExecuteScalarAsync();
+            if (result != null && result != DBNull.Value)
+            {
+                return Convert.ToInt32(result);
+            }
+            return null; // không tìm thấy
         }
     }
 }

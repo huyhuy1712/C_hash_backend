@@ -3,7 +3,7 @@ namespace MilkTea.Server.Models
     public class ChiTietDonHang
     {
         // Mã chi tiết đơn hàng (Primary Key, tự tăng)
-        public int MaCTDH { get; set; }
+        public int? MaCTDH { get; set; }
 
         // Mã đơn hàng (FK tới DonHang)
         public int MaDH { get; set; }
@@ -22,5 +22,8 @@ namespace MilkTea.Server.Models
 
         // Tổng giá (SoLuong * Giá bán)
         public decimal TongGia { get; set; }
+
+        public List<ctdonhang_topping> Toppings { get; set; } = new();
+
     }
 }

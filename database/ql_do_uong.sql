@@ -24,7 +24,7 @@ CREATE TABLE `TaiKhoan` (
   `MaTK` int PRIMARY KEY AUTO_INCREMENT,
   `TenTaiKhoan` varchar(50) UNIQUE NOT NULL,
   `anh` varchar(50),
-  `MatKhau` int,
+  `MatKhau` varchar(50),
   `TrangThai` int,
   `MaQuyen` int
 );
@@ -139,26 +139,38 @@ CREATE TABLE `DoanhThu` (
   `MaLoai` int,
   `MaKM` int,
   `MaSize` int,
+  `TongChiPhi` int,
   `TongDoanhThu` decimal(12,2)
 );
 
-CREATE TABLE `ChiPhi` (
-  `MaCP` int PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE `DoanhThuTopping` (
+  `MaDTTP` int PRIMARY KEY AUTO_INCREMENT,
   `Ngay` int NOT NULL,
   `Thang` int NOT NULL,
   `Nam` int NOT NULL,
   `Gio` time NOT NULL,
-  `MaSP` int,
-  `MaLoai` int,
-  `MaKM` int,
-  `TongChiPhiSP` decimal(12,2),
-  `TongChiPhiNL` decimal(12,2)
+  `SLBan` int,
+  `MaNL` int,
+  `TongChiPhi` int,
+  `TongDoanhThu` decimal(12,2)
 );
 
 CREATE TABLE `sanpham_khuyenmai` (
   `MaSP` int,
   `MaCTKhuyenMai` int
 );
+
+CREATE TABLE `ctdonhang_topping` (
+  `MaNL` int,
+  `MaCTDH` int,
+  `SL` int
+);
+
+ALTER TABLE `NguyenLieu` ADD FOREIGN KEY (`MaNL`) REFERENCES `DoanhThuTopping` (`MaNL`);
+
+ALTER TABLE `ctdonhang_topping` ADD FOREIGN KEY (`MaNL`) REFERENCES `NguyenLieu` (`MaNL`);
+
+ALTER TABLE `ctdonhang_topping` ADD FOREIGN KEY (`MaCTDH`) REFERENCES `ChiTietDonHang` (`MaCTDH`);
 
 ALTER TABLE `SanPham` ADD FOREIGN KEY (`MaLoai`) REFERENCES `Loai` (`MaLoai`);
 
@@ -200,12 +212,8 @@ ALTER TABLE `DoanhThu` ADD FOREIGN KEY (`MaKM`) REFERENCES `CTKhuyenMai` (`MaCTK
 
 ALTER TABLE `DoanhThu` ADD FOREIGN KEY (`MaSize`) REFERENCES `Size` (`MaSize`);
 
-ALTER TABLE `ChiPhi` ADD FOREIGN KEY (`MaSP`) REFERENCES `SanPham` (`MaSP`);
-
-ALTER TABLE `ChiPhi` ADD FOREIGN KEY (`MaLoai`) REFERENCES `Loai` (`MaLoai`);
-
-ALTER TABLE `ChiPhi` ADD FOREIGN KEY (`MaKM`) REFERENCES `CTKhuyenMai` (`MaCTKhuyenMai`);
-
 ALTER TABLE `sanpham_khuyenmai` ADD FOREIGN KEY (`MaSP`) REFERENCES `SanPham` (`MaSP`);
 
 ALTER TABLE `sanpham_khuyenmai` ADD FOREIGN KEY (`MaCTKhuyenMai`) REFERENCES `CTKhuyenMai` (`MaCTKhuyenMai`);
+
+ALTER TABLE `DoanhThu` ADD FOREIGN KEY (`TongChiPhi`) REFERENCES `DoanhThu` (`MaDT`);

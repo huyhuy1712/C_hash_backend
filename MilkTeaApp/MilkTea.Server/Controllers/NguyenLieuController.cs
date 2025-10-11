@@ -62,6 +62,23 @@ namespace MilkTea.Server.Controllers
             }
         }
 
+        // PUT: api/nguyenlieu/tru/{maNL}/{soLuong}
+        [HttpPut("tru/{maNL:int}/{soLuong:int}")]
+        public async Task<IActionResult> TruNguyenLieu(int maNL, int soLuong)
+        {
+            try
+            {
+                bool result = await _repo.TruSoLuongAsync(maNL, soLuong);
+                return result
+                    ? Ok(new { Message = $"Đã trừ {soLuong} nguyên liệu (mã {maNL}) thành công!" })
+                    : BadRequest($"Không đủ tồn kho hoặc không tìm thấy nguyên liệu có mã {maNL}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi trừ nguyên liệu: {ex.Message}");
+            }
+        }
+
         // DELETE: api/nguyenlieu/{maNL}
         [HttpDelete("{maNL}")]
         public async Task<IActionResult> Delete(int maNL)

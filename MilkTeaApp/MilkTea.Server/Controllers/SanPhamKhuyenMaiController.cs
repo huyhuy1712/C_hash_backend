@@ -97,5 +97,21 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi xóa: {ex.Message}");
             }
         }
+
+        //  GET: api/sanphamkhuyenmai/ctkhuyenmai/{MaSP}
+        [HttpGet("ctkhuyenmai/{MaSP}")]
+        public async Task<IActionResult> GetByMaSP(int MaSP)
+        {
+            try
+            {
+                var list = await _repo.GetByMaSPAsync(MaSP);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy dữ liệu: {ex.Message}");
+            }
+        }
+        
     }
 }

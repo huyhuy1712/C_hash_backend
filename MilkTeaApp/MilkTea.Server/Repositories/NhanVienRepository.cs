@@ -1,3 +1,4 @@
+
 using MilkTea.Server.Data;
 using MilkTea.Server.Models;
 using MySql.Data.MySqlClient;
@@ -117,7 +118,7 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
- 
+
         // 6. Tìm kiếm nhân viên theo MaNV
         public async Task<NhanVien?> GetByMaNVAsync(int maNV)
         {
@@ -140,6 +141,22 @@ namespace MilkTea.Server.Repositories
             }
             return null;
         }
-        
+
+        // 7. Lấy MaNV theo tên nhân viên
+        public async Task<int?> GetMaNVByTenAsync(string tenNV)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT MaNV FROM nhanvien WHERE TRIM(LOWER(TenNV)) = TRIM(LOWER(@TenNV)) LIMIT 1";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@TenNV", tenNV);
+
+            var result = await cmd.ExecuteScalarAsync();
+            if (result != null && result != DBNull.Value)
+            {
+                return Convert.ToInt32(result);
+            }
+            return null; // không tìm thấy
+        }
+
     }
 }

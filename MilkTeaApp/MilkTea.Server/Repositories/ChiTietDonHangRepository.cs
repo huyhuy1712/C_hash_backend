@@ -47,22 +47,55 @@ namespace MilkTea.Server.Repositories
         }
 
         // 2. Thêm mới chi tiết đơn hàng
-        public async Task<bool> AddAsync(ChiTietDonHang ct)
-        {
-            using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO chitietdonhang (MaDH, MaSP, MaSize, SoLuong, GiaVon, TongGia)
-                          VALUES (@MaDH, @MaSP, @MaSize, @SoLuong, @GiaVon, @TongGia)";
-            var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@MaDH", ct.MaDH);
-            cmd.Parameters.AddWithValue("@MaSP", ct.MaSP);
-            cmd.Parameters.AddWithValue("@MaSize", ct.MaSize);
-            cmd.Parameters.AddWithValue("@SoLuong", ct.SoLuong);
-            cmd.Parameters.AddWithValue("@GiaVon", ct.GiaVon);
-            cmd.Parameters.AddWithValue("@TongGia", ct.TongGia);
+public async Task<bool> AddAsync(ChiTietDonHang ct)
+{
+    using var conn = await _db.GetConnectionAsync();
+    using var trans = await conn.BeginTransactionAsync();
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+    try
+    {
+        // Thêm chi tiết đơn hàng
+        var query = @"INSERT INTO chitietdonhang (MaDH, MaSP, MaSize, SoLuong, GiaVon, TongGia)
+                      VALUES (@MaDH, @MaSP, @MaSize, @SoLuong, @GiaVon, @TongGia);
+                      SELECT LAST_INSERT_ID();";
+        var cmd = new MySqlCommand(query, conn, trans);
+        cmd.Parameters.AddWithValue("@MaDH", ct.MaDH);
+        cmd.Parameters.AddWithValue("@MaSP", ct.MaSP);
+        cmd.Parameters.AddWithValue("@MaSize", ct.MaSize);
+        cmd.Parameters.AddWithValue("@SoLuong", ct.SoLuong);
+        cmd.Parameters.AddWithValue("@GiaVon", ct.GiaVon);
+        cmd.Parameters.AddWithValue("@TongGia", ct.TongGia);
+
+        // Lấy mã chi tiết đơn hàng vừa tạo
+        var maCTDH = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+        ct.MaCTDH = maCTDH;
+
+        // Nếu có topping thì thêm topping
+        if (ct.Toppings != null && ct.Toppings.Count > 0)
+        {
+            foreach (var tp in ct.Toppings)
+            {
+                var tpQuery = @"INSERT INTO ctdonhang_topping (MaCTDH, MaNL, SL)
+                                VALUES (@MaCTDH, @MaNL, @SL)";
+                var cmdTP = new MySqlCommand(tpQuery, conn, trans);
+                cmdTP.Parameters.AddWithValue("@MaCTDH", maCTDH);
+                cmdTP.Parameters.AddWithValue("@MaNL", tp.MaNL);
+                cmdTP.Parameters.AddWithValue("@SL", tp.SL);
+                await cmdTP.ExecuteNonQueryAsync();
+            }
         }
+
+        // Commit transaction
+        await trans.CommitAsync();
+        return true;
+    }
+    catch (Exception)
+    {
+        await trans.RollbackAsync();
+        throw; // quăng lỗi để controller xử lý
+    }
+}
+
 
         // 3. Sửa chi tiết đơn hàng
         public async Task<bool> UpdateAsync(ChiTietDonHang ct)

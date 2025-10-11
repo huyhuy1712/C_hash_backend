@@ -110,7 +110,30 @@ namespace MilkTea.Server.Repositories
             return list;
         }
 
-        // 6. hàm trừ nguyên liệu
+        // Tìm kiếm theo mã nguyên liệu
+        public async Task<NguyenLieu?> SearchByMaNLAsync(int maNL)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM nguyenlieu WHERE MaNL = @MaNL";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaNL", maNL);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+            return new NguyenLieu
+            {
+                MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
+                Ten = reader.GetString(reader.GetOrdinal("Ten")),
+                SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
+                GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan"))
+            };
+            }
+
+            return null;
+        }
+
+        // 7. hàm trừ nguyên liệu
         public async Task<bool> TruSoLuongAsync(int maNL, int soLuongCanTru)
         {
             using var conn = await _db.GetConnectionAsync();

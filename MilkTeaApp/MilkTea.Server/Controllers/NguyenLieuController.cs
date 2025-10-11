@@ -109,5 +109,20 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm nguyên liệu: {ex.Message}");
             }
         }
+
+        // GET: api/nguyenlieu/search/byid?maNL=1
+        [HttpGet("search/byid")]
+        public async Task<IActionResult> GetById([FromQuery] int maNL)
+        {
+            try
+            {
+                var list = await _repo.SearchByMaNLAsync(maNL);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi tìm kiếm nguyên liệu: {ex.Message}");
+            }
+        }
     }
 }

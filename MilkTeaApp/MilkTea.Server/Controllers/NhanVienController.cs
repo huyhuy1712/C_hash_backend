@@ -96,5 +96,35 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm nhân viên: {ex.Message}");
             }
         }
+
+        // GET: api/nhanvien/searchID/{maNV}
+        [HttpGet("searchID/{maNV}")]
+        public async Task<IActionResult> GetByMaNV(int maNV)
+        {
+            try
+            {
+                var nv = await _repo.GetByMaNVAsync(maNV);
+                return nv != null ? Ok(nv) : NotFound($"Không tìm thấy nhân viên có mã {maNV}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy nhân viên: {ex.Message}");
+            }
+
+        }
+
+                //  Lấy MaNV theo tên nhân viên
+        [HttpGet("manv-by-ten")]
+        public async Task<IActionResult> GetMaNVByTen(string tenNV)
+        {
+            if (string.IsNullOrWhiteSpace(tenNV))
+                return BadRequest("Tên nhân viên không được để trống.");
+
+            var maNV = await _repo.GetMaNVByTenAsync(tenNV);
+            if (maNV == null)
+                return NotFound($"Không tìm thấy nhân viên có tên '{tenNV}'.");
+
+            return Ok(new { MaNV = maNV });
+        }
     }
 }

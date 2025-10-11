@@ -68,17 +68,17 @@ INSERT IGNORE INTO ChucNang (TenChucNang, MoTa) VALUES
 
 
 -- 6. TaiKhoan
-INSERT IGNORE INTO TaiKhoan (TenTaiKhoan, Anh, TrangThai, MaQuyen) VALUES
-('nv_banhang1', 'nv_banhang1.jpg', 1, 2),
-('nv_banhang2', 'nv_banhang2.jpg', 1, 2),
-('nv_banhang3', 'nv_banhang3.jpg', 1, 2),
-('nv_kho1', 'nv_kho1.jpg', 1, 3),
-('nv_kho2', 'nv_kho2.jpg', 1, 3),
-('admin1', 'admin1.jpg', 1, 1),
-('kt1', 'kt1.jpg', 1, 4),
-('ql1', 'ql1.jpg', 1, 5),
-('nv_banhang4', 'nv_banhang4.jpg', 1, 2),
-('nv_banhang5', 'nv_banhang5.jpg', 1, 2);
+INSERT IGNORE INTO TaiKhoan (TenTaiKhoan, Anh, MatKhau, TrangThai, MaQuyen) VALUES
+('Nguyen Van A','nv_banhang1.jpg','0901234561', 1, 2),
+('Nguyen Van B', 'nv_banhang2.jpg','0901234562', 1, 2),
+('Nguyen Van C', 'nv_banhang3.jpg','0901234563', 1, 2),
+('Tran Thi D', 'nv_kho1.jpg','0901234564', 1, 3),
+('Le Van E', 'nv_kho2.jpg','0901234565', 1, 3),
+('Pham Thi F', 'admin1.jpg','0901234566', 1, 1),
+('Nguyen Van G', 'kt1.jpg','0901234567', 1, 4),
+('Tran Thi H', 'ql1.jpg', '0901234568', 1, 5),
+('Le Van I', 'nv_banhang4.jpg','0901234569', 1, 2),
+('Pham Thi K', 'nv_banhang5.jpg','0901234570', 1, 2);
 
 -- 7. Quyen_ChucNang
 INSERT IGNORE INTO Quyen_ChucNang (MaQuyen, MaChucNang) VALUES
@@ -126,18 +126,27 @@ INSERT IGNORE INTO ChiTietDonHang (MaDH, MaSP, MaSize, SoLuong, GiaVon, TongGia)
 (6,2,3,1,30000,30000),
 (7,5,2,1,35000,35000);
 
+INSERT IGNORE INTO ctdonhang_topping (MaNL, MaCTDH, SL) VALUES
+(1,1,2),
+(2,2,2),
+(3,3,3),
+(4,4,1),
+(5,5,2),
+(6,6,3),
+(7,7,2);
+
 -- 12. NguyenLieu
 INSERT IGNORE INTO NguyenLieu (SoLuong, Ten, GiaBan) VALUES
-(1000, 'Trà đen', 5000.00),
-(800, 'Trà xanh', 6000.00),
-(500, 'Sữa đặc', 10000.00),
-(300, 'Đường', 2000.00),
-(200, 'Trân châu đen', 15000.00),
-(150, 'Trân châu trắng', 16000.00),
-(100, 'Pudding', 12000.00),
-(50, 'Thạch dừa', 10000.00),
-(400, 'Đá viên', 1000.00),
-(250, 'Matcha bột', 20000.00);
+(10, 'Trà đen', 5000.00),
+(10, 'Trà xanh', 6000.00),
+(10, 'Sữa đặc', 10000.00),
+(10, 'Đường', 2000.00),
+(10, 'Trân châu đen', 15000.00),
+(10, 'Trân châu trắng', 16000.00),
+(10, 'Pudding', 12000.00),
+(10, 'Thạch dừa', 10000.00),
+(10, 'Đá viên', 1000.00),
+(10, 'Matcha bột', 20000.00);
 
 -- 13. PhieuNhap
 INSERT IGNORE INTO PhieuNhap (NgayNhap, SoLuong, MaNV, TongTien) VALUES
@@ -210,29 +219,31 @@ INSERT IGNORE INTO ChiTietCongThuc (MaCT, MaNL, SL) VALUES
 (10,1,10),(10,3,10);
 
 -- 19. DoanhThu
-INSERT IGNORE INTO DoanhThu (Ngay, Thang, Nam, Gio, SLBan, MaSP, MaLoai, MaKM, MaSize, TongDoanhThu) VALUES
-(27,9,2025,'09:00:00',2,1,1,1,2,50000),
-(27,9,2025,'10:15:00',1,2,2,2,2,30000),
-(27,9,2025,'11:30:00',3,3,3,3,3,84000),
-(27,9,2025,'12:45:00',1,1,1,4,1,25000),
-(27,9,2025,'14:00:00',2,4,4,5,2,64000),
-(27,9,2025,'15:30:00',1,2,2,6,3,30000),
-(27,9,2025,'16:45:00',1,5,5,7,2,35000),
-(26,9,2025,'17:00:00',2,6,6,8,2,60000),
-(26,9,2025,'18:00:00',1,7,2,9,3,85000),
-(26,9,2025,'19:00:00',1,8,2,10,2,40000);
+INSERT IGNORE INTO DoanhThu (Ngay, Thang, Nam, Gio, SLBan, MaSP, MaLoai, MaKM, MaSize, TongChiPhi, TongDoanhThu) VALUES
+(27,9,2025,'09:00:00',2,1,1,1,2,10000,50000),
+(27,9,2025,'10:15:00',1,2,2,2,2,10000,30000),
+(27,9,2025,'11:30:00',3,3,3,3,3,10000,84000),
+(27,9,2025,'12:45:00',1,1,1,4,1,10000,25000),
+(27,9,2025,'14:00:00',2,4,4,5,2,10000,64000),
+(27,9,2025,'15:30:00',1,2,2,6,3,10000,30000),
+(27,9,2025,'16:45:00',1,5,5,7,2,10000,35000),
+(26,9,2025,'17:00:00',2,6,6,8,2,10000,60000),
+(26,9,2025,'18:00:00',1,7,2,9,3,10000,85000),
+(26,9,2025,'19:00:00',1,8,2,10,2,10000,40000);
 
 -- 20. ChiPhi
-INSERT IGNORE INTO ChiPhi (Ngay, Thang, Nam, Gio, MaSP, MaLoai, MaKM, TongChiPhiSP, TongChiPhiNL) VALUES
-(27,9,2025,'09:00:00',1,1,1,80000,50000),
-(27,9,2025,'10:15:00',2,2,2,75000,30000),
-(27,9,2025,'11:30:00',3,3,3,120000,84000),
-(27,9,2025,'12:45:00',4,4,4,60000,25000),
-(27,9,2025,'14:00:00',5,5,5,90000,64000),
-(27,9,2025,'15:30:00',6,6,6,70000,30000),
-(27,9,2025,'16:45:00',7,7,7,85000,35000),
-(26,9,2025,'17:00:00',8,8,8,95000,60000),
-(26,9,2025,'18:00:00',9,9,9,140000,90000),
-(26,9,2025,'19:00:00',10,10,10,40000,25000);
+INSERT IGNORE INTO DoanhThuTopping (Ngay, Thang, Nam, Gio, SLBan, MaNL, TongChiPhi, TongDoanhThu) VALUES
+(27,9,2025,'09:00:00',1,1,10000,50000),
+(27,9,2025,'10:15:00',2,2,10000,30000),
+(27,9,2025,'11:30:00',3,3,10000,84000),
+(27,9,2025,'12:45:00',4,4,10000,25000),
+(27,9,2025,'14:00:00',5,5,10000,64000),
+(27,9,2025,'15:30:00',6,6,10000,30000),
+(27,9,2025,'16:45:00',7,7,10000,35000),
+(26,9,2025,'17:00:00',8,8,10000,60000),
+(26,9,2025,'18:00:00',9,9,10000,90000),
+(26,9,2025,'19:00:00',10,10,10000,25000);
+
+
 
 

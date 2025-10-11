@@ -90,23 +90,38 @@ namespace MilkTea.Server.Controllers
         }
 
         // DELETE: api/chitietcongthuc/delete-by-mact/1
-            [HttpDelete("delete-by-mact/{maCT}")]
-            public async Task<IActionResult> DeleteByMaCT(int maCT)
+        [HttpDelete("delete-by-mact/{maCT}")]
+        public async Task<IActionResult> DeleteByMaCT(int maCT)
+        {
+            try
             {
-                try
-                {
-                    bool deleted = await _repo.DeleteByMaCTAsync(maCT);
+                bool deleted = await _repo.DeleteByMaCTAsync(maCT);
 
-                    if (!deleted)
-                        return NotFound($"Không tìm thấy chi tiết nào thuộc công thức có mã {maCT}.");
+                if (!deleted)
+                    return NotFound($"Không tìm thấy chi tiết nào thuộc công thức có mã {maCT}.");
 
-                    return Ok(new { Message = $"Đã xóa tất cả chi tiết thuộc công thức có mã {maCT} thành công." });
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"Lỗi khi xóa chi tiết công thức theo mã công thức: {ex.Message}");
-                }
+                return Ok(new { Message = $"Đã xóa tất cả chi tiết thuộc công thức có mã {maCT} thành công." });
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa chi tiết công thức theo mã công thức: {ex.Message}");
+            }
+        }
+
+        //GET: api/chitietcongthuc/masp/{masp}
+        [HttpGet("masp/{maSP}")]
+        public async Task<IActionResult> GetChiTietCongThucTheoSPAsync(int maSP)
+        {
+            try
+            {
+                var list = await _repo.GetChiTietCongThucByMaSPAsync(maSP);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi đọc dữ liệu: {ex.Message}");
+            }
+        }
 
     }
 }

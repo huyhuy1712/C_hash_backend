@@ -18,7 +18,7 @@ namespace MilkTea.Server.Repositories
         {
             var list = new List<SanPhamKhuyenMai>();
             using var conn = await _db.GetConnectionAsync();
-            var cmd = new MySqlCommand("SELECT * FROM sanphamkhuyenmai", conn);
+            var cmd = new MySqlCommand("SELECT * FROM sanpham_khuyenmai", conn);
             using var reader = await cmd.ExecuteReaderAsync();
 
             int idxMaSP = reader.GetOrdinal("MaSP");
@@ -40,7 +40,7 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(SanPhamKhuyenMai spkm)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = "INSERT INTO sanphamkhuyenmai (MaSP, MaCTKhuyenMai) VALUES (@MaSP, @MaCTKhuyenMai)";
+            var query = "INSERT INTO sanpham_khuyenmai (MaSP, MaCTKhuyenMai) VALUES (@MaSP, @MaCTKhuyenMai)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaSP", spkm.MaSP);
             cmd.Parameters.AddWithValue("@MaCTKhuyenMai", spkm.MaCTKhuyenMai);
@@ -53,7 +53,7 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> UpdateAsync(int maSP, int maCTKhuyenMaiMoi)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"UPDATE sanphamkhuyenmai 
+            var query = @"UPDATE sanpham_khuyenmai 
                           SET MaCTKhuyenMai = @MaCTKhuyenMaiMoi 
                           WHERE MaSP = @MaSP";
             var cmd = new MySqlCommand(query, conn);
@@ -68,7 +68,7 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> DeleteAsync(int maSP)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = "DELETE FROM sanphamkhuyenmai WHERE MaSP = @MaSP";
+            var query = "DELETE FROM sanpham_khuyenmai WHERE MaSP = @MaSP";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaSP", maSP);
 
@@ -80,12 +80,44 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> DeleteByCTKMAsync(int maCTKM)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = "DELETE FROM sanphamkhuyenmai WHERE MaCTKhuyenMai = @MaCTKhuyenMai";
+            var query = "DELETE FROM sanpham_khuyenmai WHERE MaCTKhuyenMai = @MaCTKhuyenMai";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaCTKhuyenMai", maCTKM);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
         }
+
+       // 6. Tìm kiếm chương trình khuyến mãi theo MaSP
+        public async Task<CTKhuyenMai?> GetByMaSPAsync(int maSP)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = @"
+        SELECT km.MaCTKhuyenMai, km.TenCTKhuyenMai, km.MoTa,
+        km.NgayBatDau, km.NgayKetThuc, km.PhanTramKhuyenMai, km.TrangThai
+        FROM sanpham_khuyenmai spkm
+        JOIN ctkhuyenmai km ON spkm.MaCTKhuyenMai = km.MaCTKhuyenMai
+        WHERE spkm.MaSP = @MaSP
+        LIMIT 1;";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new CTKhuyenMai
+                {
+                    MaCTKhuyenMai = reader.GetInt32(reader.GetOrdinal("MaCTKhuyenMai")),
+                    TenCTKhuyenMai = reader.GetString(reader.GetOrdinal("TenCTKhuyenMai")),
+                    MoTa = reader.GetString(reader.GetOrdinal("MoTa")),
+                    NgayBatDau = reader.GetDateTime(reader.GetOrdinal("NgayBatDau")),
+                    NgayKetThuc = reader.GetDateTime(reader.GetOrdinal("NgayKetThuc")),
+                    PhanTramKhuyenMai = reader.GetInt32(reader.GetOrdinal("PhanTramKhuyenMai")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+                };
+            }
+            return null;
+        }
+
     }
 }

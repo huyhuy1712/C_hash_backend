@@ -24,6 +24,7 @@ namespace MilkTea.Server.Repositories
             int idxMaTK = reader.GetOrdinal("MaTK");
             int idxTenTaiKhoan = reader.GetOrdinal("TenTaiKhoan");
             int idxAnh = reader.GetOrdinal("Anh");
+            int idxMatKhau = reader.GetOrdinal("MatKhau");
             int idxTrangThai = reader.GetOrdinal("TrangThai");
             int idxMaQuyen = reader.GetOrdinal("MaQuyen");
 
@@ -34,6 +35,7 @@ namespace MilkTea.Server.Repositories
                     MaTK = reader.GetInt32(idxMaTK),
                     TenTaiKhoan = reader.GetString(idxTenTaiKhoan),
                     anh = reader.IsDBNull(idxAnh) ? string.Empty : reader.GetString(idxAnh),
+                    MatKhau = reader.GetString(idxMatKhau),
                     TrangThai = reader.GetInt32(idxTrangThai),
                     MaQuyen = reader.GetInt32(idxMaQuyen)
                 });
@@ -46,13 +48,14 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(TaiKhoan tk)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO taikhoan (TenTaiKhoan, Anh, TrangThai, MaQuyen)
-                          VALUES (@TenTaiKhoan, @Anh, @TrangThai, @MaQuyen)";
+            var query = @"INSERT INTO taikhoan (TenTaiKhoan, Anh, MatKhau, TrangThai, MaQuyen)
+                          VALUES (@TenTaiKhoan, @Anh, @MatKhau, @TrangThai, @MaQuyen)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenTaiKhoan", tk.TenTaiKhoan);
             cmd.Parameters.AddWithValue("@Anh", tk.anh ?? "");
             cmd.Parameters.AddWithValue("@TrangThai", tk.TrangThai);
             cmd.Parameters.AddWithValue("@MaQuyen", tk.MaQuyen);
+            cmd.Parameters.AddWithValue("@MatKhau", tk.MatKhau);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -63,12 +66,13 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE taikhoan 
-                          SET TenTaiKhoan=@TenTaiKhoan, Anh=@Anh, TrangThai=@TrangThai, MaQuyen=@MaQuyen
+                          SET TenTaiKhoan=@TenTaiKhoan, Anh=@Anh, MatKhau=@MatKhau, TrangThai=@TrangThai, MaQuyen=@MaQuyen
                           WHERE MaTK=@MaTK";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaTK", tk.MaTK);
             cmd.Parameters.AddWithValue("@TenTaiKhoan", tk.TenTaiKhoan);
             cmd.Parameters.AddWithValue("@Anh", tk.anh ?? "");
+            cmd.Parameters.AddWithValue("@MatKhau", tk.MatKhau);
             cmd.Parameters.AddWithValue("@TrangThai", tk.TrangThai);
             cmd.Parameters.AddWithValue("@MaQuyen", tk.MaQuyen);
 
@@ -107,6 +111,7 @@ namespace MilkTea.Server.Repositories
                     MaTK = reader.GetInt32(reader.GetOrdinal("MaTK")),
                     TenTaiKhoan = reader.GetString(reader.GetOrdinal("TenTaiKhoan")),
                     anh = reader.IsDBNull(reader.GetOrdinal("Anh")) ? string.Empty : reader.GetString(reader.GetOrdinal("Anh")),
+                    MatKhau = reader.GetString(reader.GetOrdinal("MatKhau")),
                     TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
                     MaQuyen = reader.GetInt32(reader.GetOrdinal("MaQuyen"))
                 });

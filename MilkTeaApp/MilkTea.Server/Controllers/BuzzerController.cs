@@ -23,7 +23,7 @@ namespace MilkTea.Server.Controllers
                 if (trangThai != 0 && trangThai != 1)
                     return BadRequest("Trạng thái chỉ có thể là 0 hoặc 1.");
 
-                var list = await _buzzerRepo.GetSoHieuByTrangThaiAsync(trangThai);
+                var list = await _buzzerRepo.GetBuzzersByTrangThaiAsync(trangThai);
                 return Ok(list);
             }
             catch (Exception ex)
@@ -58,10 +58,19 @@ public async Task<IActionResult> UpdateTrangThai(string soHieu, int trangThai)
         return StatusCode(500, $"Lỗi khi cập nhật trạng thái buzzer: {ex.Message}");
     }
 }
-             public class BuzzerUpdateRequest
+        
+                 //  Lấy MaMay theo số hiệu
+        [HttpGet("mamay-by-sohieu")]
+        public async Task<IActionResult> GetMaMayBySoHieuAsync(string sohieu)
         {
-            public string SoHieu { get; set; } = string.Empty;
-            public int TrangThai { get; set; }
+            if (string.IsNullOrWhiteSpace(sohieu))
+                return BadRequest("Tên maáy không được để trống.");
+
+            var mamay = await _buzzerRepo.GetMaMayBySoHieuAsync(sohieu);
+            if (mamay == null)
+                return NotFound($"Không tìm thấy máy có tên '{sohieu}'.");
+
+            return Ok(new { MaBuzzer = mamay });
         }
     }
 }

@@ -436,3 +436,7 @@ FodyWeavers.xsd
 *.msm
 *.msp
 >>>>>>> main
+
+**/bin/
+**/obj/
+

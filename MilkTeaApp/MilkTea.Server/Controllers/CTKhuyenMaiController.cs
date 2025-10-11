@@ -108,5 +108,24 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm: {ex.Message}");
             }
         }
+
+        // GET: api/ctkhuyenmai/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var km = await _repo.GetByIdAsync(id);
+                if (km == null)
+                    return NotFound($"Không tìm thấy chương trình khuyến mãi có mã {id}.");
+
+                return Ok(km);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy chi tiết chương trình khuyến mãi: {ex.Message}");
+            }
+        }
+
     }
 }

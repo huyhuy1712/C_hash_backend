@@ -107,5 +107,22 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi xóa chi tiết phiếu nhập theo mã phiếu: {ex.Message}");
             }
         }
+
+        // GET: api/chitietphieunhap/by-mapn?maPN={maPN}
+        [HttpGet("by-mapn")]
+        public async Task<IActionResult> GetByMaPN(int maPN)
+        {
+            try
+            {
+                var list = await _repo.GetByMaPNAsync(maPN);
+                if (list == null || !list.Any())
+                    return NotFound($"Không tìm thấy chi tiết phiếu nhập nào cho mã phiếu nhập {maPN}.");
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi đọc dữ liệu: {ex.Message}");
+            }
+        }
     }
 }

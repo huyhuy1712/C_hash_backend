@@ -25,7 +25,7 @@ namespace MilkTea.Server.Repositories
             int idxMaPN = reader.GetOrdinal("MaPN");
             int idxMaNL = reader.GetOrdinal("MaNguyenLieu");
             int idxSoLuong = reader.GetOrdinal("SoLuong");
-            int idxDonGia = reader.GetOrdinal("DonGia");
+            int idxDonGia = reader.GetOrdinal("DonGiaNhap");
             int idxTongGia = reader.GetOrdinal("TongGia");
 
             while (await reader.ReadAsync())
@@ -66,7 +66,7 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE chitietphieunhap 
-                          SET SoLuong = @SoLuong, DonGiaNhap = @DonGia, TongGia = @TongGia 
+                          SET SoLuong = @SoLuong, DonGiaNhap = @DonGiaNhap, TongGia = @TongGia 
                           WHERE MaChiTietPhieuNhap = @MaChiTietPhieuNhap";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@SoLuong", ctpn.SoLuong);
@@ -100,6 +100,39 @@ namespace MilkTea.Server.Repositories
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
+        }
+
+        public async Task<List<ChiTietPhieuNhap>> GetByMaPNAsync(int maPN)
+        {
+            var list = new List<ChiTietPhieuNhap>();
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM chitietphieunhap WHERE MaPN = @MaPN";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaPN", maPN);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMaCTPN = reader.GetOrdinal("MaChiTietPhieuNhap");
+            int idxMaPN = reader.GetOrdinal("MaPN");
+            int idxMaNL = reader.GetOrdinal("MaNguyenLieu");
+            int idxSoLuong = reader.GetOrdinal("SoLuong");
+            int idxDonGia = reader.GetOrdinal("DonGiaNhap");
+            int idxTongGia = reader.GetOrdinal("TongGia");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new ChiTietPhieuNhap
+                {
+                    MaChiTietPhieuNhap = reader.GetInt32(idxMaCTPN),
+                    MaPN = reader.GetInt32(idxMaPN),
+                    MaNguyenLieu = reader.GetInt32(idxMaNL),
+                    SoLuong = reader.GetInt32(idxSoLuong),
+                    DonGiaNhap = reader.GetDecimal(idxDonGia),
+                    TongGia = reader.GetDecimal(idxTongGia)
+                });
+            }
+
+            return list;
         }
     }
 }

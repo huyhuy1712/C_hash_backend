@@ -43,7 +43,8 @@ namespace MilkTea.Server.Repositories
                     Nam = reader.GetInt32(idxNam),
                     Gio = reader.IsDBNull(idxGio)
                         ? TimeSpan.Zero
-                        : TimeSpan.Parse(reader.GetString(idxGio)),
+                        : (TimeSpan)reader.GetValue(idxGio),
+
                     SLBan = reader.GetInt32(idxSLBan),
                     MaSP = reader.IsDBNull(idxMaSP) ? null : reader.GetInt32(idxMaSP),
                     MaLoai = reader.IsDBNull(idxMaLoai) ? null : reader.GetInt32(idxMaLoai),
@@ -120,7 +121,7 @@ namespace MilkTea.Server.Repositories
                     Nam = reader.GetInt32(idxNam),
                     Gio = reader.IsDBNull(idxGio)
                         ? TimeSpan.Zero
-                        : TimeSpan.Parse(reader.GetString(idxGio)),
+                        : (TimeSpan)reader.GetValue(idxGio),
                     SLBan = reader.GetInt32(idxSLBan),
                     MaSP = reader.IsDBNull(idxMaSP) ? null : reader.GetInt32(idxMaSP),
                     MaLoai = reader.IsDBNull(idxMaLoai) ? null : reader.GetInt32(idxMaLoai),

@@ -26,7 +26,6 @@ namespace MilkTea.Server.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 return StatusCode(500, $"Lỗi khi lấy dữ liệu doanh thu: {ex.Message}");
             }
         }

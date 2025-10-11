@@ -119,5 +119,30 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+
+        // 6. Lấy tài khoản theo MaTK
+        public async Task<TaiKhoan?> GetByIdAsync(int maTK)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM taikhoan WHERE MaTK = @MaTK";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaTK", maTK);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new TaiKhoan
+                {
+                    MaTK = reader.GetInt32(reader.GetOrdinal("MaTK")),
+                    TenTaiKhoan = reader.GetString(reader.GetOrdinal("TenTaiKhoan")),
+                    anh = reader.IsDBNull(reader.GetOrdinal("Anh")) ? string.Empty : reader.GetString(reader.GetOrdinal("Anh")),
+                    MatKhau = reader.GetString(reader.GetOrdinal("MatKhau")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
+                    MaQuyen = reader.GetInt32(reader.GetOrdinal("MaQuyen"))
+                };
+            }
+
+            return null;
+        }
     }
 }

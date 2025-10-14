@@ -105,5 +105,38 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+
+        // 6. Lấy danh sách chức năng theo quyền
+        public async Task<List<ChucNang>> GetByQuyenAsync(int maQuyen)
+        {
+            var list = new List<ChucNang>();
+            using var conn = await _db.GetConnectionAsync();
+            var query = @"
+        SELECT c.MaChucNang, c.TenChucNang, c.MoTa
+        FROM chucnang c
+        INNER JOIN quyen_chucnang qc ON c.MaChucNang = qc.MaChucNang
+        WHERE qc.MaQuyen = @MaQuyen";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaQuyen", maQuyen);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMa = reader.GetOrdinal("MaChucNang");
+            int idxTen = reader.GetOrdinal("TenChucNang");
+            int idxMoTa = reader.GetOrdinal("MoTa");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new ChucNang
+                {
+                    MaChucNang = reader.GetInt32(idxMa),
+                    TenChucNang = reader.GetString(idxTen),
+                    MoTa = reader.IsDBNull(idxMoTa) ? "" : reader.GetString(idxMoTa)
+                });
+            }
+
+            return list;
+        }
     }
 }

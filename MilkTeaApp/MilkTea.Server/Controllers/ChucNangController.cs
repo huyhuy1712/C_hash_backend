@@ -106,8 +106,8 @@ namespace MilkTea.Server.Controllers
             }
         }
 
-        // GET: api/chucnang/quyen/{maQuyen}
-        [HttpGet("quyen/{maQuyen}")]
+        // GET: api/chucnang/{maQuyen}
+        [HttpGet("{maQuyen}")]
         public async Task<IActionResult> GetByQuyen(int maQuyen)
         {
             try

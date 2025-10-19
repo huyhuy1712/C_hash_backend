@@ -92,5 +92,23 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm quyền: {ex.Message}");
             }
         }
+        
+        // GET: api/quyen/{maQuyen}
+        [HttpGet("{maQuyen}")]
+        public async Task<IActionResult> GetById(int maQuyen)
+        {
+            try
+            {
+                var quyen = await _repo.GetByIdAsync(maQuyen);
+                if (quyen == null)
+                    return NotFound($"Không tìm thấy quyền có mã {maQuyen}.");
+
+                return Ok(quyen);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy quyền theo ID: {ex.Message}");
+            }
+        }
     }
 }

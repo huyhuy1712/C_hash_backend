@@ -99,5 +99,27 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+
+        // 6. Lấy quyền theo ID
+        public async Task<Quyen?> GetByIdAsync(int maQuyen)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM quyen WHERE MaQuyen = @MaQuyen";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaQuyen", maQuyen);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new Quyen
+                {
+                    MaQuyen = reader.GetInt32(reader.GetOrdinal("MaQuyen")),
+                    TenQuyen = reader.GetString(reader.GetOrdinal("TenQuyen")),
+                    Mota = reader.IsDBNull(reader.GetOrdinal("Mota")) ? "" : reader.GetString(reader.GetOrdinal("Mota"))
+                };
+            }
+
+            return null; // Không tìm thấy
+        }
     }
 }

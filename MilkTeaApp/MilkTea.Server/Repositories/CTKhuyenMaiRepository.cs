@@ -114,5 +114,30 @@ namespace MilkTea.Server.Repositories
             return list;
         }
 
+
+        public async Task<CTKhuyenMai?> GetByIdAsync(int id)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var cmd = new MySqlCommand("SELECT * FROM ctkhuyenmai WHERE MaCTKhuyenMai = @Ma", conn);
+            cmd.Parameters.AddWithValue("@Ma", id);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new CTKhuyenMai
+                {
+                    MaCTKhuyenMai = reader.GetInt32(reader.GetOrdinal("MaCTKhuyenMai")),
+                    TenCTKhuyenMai = reader.GetString(reader.GetOrdinal("TenCTKhuyenMai")),
+                    MoTa = reader.IsDBNull(reader.GetOrdinal("MoTa")) ? null : reader.GetString(reader.GetOrdinal("MoTa")),
+                    NgayBatDau = reader.GetDateTime(reader.GetOrdinal("NgayBatDau")),
+                    NgayKetThuc = reader.GetDateTime(reader.GetOrdinal("NgayKetThuc")),
+                    PhanTramKhuyenMai = reader.GetInt32(reader.GetOrdinal("PhanTramKhuyenMai")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+                };
+            }
+
+            return null;
+        }
+
     }
 }

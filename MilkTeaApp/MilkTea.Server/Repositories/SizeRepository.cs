@@ -61,6 +61,27 @@ namespace MilkTea.Server.Repositories
 
             return null; // Không tìm thấy size
         }
+        public async Task<Size?> GetSizeByIdAsync(int id)
+        {
+            using var conn = await _db.GetConnectionAsync();
+
+            var cmd = new MySqlCommand("SELECT MaSize, TenSize, PhuThu FROM size WHERE MaSize = @MaSize", conn);
+            cmd.Parameters.AddWithValue("@MaSize", id);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new Size
+                {
+                    MaSize = reader.GetInt32(reader.GetOrdinal("MaSize")),
+                    TenSize = reader.GetString(reader.GetOrdinal("TenSize")),
+                    PhuThu = reader.GetInt32(reader.GetOrdinal("PhuThu"))
+                };
+            }
+
+            return null; // Không tìm thấy size
+        }
 
 
     }

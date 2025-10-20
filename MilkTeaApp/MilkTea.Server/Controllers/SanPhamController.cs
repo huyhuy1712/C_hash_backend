@@ -34,11 +34,17 @@ namespace MilkTea.Server.Controllers
 
         // POST api/sanpham
         [HttpPost]
-        public async Task<IActionResult> Create(SanPham sp)
+        public async Task<IActionResult> Create([FromBody] SanPham sp)
         {
-            await _repo.AddAsync(sp);
-            return Ok(new { message = "Thêm sản phẩm thành công" });
-        }
+            if (sp == null)
+                return BadRequest("Dữ liệu không hợp lệ");
+
+            int newId = await _repo.AddAsync(sp);
+            sp.MaSP = newId;
+
+            return Ok(newId); // trả về ID thật, kiểu JSON hợp lệ
+}
+
 
         // PUT api/sanpham/5
         [HttpPut("{id}")]
@@ -57,5 +63,25 @@ namespace MilkTea.Server.Controllers
             await _repo.DeleteAsync(id);
             return Ok(new { message = "Xóa sản phẩm thành công" });
         }
+
+        // GET: api/sanpham/search?column=MaLoai&value=1
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string column, [FromQuery] string value)
+        {
+            try
+            {
+                var list = await _repo.SearchAsync(column, value);
+                return Ok(list);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi tìm kiếm: {ex.Message}");
+            }
+        }
+        
     }
 }

@@ -2296,24 +2296,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dtoan\\.nuget\\packages\\": {},
+    "C:\\Users\\anhhu\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\C#_Doan\\C_hash_backend\\MilkTeaApp\\MilkTea.Server\\MilkTea.Server.csproj",
+      "projectUniqueName": "D:\\C#\\đồ án\\C_hash_backend\\MilkTeaApp\\MilkTea.Server\\MilkTea.Server.csproj",
       "projectName": "MilkTea.Server",
-      "projectPath": "E:\\C#_Doan\\C_hash_backend\\MilkTeaApp\\MilkTea.Server\\MilkTea.Server.csproj",
-      "packagesPath": "C:\\Users\\dtoan\\.nuget\\packages\\",
-      "outputPath": "E:\\C#_Doan\\C_hash_backend\\MilkTeaApp\\MilkTea.Server\\obj\\",
+      "projectPath": "D:\\C#\\đồ án\\C_hash_backend\\MilkTeaApp\\MilkTea.Server\\MilkTea.Server.csproj",
+      "packagesPath": "C:\\Users\\anhhu\\.nuget\\packages\\",
+      "outputPath": "D:\\C#\\đồ án\\C_hash_backend\\MilkTeaApp\\MilkTea.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\dtoan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.2.config",
+        "C:\\Users\\anhhu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2321,8 +2320,8 @@
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\DevExpress 19.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

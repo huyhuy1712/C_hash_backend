@@ -32,18 +32,10 @@ namespace MilkTea.Server.Controllers
 
         // POST: api/phieunhap
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] PhieuNhap pn)
+        public async Task<IActionResult> Create(PhieuNhap pn)
         {
-            try
-            {
-                bool added = await _repo.AddAsync(pn);
-                return added ? Ok(new { Message = "Thêm phiếu nhập thành công!" })
-                             : StatusCode(500, "Không thể thêm phiếu nhập.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Lỗi khi thêm phiếu nhập: {ex.Message}");
-            }
+            var id = await _repo.AddAsync(pn);
+            return Ok(new { id });
         }
 
         // PUT: api/phieunhap

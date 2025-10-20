@@ -43,19 +43,21 @@ namespace MilkTea.Server.Repositories
         }
 
         //  2. Thêm phiếu nhập
-        public async Task<bool> AddAsync(PhieuNhap pn)
+        public async Task<int> AddAsync(PhieuNhap pn)
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, MaNV, TongTien)
-                          VALUES (@NgayNhap, @SoLuong, @MaNV, @TongTien)";
+                  VALUES (@NgayNhap, @SoLuong, @MaNV, @TongTien);
+                  SELECT LAST_INSERT_ID();";
+
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
             cmd.Parameters.AddWithValue("@SoLuong", pn.SoLuong);
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+            var result = await cmd.ExecuteScalarAsync();
+            return Convert.ToInt32(result);
         }
 
         //  3. Cập nhật phiếu nhập

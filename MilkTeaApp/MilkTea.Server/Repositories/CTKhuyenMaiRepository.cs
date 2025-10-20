@@ -86,15 +86,30 @@ namespace MilkTea.Server.Repositories
         {
             var validColumns = new HashSet<string>
             {
-                "TenCTKhuyenMai", "MoTa", "PhanTramKhuyenMai", "TrangThai"
+                "MaCTKhuyenMai", "TenCTKhuyenMai", "MoTa", "PhanTramKhuyenMai", "TrangThai"
             };
+
             if (!validColumns.Contains(column))
                 throw new ArgumentException("Cột tìm kiếm không hợp lệ.");
 
             var list = new List<CTKhuyenMai>();
+
             using var conn = await _db.GetConnectionAsync();
-            var cmd = new MySqlCommand($"SELECT * FROM ctkhuyenmai WHERE {column} LIKE @Value", conn);
-            cmd.Parameters.AddWithValue("@Value", $"%{value}%");
+
+            MySqlCommand cmd;
+
+            // Nếu cột là ID thì tìm chính xác (dạng số), không dùng LIKE
+            if (column == "MaCTKhuyenMai")
+            {
+                cmd = new MySqlCommand($"SELECT * FROM ctkhuyenmai WHERE {column} = @Value", conn);
+                cmd.Parameters.AddWithValue("@Value", Convert.ToInt32(value));
+            }
+            else
+            {
+                cmd = new MySqlCommand($"SELECT * FROM ctkhuyenmai WHERE {column} LIKE @Value", conn);
+                cmd.Parameters.AddWithValue("@Value", $"%{value}%");
+            }
+
             using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
@@ -104,8 +119,14 @@ namespace MilkTea.Server.Repositories
                     MaCTKhuyenMai = reader.GetInt32(reader.GetOrdinal("MaCTKhuyenMai")),
                     TenCTKhuyenMai = reader.GetString(reader.GetOrdinal("TenCTKhuyenMai")),
                     MoTa = reader.IsDBNull(reader.GetOrdinal("MoTa")) ? null : reader.GetString(reader.GetOrdinal("MoTa")),
-                    NgayBatDau = reader.GetDateTime(reader.GetOrdinal("NgayBatDau")),
-                    NgayKetThuc = reader.GetDateTime(reader.GetOrdinal("NgayKetThuc")),
+                    NgayBatDau = reader.IsDBNull(reader.GetOrdinal("NgayBatDau"))
+                        ? (DateTime?)null
+                        : reader.GetDateTime(reader.GetOrdinal("NgayBatDau")),
+
+                    NgayKetThuc = reader.IsDBNull(reader.GetOrdinal("NgayKetThuc"))
+                        ? (DateTime?)null
+                        : reader.GetDateTime(reader.GetOrdinal("NgayKetThuc")),
+
                     PhanTramKhuyenMai = reader.GetInt32(reader.GetOrdinal("PhanTramKhuyenMai")),
                     TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
                 });

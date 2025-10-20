@@ -101,6 +101,19 @@ INSERT IGNORE INTO NhanVien (TenNV, SDT, MaTK) VALUES
 ('Le Van I','0901234569',9),
 ('Pham Thi K','0901234570',10);
 
+-- 8. NhaCungCap
+INSERT IGNORE INTO NhaCungCap (TenNCC, SDT, DiaChi) VALUES
+('Công ty TNHH Trà Sữa A','0901111001','123 Lê Lợi, Quận 1, TP.HCM'),
+('Công ty TNHH Nguyên Liệu B','0901111002','45 Trần Hưng Đạo, Quận 5, TP.HCM'),
+('Cơ Sở Cung Ứng C','0901111003','78 Nguyễn Huệ, Quận 1, TP.HCM'),
+('Công ty TNHH Đóng Gói D','0901111004','9 Lý Thường Kiệt, Quận 11, TP.HCM'),
+('Nhà Cung Cấp E','0901111005','210 Phan Đình Phùng, TP.Đà Lạt'),
+('Công ty F','0901111006','56 Hai Bà Trưng, Quận 3, TP.HCM'),
+('Cơ Sở G','0901111007','12 Trần Phú, Hà Đông, Hà Nội'),
+('Công ty H','0901111008','88 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM'),
+('Nhà Cung Cấp I','0901111009','33 Bà Triệu, Hoàn Kiếm, Hà Nội'),
+('Công ty J','0901111010','150 Võ Văn Kiệt, Quận 1, TP.HCM');
+
 -- 9. Buzzer
 INSERT IGNORE INTO Buzzer (SoHieu, TrangThai) VALUES
 ('BZ01',1),('BZ02',1),('BZ03',1),('BZ04',1),('BZ05',1),
@@ -148,18 +161,18 @@ INSERT IGNORE INTO NguyenLieu (SoLuong, Ten, GiaBan) VALUES
 (10, 'Đá viên', 1000.00),
 (10, 'Matcha bột', 20000.00);
 
--- 13. PhieuNhap
-INSERT IGNORE INTO PhieuNhap (NgayNhap, SoLuong, MaNV, TongTien) VALUES
-('2025-09-01',50,1,500000),
-('2025-09-02',30,2,300000),
-('2025-09-03',40,3,400000),
-('2025-09-04',25,4,250000),
-('2025-09-05',60,5,600000),
-('2025-09-06',35,6,350000),
-('2025-09-07',45,7,450000),
-('2025-09-08',20,8,200000),
-('2025-09-09',55,9,550000),
-('2025-09-10',50,10,500000);
+-- 13. NhaCungCap
+INSERT IGNORE INTO PhieuNhap (NgayNhap, SoLuong, MaNCC, MaNV, TongTien) VALUES
+('2025-09-01',50,1,1,500000),
+('2025-09-02',30,2,2,300000),
+('2025-09-03',40,3,3,400000),
+('2025-09-04',25,4,4,250000),
+('2025-09-05',60,5,5,600000),
+('2025-09-06',35,6,6,350000),
+('2025-09-07',45,7,7,450000),
+('2025-09-08',20,8,8,200000),
+('2025-09-09',55,9,9,550000),
+('2025-09-10',50,9,10,500000);
 
 -- 14. ChiTietPhieuNhap
 INSERT IGNORE INTO ChiTietPhieuNhap (MaPN, SoLuong, MaNguyenLieu, DonGiaNhap, TongGia) VALUES
@@ -231,18 +244,6 @@ INSERT IGNORE INTO DoanhThu (Ngay, Thang, Nam, Gio, SLBan, MaSP, MaLoai, MaKM, M
 (26,9,2025,'18:00:00',1,7,2,9,3,10000,85000),
 (26,9,2025,'19:00:00',1,8,2,10,2,10000,40000);
 
--- 20. ChiPhi
-INSERT IGNORE INTO DoanhThuTopping (Ngay, Thang, Nam, Gio, SLBan, MaNL, TongChiPhi, TongDoanhThu) VALUES
-(27,9,2025,'09:00:00',1,1,10000,50000),
-(27,9,2025,'10:15:00',2,2,10000,30000),
-(27,9,2025,'11:30:00',3,3,10000,84000),
-(27,9,2025,'12:45:00',4,4,10000,25000),
-(27,9,2025,'14:00:00',5,5,10000,64000),
-(27,9,2025,'15:30:00',6,6,10000,30000),
-(27,9,2025,'16:45:00',7,7,10000,35000),
-(26,9,2025,'17:00:00',8,8,10000,60000),
-(26,9,2025,'18:00:00',9,9,10000,90000),
-(26,9,2025,'19:00:00',10,10,10000,25000);
 
 
 

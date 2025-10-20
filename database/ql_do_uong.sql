@@ -54,6 +54,13 @@ CREATE TABLE `NhanVien` (
   `MaTK` int
 );
 
+CREATE TABLE `NhaCungCap` (
+  `MaNCC` int PRIMARY KEY AUTO_INCREMENT,
+  `TenNCC` varchar(50) NOT NULL,
+  `SDT` varchar(50) NOT NULL,
+  `DiaChi` varchar(100) NOT NULL
+);
+
 CREATE TABLE `Buzzer` (
   `MaBuzzer` int PRIMARY KEY AUTO_INCREMENT,
   `SoHieu` varchar(20) UNIQUE NOT NULL,
@@ -95,6 +102,7 @@ CREATE TABLE `PhieuNhap` (
   `MaPN` int PRIMARY KEY AUTO_INCREMENT,
   `NgayNhap` date,
   `SoLuong` int,
+  `MaNCC` int,
   `MaNV` int,
   `TongTien` decimal(12,2)
 );
@@ -143,18 +151,6 @@ CREATE TABLE `DoanhThu` (
   `TongDoanhThu` decimal(12,2)
 );
 
-CREATE TABLE `DoanhThuTopping` (
-  `MaDTTP` int PRIMARY KEY AUTO_INCREMENT,
-  `Ngay` int NOT NULL,
-  `Thang` int NOT NULL,
-  `Nam` int NOT NULL,
-  `Gio` time NOT NULL,
-  `SLBan` int,
-  `MaNL` int,
-  `TongChiPhi` int,
-  `TongDoanhThu` decimal(12,2)
-);
-
 CREATE TABLE `sanpham_khuyenmai` (
   `MaSP` int,
   `MaCTKhuyenMai` int
@@ -165,8 +161,6 @@ CREATE TABLE `ctdonhang_topping` (
   `MaCTDH` int,
   `SL` int
 );
-
-ALTER TABLE `NguyenLieu` ADD FOREIGN KEY (`MaNL`) REFERENCES `DoanhThuTopping` (`MaNL`);
 
 ALTER TABLE `ctdonhang_topping` ADD FOREIGN KEY (`MaNL`) REFERENCES `NguyenLieu` (`MaNL`);
 
@@ -193,6 +187,8 @@ ALTER TABLE `ChiTietDonHang` ADD FOREIGN KEY (`MaSP`) REFERENCES `SanPham` (`MaS
 ALTER TABLE `ChiTietDonHang` ADD FOREIGN KEY (`MaSize`) REFERENCES `Size` (`MaSize`);
 
 ALTER TABLE `PhieuNhap` ADD FOREIGN KEY (`MaNV`) REFERENCES `NhanVien` (`MaNV`);
+
+ALTER TABLE `PhieuNhap` ADD FOREIGN KEY (`MaNCC`) REFERENCES `NhaCungCap` (`MaNCC`);
 
 ALTER TABLE `ChiTietPhieuNhap` ADD FOREIGN KEY (`MaPN`) REFERENCES `PhieuNhap` (`MaPN`);
 

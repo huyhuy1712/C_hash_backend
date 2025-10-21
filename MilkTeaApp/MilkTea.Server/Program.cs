@@ -36,6 +36,8 @@ builder.Services.AddScoped<TaiKhoanRepository>();
 
 
 
+
+
 var app = builder.Build();
 
 // Middleware xử lý lỗi

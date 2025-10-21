@@ -99,5 +99,29 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm tài khoản: {ex.Message}");
             }
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLogin request)
+        {
+            var tk = await _repo.CheckLoginAsync(request.Username, request.Password);
+            if (tk != null)
+            {
+                return Ok(new { success = true, message = "Đăng nhập thành công", data = tk });
+            }
+            else
+            {
+                return BadRequest(new { success = false, message = "Sai tên tài khoản hoặc mật khẩu" });
+            }
+        }
+
+
+
+
     }
+
 }
+public class UserLogin
+{
+    public string Username { get; set; }
+    public string Password { get; set; }
+}
+

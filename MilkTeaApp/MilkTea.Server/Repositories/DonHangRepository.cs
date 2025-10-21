@@ -37,9 +37,12 @@ namespace MilkTea.Server.Repositories
                     MaDH = reader.GetInt32(idxMaDH),
                     MaNV = reader.IsDBNull(idxMaNV) ? null : reader.GetInt32(idxMaNV),
                     NgayLap = reader.GetDateTime(idxNgayLap),
+                    //GioLap = reader.IsDBNull(idxGioLap)
+                    //    ? TimeSpan.Zero
+                    //    : TimeSpan.Parse(reader.GetString(idxGioLap)),
                     GioLap = reader.IsDBNull(idxGioLap)
-                        ? TimeSpan.Zero
-                        : TimeSpan.Parse(reader.GetString(idxGioLap)),
+                    ? (TimeSpan?)null
+                    : (TimeSpan?)reader.GetValue(idxGioLap),
                     TrangThai = reader.GetInt32(idxTrangThai),
                     MaBuzzer = reader.IsDBNull(idxMaBuzzer) ? null : reader.GetInt32(idxMaBuzzer),
                     PhuongThucThanhToan = reader.IsDBNull(idxPTTT) ? null : reader.GetInt32(idxPTTT),

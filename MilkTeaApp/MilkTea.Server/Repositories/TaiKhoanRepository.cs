@@ -89,6 +89,9 @@ namespace MilkTea.Server.Repositories
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
         }
+        
+
+  
 
         //5. Tìm kiếm theo cột và giá trị
         public async Task<List<TaiKhoan>> SearchAsync(string column, string value)
@@ -119,5 +122,33 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+
+        // 6. Kiểm tra đăng nhập
+        public async Task<TaiKhoan?> CheckLoginAsync(string tenTaiKhoan, string matKhau)
+        {
+            using var conn = await _db.GetConnectionAsync();
+
+            string sql = "SELECT * FROM taikhoan WHERE TenTaiKhoan = @ten AND MatKhau = @mk";
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@ten", tenTaiKhoan);
+            cmd.Parameters.AddWithValue("@mk", matKhau);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new TaiKhoan
+                {
+                    MaTK = reader.GetInt32(reader.GetOrdinal("MaTK")),
+                    TenTaiKhoan = reader.GetString(reader.GetOrdinal("TenTaiKhoan")),
+                    anh = reader.IsDBNull(reader.GetOrdinal("Anh")) ? string.Empty : reader.GetString(reader.GetOrdinal("Anh")),
+                    MatKhau = reader.GetString(reader.GetOrdinal("MatKhau")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
+                    MaQuyen = reader.GetInt32(reader.GetOrdinal("MaQuyen"))
+                };
+            }
+
+            return null;
+        }
+
     }
 }

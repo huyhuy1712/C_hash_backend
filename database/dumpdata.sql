@@ -70,7 +70,7 @@ INSERT IGNORE INTO ChucNang (TenChucNang, MoTa) VALUES
 ('Vào nhà cung cấp', 'Vào nhà cung cấp'),
 ('Thêm nhà cung cấp', 'Thêm nhà cung cấp'),
 ('Xóa nhà cung cấp', 'Xóa nhà cung cấp'),
-('Sửa nhà cung cấp', 'Sửa nhà cung cấp'),
+('Sửa nhà cung cấp', 'Sửa nhà cung cấp');
 
 
 -- 6. TaiKhoan
@@ -156,16 +156,16 @@ INSERT IGNORE INTO ctdonhang_topping (MaNL, MaCTDH, SL) VALUES
 
 -- 12. NguyenLieu
 INSERT IGNORE INTO NguyenLieu (SoLuong, Ten, GiaBan, TrangThai) VALUES
-(10, 'Trà đen', 5000.00,1),
-(10, 'Trà xanh', 6000.00,1),
-(10, 'Sữa đặc', 10000.00,1),
-(10, 'Đường', 2000.00,1),
-(10, 'Trân châu đen', 15000.00,1),
-(10, 'Trân châu trắng', 16000.00,1),
-(10, 'Pudding', 12000.00,1),
-(10, 'Thạch dừa', 10000.00,1),
-(10, 'Đá viên', 1000.00,1),
-(10, 'Matcha bột', 20000.00,1);
+(100, 'Trà đen', 5000.00,1),
+(100, 'Trà xanh', 6000.00,1),
+(100, 'Sữa đặc', 10000.00,1),
+(100, 'Đường', 2000.00,1),
+(100, 'Trân châu đen', 15000.00,1),
+(100, 'Trân châu trắng', 16000.00,1),
+(100, 'Pudding', 12000.00,1),
+(100, 'Thạch dừa', 10000.00,1),
+(100, 'Đá viên', 1000.00,1),
+(100, 'Matcha bột', 20000.00,1);
 
 -- 13. NhaCungCap
 INSERT IGNORE INTO PhieuNhap (NgayNhap, SoLuong, TrangThai, MaNCC, MaNV, TongTien) VALUES

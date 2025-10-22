@@ -62,15 +62,15 @@ INSERT IGNORE INTO ChucNang (TenChucNang, MoTa) VALUES
 ('Thêm phiếu nhập', 'Thêm phiếu nhập'),
 ('Xóa phiếu nhập', 'Xóa phiếu nhập'),
 ('Sửa phiếu nhập', 'Sửa phiếu nhập'),
-('Nhập excel phiếu nhập', 'Nhập excel phiếu nhập');
-('Vào nguyên liệu', 'Vào nguyên liệu');
-('Thêm nguyên liệu', 'Thêm nguyên liệu');
-('Xóa nguyên liệu', 'Xóa nguyên liệu');
-('Sửa nguyên liệu', 'Sửa nguyên liệu');
-('Vào nhà cung cấp', 'Vào nhà cung cấp');
-('Thêm nhà cung cấp', 'Thêm nhà cung cấp');
-('Xóa nhà cung cấp', 'Xóa nhà cung cấp');
-('Sửa nhà cung cấp', 'Sửa nhà cung cấp');
+('Nhập excel phiếu nhập', 'Nhập excel phiếu nhập'),
+('Vào nguyên liệu', 'Vào nguyên liệu'),
+('Thêm nguyên liệu', 'Thêm nguyên liệu'),
+('Xóa nguyên liệu', 'Xóa nguyên liệu'),
+('Sửa nguyên liệu', 'Sửa nguyên liệu'),
+('Vào nhà cung cấp', 'Vào nhà cung cấp'),
+('Thêm nhà cung cấp', 'Thêm nhà cung cấp'),
+('Xóa nhà cung cấp', 'Xóa nhà cung cấp'),
+('Sửa nhà cung cấp', 'Sửa nhà cung cấp'),
 
 
 -- 6. TaiKhoan

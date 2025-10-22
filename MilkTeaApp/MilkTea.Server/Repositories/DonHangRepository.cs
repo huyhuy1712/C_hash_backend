@@ -47,7 +47,7 @@ namespace MilkTea.Server.Repositories
                     MaBuzzer = reader.IsDBNull(idxMaBuzzer) ? null : reader.GetInt32(idxMaBuzzer),
                     PhuongThucThanhToan = reader.IsDBNull(idxPTTT) ? null : reader.GetInt32(idxPTTT),
                     TongGia = reader.GetDecimal(idxTongGia)
-                });
+                }); 
             }
 
             return list;
@@ -112,23 +112,88 @@ namespace MilkTea.Server.Repositories
         }
 
         //  5. Tìm kiếm theo cột & giá trị
+        //public async Task<List<DonHang>> SearchAsync(string column, string value)
+        //{
+        //    // Giới hạn cột hợp lệ
+        //    var allowedColumns = new HashSet<string>
+        //    {
+        //        "MaNV", "NgayLap", "GioLap", "TrangThai", "MaBuzzer", "PhuongThucThanhToan"
+        //    };
+        //    if (!allowedColumns.Contains(column))
+        //        throw new ArgumentException($"Cột '{column}' không hợp lệ để tìm kiếm.");
+
+        //    var list = new List<DonHang>();
+        //    using var conn = await _db.GetConnectionAsync();
+        //    var query = $"SELECT * FROM donhang WHERE {column} LIKE @value";
+        //    var cmd = new MySqlCommand(query, conn);
+        //    cmd.Parameters.AddWithValue("@value", $"%{value}%");
+
+        //    using var reader = await cmd.ExecuteReaderAsync();
+        //    while (await reader.ReadAsync())
+        //    {
+        //        list.Add(new DonHang
+        //        {
+        //            MaDH = reader.GetInt32(reader.GetOrdinal("MaDH")),
+        //            MaNV = reader.IsDBNull(reader.GetOrdinal("MaNV")) ? null : reader.GetInt32(reader.GetOrdinal("MaNV")),
+        //            NgayLap = reader.GetDateTime(reader.GetOrdinal("NgayLap")),
+        //            GioLap = reader.IsDBNull(reader.GetOrdinal("GioLap"))
+        //                ? TimeSpan.Zero
+        //                : TimeSpan.Parse(reader.GetString(reader.GetOrdinal("GioLap"))),
+        //            TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
+        //            MaBuzzer = reader.IsDBNull(reader.GetOrdinal("MaBuzzer")) ? null : reader.GetInt32(reader.GetOrdinal("MaBuzzer")),
+        //            PhuongThucThanhToan = reader.IsDBNull(reader.GetOrdinal("PhuongThucThanhToan")) ? null : reader.GetInt32(reader.GetOrdinal("PhuongThucThanhToan")),
+        //            TongGia = reader.GetDecimal(reader.GetOrdinal("TongGia"))
+        //        });
+        //    }
+
+        //    return list;
+        //}
         public async Task<List<DonHang>> SearchAsync(string column, string value)
         {
             // Giới hạn cột hợp lệ
             var allowedColumns = new HashSet<string>
-            {
-                "MaNV", "NgayLap", "GioLap", "TrangThai", "MaBuzzer", "PhuongThucThanhToan"
-            };
+    {
+        "MaNV", "NgayLap", "GioLap", "TrangThai", "MaBuzzer", "PhuongThucThanhToan"
+    };
             if (!allowedColumns.Contains(column))
                 throw new ArgumentException($"Cột '{column}' không hợp lệ để tìm kiếm.");
 
             var list = new List<DonHang>();
             using var conn = await _db.GetConnectionAsync();
-            var query = $"SELECT * FROM donhang WHERE {column} LIKE @value";
-            var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@value", $"%{value}%");
 
+            string query;
+            MySqlCommand cmd;
+
+            // Trường ngày: dùng LIKE để tìm theo ngày/tháng
+            if (column == "NgayLap" || column == "GioLap")
+            {
+                query = $"SELECT * FROM donhang WHERE DATE_FORMAT({column}, '%Y-%m-%d') LIKE @value";
+                cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@value", $"%{value}%");
+            }
+            // Trường số: so sánh bằng =
+            else if (column == "TrangThai" || column == "MaNV" || column == "MaBuzzer" || column == "PhuongThucThanhToan")
+            {
+                query = $"SELECT * FROM donhang WHERE {column} = @value";
+                cmd = new MySqlCommand(query, conn);
+
+                // ép kiểu về int nếu được
+                if (int.TryParse(value, out int intValue))
+                    cmd.Parameters.AddWithValue("@value", intValue);
+                else
+                    cmd.Parameters.AddWithValue("@value", -1); // giá trị vô nghĩa => ko tìm thấy gì
+            }
+            // Mặc định: tìm chuỗi LIKE
+            else
+            {
+                query = $"SELECT * FROM donhang WHERE {column} LIKE @value";
+                cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@value", $"%{value}%");
+            }
+
+            // ❌ Đừng khai báo lại cmd ở đây nữa!
             using var reader = await cmd.ExecuteReaderAsync();
+
             while (await reader.ReadAsync())
             {
                 list.Add(new DonHang
@@ -137,7 +202,7 @@ namespace MilkTea.Server.Repositories
                     MaNV = reader.IsDBNull(reader.GetOrdinal("MaNV")) ? null : reader.GetInt32(reader.GetOrdinal("MaNV")),
                     NgayLap = reader.GetDateTime(reader.GetOrdinal("NgayLap")),
                     GioLap = reader.IsDBNull(reader.GetOrdinal("GioLap"))
-                        ? TimeSpan.Zero
+                        ? (TimeSpan?)null
                         : TimeSpan.Parse(reader.GetString(reader.GetOrdinal("GioLap"))),
                     TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
                     MaBuzzer = reader.IsDBNull(reader.GetOrdinal("MaBuzzer")) ? null : reader.GetInt32(reader.GetOrdinal("MaBuzzer")),
@@ -148,5 +213,6 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+
     }
 }

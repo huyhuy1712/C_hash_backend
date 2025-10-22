@@ -108,6 +108,7 @@ INSERT IGNORE INTO NhanVien (TenNV, SDT, MaTK) VALUES
 ('Pham Thi K','0901234570',10);
 
 -- 8. NhaCungCap
+<<<<<<< HEAD
 INSERT IGNORE INTO NhaCungCap (TenNCC, SDT, DiaChi, TrangThai) VALUES
 ('Công ty TNHH Trà Sữa A','0901111001','123 Lê Lợi, Quận 1, TP.HCM',1),
 ('Công ty TNHH Nguyên Liệu B','0901111002','45 Trần Hưng Đạo, Quận 5, TP.HCM',1),
@@ -119,6 +120,19 @@ INSERT IGNORE INTO NhaCungCap (TenNCC, SDT, DiaChi, TrangThai) VALUES
 ('Công ty H','0901111008','88 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM',1),
 ('Nhà Cung Cấp I','0901111009','33 Bà Triệu, Hoàn Kiếm, Hà Nội',1),
 ('Công ty J','0901111010','150 Võ Văn Kiệt, Quận 1, TP.HCM',1);
+=======
+INSERT IGNORE INTO NhaCungCap (TenNCC, SDT, DiaChi) VALUES
+('Công ty TNHH Trà Sữa A','0901111001','123 Lê Lợi, Quận 1, TP.HCM'),
+('Công ty TNHH Nguyên Liệu B','0901111002','45 Trần Hưng Đạo, Quận 5, TP.HCM'),
+('Cơ Sở Cung Ứng C','0901111003','78 Nguyễn Huệ, Quận 1, TP.HCM'),
+('Công ty TNHH Đóng Gói D','0901111004','9 Lý Thường Kiệt, Quận 11, TP.HCM'),
+('Nhà Cung Cấp E','0901111005','210 Phan Đình Phùng, TP.Đà Lạt'),
+('Công ty F','0901111006','56 Hai Bà Trưng, Quận 3, TP.HCM'),
+('Cơ Sở G','0901111007','12 Trần Phú, Hà Đông, Hà Nội'),
+('Công ty H','0901111008','88 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM'),
+('Nhà Cung Cấp I','0901111009','33 Bà Triệu, Hoàn Kiếm, Hà Nội'),
+('Công ty J','0901111010','150 Võ Văn Kiệt, Quận 1, TP.HCM');
+>>>>>>> origin/main
 
 -- 9. Buzzer
 INSERT IGNORE INTO Buzzer (SoHieu, TrangThai) VALUES
@@ -168,6 +182,7 @@ INSERT IGNORE INTO NguyenLieu (SoLuong, Ten, GiaBan, TrangThai) VALUES
 (10, 'Matcha bột', 20000.00,1);
 
 -- 13. NhaCungCap
+<<<<<<< HEAD
 INSERT IGNORE INTO PhieuNhap (NgayNhap, SoLuong, TrangThai, MaNCC, MaNV, TongTien) VALUES
 ('2025-09-01',50,1,1,1,500000),
 ('2025-09-02',30,1,2,2,300000),
@@ -179,6 +194,19 @@ INSERT IGNORE INTO PhieuNhap (NgayNhap, SoLuong, TrangThai, MaNCC, MaNV, TongTie
 ('2025-09-08',20,1,8,8,200000),
 ('2025-09-09',55,1,9,9,550000),
 ('2025-09-10',50,1,9,10,500000);
+=======
+INSERT IGNORE INTO PhieuNhap (NgayNhap, SoLuong, MaNCC, MaNV, TongTien) VALUES
+('2025-09-01',50,1,1,500000),
+('2025-09-02',30,2,2,300000),
+('2025-09-03',40,3,3,400000),
+('2025-09-04',25,4,4,250000),
+('2025-09-05',60,5,5,600000),
+('2025-09-06',35,6,6,350000),
+('2025-09-07',45,7,7,450000),
+('2025-09-08',20,8,8,200000),
+('2025-09-09',55,9,9,550000),
+('2025-09-10',50,9,10,500000);
+>>>>>>> origin/main
 
 -- 14. ChiTietPhieuNhap
 INSERT IGNORE INTO ChiTietPhieuNhap (MaPN, SoLuong, MaNguyenLieu, DonGiaNhap, TongGia) VALUES

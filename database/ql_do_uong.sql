@@ -59,8 +59,12 @@ CREATE TABLE `NhaCungCap` (
   `MaNCC` int PRIMARY KEY AUTO_INCREMENT,
   `TenNCC` varchar(50) NOT NULL,
   `SDT` varchar(50) NOT NULL,
+<<<<<<< HEAD
   `DiaChi` varchar(100) NOT NULL,
   `TrangThai` int
+=======
+  `DiaChi` varchar(100) NOT NULL
+>>>>>>> origin/main
 );
 
 CREATE TABLE `Buzzer` (
@@ -104,7 +108,10 @@ CREATE TABLE `PhieuNhap` (
   `MaPN` int PRIMARY KEY AUTO_INCREMENT,
   `NgayNhap` date,
   `SoLuong` int,
+<<<<<<< HEAD
   `TrangThai` int,
+=======
+>>>>>>> origin/main
   `MaNCC` int,
   `MaNV` int,
   `TongTien` decimal(12,2)

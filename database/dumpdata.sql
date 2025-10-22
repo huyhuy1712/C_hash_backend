@@ -70,7 +70,7 @@ INSERT IGNORE INTO ChucNang (TenChucNang, MoTa) VALUES
 ('Vào nhà cung cấp', 'Vào nhà cung cấp'),
 ('Thêm nhà cung cấp', 'Thêm nhà cung cấp'),
 ('Xóa nhà cung cấp', 'Xóa nhà cung cấp'),
-('Sửa nhà cung cấp', 'Sửa nhà cung cấp'),
+('Sửa nhà cung cấp', 'Sửa nhà cung cấp');
 
 
 -- 6. TaiKhoan

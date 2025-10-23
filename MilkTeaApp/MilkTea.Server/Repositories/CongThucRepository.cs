@@ -41,19 +41,25 @@ namespace MilkTea.Server.Repositories
         }
 
         // 2. Thêm mới công thức
-        public async Task<bool> AddAsync(CongThuc ct)
-        {
-            using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO congthuc (Ten, MaSP, MoTa)
-                          VALUES (@Ten, @MaSP, @MoTa)";
-            var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Ten", ct.Ten);
-            cmd.Parameters.AddWithValue("@MaSP", ct.MaSP);
-            cmd.Parameters.AddWithValue("@MoTa", ct.MoTa ?? "");
+public async Task<int> AddAsync(CongThuc ct)
+{
+    using var conn = await _db.GetConnectionAsync();
+    var query = @"INSERT INTO congthuc (Ten, MaSP, MoTa)
+                  VALUES (@Ten, @MaSP, @MoTa);
+                  SELECT LAST_INSERT_ID();";
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
-        }
+    using var cmd = new MySqlCommand(query, conn);
+    cmd.Parameters.AddWithValue("@Ten", ct.Ten);
+    cmd.Parameters.AddWithValue("@MaSP", ct.MaSP);
+    cmd.Parameters.AddWithValue("@MoTa", ct.MoTa ?? "");
+
+    object result = await cmd.ExecuteScalarAsync(); // lấy ID trả về
+    int newId = Convert.ToInt32(result);
+
+    ct.MaCT = newId; // gán lại vào model
+
+    return newId;
+}
 
         // 3. Sửa công thức
         public async Task<bool> UpdateAsync(CongThuc ct)

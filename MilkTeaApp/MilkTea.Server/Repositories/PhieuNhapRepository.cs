@@ -27,6 +27,7 @@ namespace MilkTea.Server.Repositories
             int idxMaNCC = reader.GetOrdinal("MaNCC");
             int idxMaNV = reader.GetOrdinal("MaNV");
             int idxTongTien = reader.GetOrdinal("TongTien");
+            int idxTrangThai = reader.GetOrdinal("TrangThai");
 
             while (await reader.ReadAsync())
             {
@@ -37,7 +38,8 @@ namespace MilkTea.Server.Repositories
                     SoLuong = reader.GetInt32(idxSoLuong),
                     MaNCC = reader.IsDBNull(idxMaNCC) ? null : reader.GetInt32(idxMaNCC),
                     MaNV = reader.IsDBNull(idxMaNV) ? null : reader.GetInt32(idxMaNV),
-                    TongTien = reader.GetDecimal(idxTongTien)
+                    TongTien = reader.GetDecimal(idxTongTien),
+                    TrangThai = reader.GetInt32(idxTrangThai)
                 });
             }
 
@@ -49,7 +51,8 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, MaNCC, MaNV, TongTien)
-                  VALUES (@NgayNhap, @SoLuong, @MaNCC, @MaNV, @TongTien);
+                  VALUES (@NgayNhap, @SoLuong, @MaNCC, @TrangThai, @MaNV, @TongTien);
+
                   SELECT LAST_INSERT_ID();";
 
             var cmd = new MySqlCommand(query, conn);
@@ -58,6 +61,7 @@ namespace MilkTea.Server.Repositories
             cmd.Parameters.AddWithValue("@MaNCC", (object?)pn.MaNCC ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
+            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
 
             var result = await cmd.ExecuteScalarAsync();
             return Convert.ToInt32(result);
@@ -68,7 +72,7 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE phieunhap 
-                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien
+                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien, TrangThai = @TrangThai
                           WHERE MaPN = @MaPN";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
@@ -77,6 +81,7 @@ namespace MilkTea.Server.Repositories
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
             cmd.Parameters.AddWithValue("@MaPN", pn.MaPN);
+            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -117,7 +122,9 @@ namespace MilkTea.Server.Repositories
                     SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
                     MaNCC = reader.IsDBNull(reader.GetOrdinal("MaNCC")) ? null : reader.GetInt32(reader.GetOrdinal("MaNCC")),
                     MaNV = reader.IsDBNull(reader.GetOrdinal("MaNV")) ? null : reader.GetInt32(reader.GetOrdinal("MaNV")),
-                    TongTien = reader.GetDecimal(reader.GetOrdinal("TongTien"))
+                    TongTien = reader.GetDecimal(reader.GetOrdinal("TongTien")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+
                 });
             }
 

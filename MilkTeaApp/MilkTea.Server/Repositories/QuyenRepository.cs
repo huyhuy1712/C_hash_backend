@@ -23,6 +23,7 @@ namespace MilkTea.Server.Repositories
 
             int idxMaQuyen = reader.GetOrdinal("MaQuyen");
             int idxTenQuyen = reader.GetOrdinal("TenQuyen");
+            int idxTrangThai = reader.GetOrdinal("TrangThai");
             int idxMota = reader.GetOrdinal("Mota");
 
             while (await reader.ReadAsync())
@@ -31,7 +32,9 @@ namespace MilkTea.Server.Repositories
                 {
                     MaQuyen = reader.GetInt32(idxMaQuyen),
                     TenQuyen = reader.GetString(idxTenQuyen),
-                    Mota = reader.IsDBNull(idxMota) ? "" : reader.GetString(idxMota)
+                    Mota = reader.IsDBNull(idxMota) ? "" : reader.GetString(idxMota),
+                    TrangThai = reader.GetInt32(idxTrangThai),
+
                 });
             }
 
@@ -42,10 +45,11 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(Quyen q)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO quyen (TenQuyen, Mota) VALUES (@TenQuyen, @Mota)";
+            var query = @"INSERT INTO quyen (TenQuyen, TrangThai, Mota) VALUES (@TenQuyen, @TrangThai, @Mota)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenQuyen", q.TenQuyen);
             cmd.Parameters.AddWithValue("@Mota", (object?)q.Mota ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@Trangthai", q.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -55,11 +59,12 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> UpdateAsync(Quyen q)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"UPDATE quyen SET TenQuyen = @TenQuyen, Mota = @Mota WHERE MaQuyen = @MaQuyen";
+            var query = @"UPDATE quyen SET TenQuyen = @TenQuyen, TrangThai = @TrangThai, Mota = @Mota WHERE MaQuyen = @MaQuyen";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenQuyen", q.TenQuyen);
             cmd.Parameters.AddWithValue("@Mota", (object?)q.Mota ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@MaQuyen", q.MaQuyen);
+            cmd.Parameters.AddWithValue("@Trangthai", q.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -93,6 +98,7 @@ namespace MilkTea.Server.Repositories
                 {
                     MaQuyen = reader.GetInt32(reader.GetOrdinal("MaQuyen")),
                     TenQuyen = reader.GetString(reader.GetOrdinal("TenQuyen")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
                     Mota = reader.IsDBNull(reader.GetOrdinal("Mota")) ? "" : reader.GetString(reader.GetOrdinal("Mota"))
                 });
             }
@@ -115,6 +121,7 @@ namespace MilkTea.Server.Repositories
                 {
                     MaQuyen = reader.GetInt32(reader.GetOrdinal("MaQuyen")),
                     TenQuyen = reader.GetString(reader.GetOrdinal("TenQuyen")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
                     Mota = reader.IsDBNull(reader.GetOrdinal("Mota")) ? "" : reader.GetString(reader.GetOrdinal("Mota"))
                 };
             }

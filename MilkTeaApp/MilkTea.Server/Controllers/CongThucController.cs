@@ -31,24 +31,26 @@ namespace MilkTea.Server.Controllers
         }
 
         //  POST: api/congthuc
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CongThuc ct)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(ct.Ten))
-                    return BadRequest("Tên công thức không được để trống.");
+[HttpPost]
+public async Task<IActionResult> Add([FromBody] CongThuc ct)
+{
+    try
+    {
+        if (string.IsNullOrWhiteSpace(ct.Ten))
+            return BadRequest("Tên công thức không được để trống.");
 
-                bool added = await _repo.AddAsync(ct);
-                return added
-                    ? Ok(new { Message = "Thêm công thức thành công!" })
-                    : StatusCode(500, "Không thể thêm công thức.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Lỗi khi thêm công thức: {ex.Message}");
-            }
-        }
+        int newId = await _repo.AddAsync(ct); // Repo giờ trả về ID thực tế
+
+        if (newId > 0)
+            return Ok(newId); //  Trả ID thật về FE
+
+        return StatusCode(500, "Không thể thêm công thức.");
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, $"Lỗi khi thêm công thức: {ex.Message}");
+    }
+}
 
         //  PUT: api/congthuc
         [HttpPut]

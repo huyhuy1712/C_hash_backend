@@ -50,18 +50,18 @@ namespace MilkTea.Server.Repositories
         public async Task<int> AddAsync(PhieuNhap pn)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, MaNCC, MaNV, TongTien)
-                  VALUES (@NgayNhap, @SoLuong, @MaNCC, @TrangThai, @MaNV, @TongTien);
+            var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, TrangThai, MaNCC, MaNV, TongTien)
+                  VALUES (@NgayNhap, @SoLuong, @TrangThai, @MaNCC, @MaNV, @TongTien);
 
                   SELECT LAST_INSERT_ID();";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
             cmd.Parameters.AddWithValue("@SoLuong", pn.SoLuong);
+            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
             cmd.Parameters.AddWithValue("@MaNCC", (object?)pn.MaNCC ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
-            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
 
             var result = await cmd.ExecuteScalarAsync();
             return Convert.ToInt32(result);
@@ -73,6 +73,7 @@ namespace MilkTea.Server.Repositories
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE phieunhap 
                           SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien, TrangThai = @TrangThai
+
                           WHERE MaPN = @MaPN";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);

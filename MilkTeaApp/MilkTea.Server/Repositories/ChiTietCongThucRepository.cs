@@ -93,15 +93,15 @@ namespace MilkTea.Server.Repositories
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0; // Trả về true nếu có ít nhất một dòng bị xóa
         }
-            
+
         // 6. Lấy danh sách chi tiết công thức theo mã sản phẩm
-public async Task<List<CTCongThucSP>> GetChiTietCongThucByMaSPAsync(int maSP)
-{
-    var list = new List<CTCongThucSP>();
+        public async Task<List<CTCongThucSP>> GetChiTietCongThucByMaSPAsync(int maSP)
+        {
+            var list = new List<CTCongThucSP>();
 
-    using var conn = await _db.GetConnectionAsync();
+            using var conn = await _db.GetConnectionAsync();
 
-    var query = @"
+            var query = @"
         SELECT 
             ct.MaCT,
             ct.Ten AS TenCongThuc,
@@ -116,26 +116,52 @@ public async Task<List<CTCongThucSP>> GetChiTietCongThucByMaSPAsync(int maSP)
         WHERE ct.MaSP = @MaSP;
     ";
 
-    var cmd = new MySqlCommand(query, conn);
-    cmd.Parameters.AddWithValue("@MaSP", maSP);
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaSP", maSP);
 
-    using var reader = await cmd.ExecuteReaderAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
 
-    while (await reader.ReadAsync())
-    {
-        list.Add(new CTCongThucSP
+            while (await reader.ReadAsync())
+            {
+                list.Add(new CTCongThucSP
+                {
+                    MaCT = reader.GetInt32(reader.GetOrdinal("MaCT")),
+                    TenCongThuc = reader.GetString(reader.GetOrdinal("TenCongThuc")),
+                    MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
+                    TenNguyenLieu = reader.GetString(reader.GetOrdinal("TenNguyenLieu")),
+                    SoLuongCanDung = reader.GetInt32(reader.GetOrdinal("SoLuongCanDung")),
+                    SoLuongTonKho = reader.GetInt32(reader.GetOrdinal("SoLuongTonKho")),
+                    GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan"))
+                });
+            }
+
+            return list;
+        }
+        public async Task<List<ChiTietCongThuc>> GetByMaCTAsync(int maCT)
         {
-            MaCT = reader.GetInt32(reader.GetOrdinal("MaCT")),
-            TenCongThuc = reader.GetString(reader.GetOrdinal("TenCongThuc")),
-            MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
-            TenNguyenLieu = reader.GetString(reader.GetOrdinal("TenNguyenLieu")),
-            SoLuongCanDung = reader.GetInt32(reader.GetOrdinal("SoLuongCanDung")),
-            SoLuongTonKho = reader.GetInt32(reader.GetOrdinal("SoLuongTonKho")),
-            GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan"))
-        });
-    }
+            var list = new List<ChiTietCongThuc>();
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT MaCT, MaNL, SL FROM chitietcongthuc WHERE MaCT = @MaCT";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaCT", maCT);
 
-    return list;
-}
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMaCT = reader.GetOrdinal("MaCT");
+            int idxMaNL = reader.GetOrdinal("MaNL");
+            int idxSL = reader.GetOrdinal("SL");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new ChiTietCongThuc
+                {
+                    MaCT = reader.GetInt32(idxMaCT),
+                    MaNL = reader.GetInt32(idxMaNL),
+                    SL = reader.GetInt32(idxSL)
+                });
+            }
+
+            return list;
+        }
     }
 }

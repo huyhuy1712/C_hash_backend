@@ -29,6 +29,19 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi đọc dữ liệu: {ex.Message}");
             }
         }
+        [HttpGet("{maCT}")]
+        public async Task<IActionResult> GetByMaCT(int maCT)
+        {
+            try
+            {
+                var list = await _repo.GetByMaCTAsync(maCT);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi đọc dữ liệu: {ex.Message}");
+            }
+        }
 
         // POST: api/chitietcongthuc
         [HttpPost]

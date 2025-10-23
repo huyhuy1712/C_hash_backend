@@ -29,6 +29,7 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi lấy danh sách công thức: {ex.Message}");
             }
         }
+        
 
         //  POST: api/congthuc
         [HttpPost]

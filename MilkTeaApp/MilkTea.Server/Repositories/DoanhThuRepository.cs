@@ -42,8 +42,8 @@ namespace MilkTea.Server.Repositories
                     Thang = reader.GetInt32(idxThang),
                     Nam = reader.GetInt32(idxNam),
                     Gio = reader.IsDBNull(idxGio)
-                        ? TimeSpan.Zero
-                        : (TimeSpan)reader.GetValue(idxGio),
+    ? TimeSpan.Zero
+    : ((TimeSpan?)reader.GetValue(idxGio)) ?? TimeSpan.Zero,
 
                     SLBan = reader.GetInt32(idxSLBan),
                     MaSP = reader.IsDBNull(idxMaSP) ? null : reader.GetInt32(idxMaSP),

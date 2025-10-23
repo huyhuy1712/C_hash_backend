@@ -112,5 +112,26 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+        public async Task<CongThuc?> GetByIdSpAsync(int maSP)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT MaCT, Ten, MaSP, MoTa FROM congthuc WHERE MaSP = @MaSP";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new CongThuc
+                {
+                    MaCT = reader.GetInt32(reader.GetOrdinal("MaCT")),
+                    Ten = reader.GetString(reader.GetOrdinal("Ten")),
+                    MaSP = reader.GetInt32(reader.GetOrdinal("MaSP")),
+                    MoTa = reader.IsDBNull(reader.GetOrdinal("MoTa")) ? null : reader.GetString(reader.GetOrdinal("MoTa"))
+                };
+            }
+
+            return null;
+        }
     }
 }

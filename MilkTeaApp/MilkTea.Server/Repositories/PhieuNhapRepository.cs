@@ -24,6 +24,7 @@ namespace MilkTea.Server.Repositories
             int idxMaPN = reader.GetOrdinal("MaPN");
             int idxNgayNhap = reader.GetOrdinal("NgayNhap");
             int idxSoLuong = reader.GetOrdinal("SoLuong");
+            int idxMaNCC = reader.GetOrdinal("MaNCC");
             int idxMaNV = reader.GetOrdinal("MaNV");
             int idxTongTien = reader.GetOrdinal("TongTien");
             int idxTrangThai = reader.GetOrdinal("TrangThai");
@@ -35,6 +36,7 @@ namespace MilkTea.Server.Repositories
                     MaPN = reader.GetInt32(idxMaPN),
                     NgayNhap = reader.IsDBNull(idxNgayNhap) ? null : reader.GetDateTime(idxNgayNhap),
                     SoLuong = reader.GetInt32(idxSoLuong),
+                    MaNCC = reader.IsDBNull(idxMaNCC) ? null : reader.GetInt32(idxMaNCC),
                     MaNV = reader.IsDBNull(idxMaNV) ? null : reader.GetInt32(idxMaNV),
                     TongTien = reader.GetDecimal(idxTongTien),
                     TrangThai = reader.GetInt32(idxTrangThai)
@@ -48,16 +50,18 @@ namespace MilkTea.Server.Repositories
         public async Task<int> AddAsync(PhieuNhap pn)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, TrangThai, MaNV, TongTien)
-                  VALUES (@NgayNhap, @SoLuong, @TrangThai, @MaNV, @TongTien);
+            var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, TrangThai, MaNCC, MaNV, TongTien)
+                  VALUES (@NgayNhap, @SoLuong, @TrangThai, @MaNCC, @MaNV, @TongTien);
+
                   SELECT LAST_INSERT_ID();";
 
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
             cmd.Parameters.AddWithValue("@SoLuong", pn.SoLuong);
+            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
+            cmd.Parameters.AddWithValue("@MaNCC", (object?)pn.MaNCC ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
-            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
 
             var result = await cmd.ExecuteScalarAsync();
             return Convert.ToInt32(result);
@@ -68,11 +72,13 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE phieunhap 
-                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNV = @MaNV, TongTien = @TongTien, TrangThai = @TrangThai
+                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien, TrangThai = @TrangThai
+
                           WHERE MaPN = @MaPN";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
             cmd.Parameters.AddWithValue("@SoLuong", pn.SoLuong);
+            cmd.Parameters.AddWithValue("@MaNCC", (object?)pn.MaNCC ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
             cmd.Parameters.AddWithValue("@MaPN", pn.MaPN);
@@ -97,7 +103,7 @@ namespace MilkTea.Server.Repositories
         //  5. Tìm kiếm theo cột & giá trị
         public async Task<List<PhieuNhap>> SearchAsync(string column, string value)
         {
-            var allowedColumns = new List<string> { "NgayNhap", "SoLuong", "MaNV", "TongTien" };
+            var allowedColumns = new List<string> { "NgayNhap", "SoLuong", "MaNCC", "MaNV", "TongTien" };
             if (!allowedColumns.Contains(column))
                 throw new ArgumentException($"Không thể tìm kiếm theo cột '{column}'.");
 
@@ -115,6 +121,7 @@ namespace MilkTea.Server.Repositories
                     MaPN = reader.GetInt32(reader.GetOrdinal("MaPN")),
                     NgayNhap = reader.IsDBNull(reader.GetOrdinal("NgayNhap")) ? null : reader.GetDateTime(reader.GetOrdinal("NgayNhap")),
                     SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
+                    MaNCC = reader.IsDBNull(reader.GetOrdinal("MaNCC")) ? null : reader.GetInt32(reader.GetOrdinal("MaNCC")),
                     MaNV = reader.IsDBNull(reader.GetOrdinal("MaNV")) ? null : reader.GetInt32(reader.GetOrdinal("MaNV")),
                     TongTien = reader.GetDecimal(reader.GetOrdinal("TongTien")),
                     TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))

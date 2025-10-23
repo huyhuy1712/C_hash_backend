@@ -433,6 +433,10 @@ FodyWeavers.xsd
 **/bin/
 **/obj/
 
+
+**/bin/
+**/obj/
+
 # Ignore appsettings files
 appsettings.json
 appsettings.*.json

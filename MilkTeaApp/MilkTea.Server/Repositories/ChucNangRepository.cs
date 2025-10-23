@@ -105,6 +105,7 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+        
         // 6. Lấy danh sách chức năng theo quyền
         public async Task<List<ChucNang>> GetByQuyenAsync(int maQuyen)
         {

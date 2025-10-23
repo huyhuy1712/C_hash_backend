@@ -72,17 +72,17 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE phieunhap 
-                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien, TrangThai = @TrangThai
+                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong,TrangThai = @TrangThai, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien,
 
                           WHERE MaPN = @MaPN";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
             cmd.Parameters.AddWithValue("@SoLuong", pn.SoLuong);
+            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
             cmd.Parameters.AddWithValue("@MaNCC", (object?)pn.MaNCC ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
             cmd.Parameters.AddWithValue("@MaPN", pn.MaPN);
-            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -121,10 +121,10 @@ namespace MilkTea.Server.Repositories
                     MaPN = reader.GetInt32(reader.GetOrdinal("MaPN")),
                     NgayNhap = reader.IsDBNull(reader.GetOrdinal("NgayNhap")) ? null : reader.GetDateTime(reader.GetOrdinal("NgayNhap")),
                     SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai")),
                     MaNCC = reader.IsDBNull(reader.GetOrdinal("MaNCC")) ? null : reader.GetInt32(reader.GetOrdinal("MaNCC")),
                     MaNV = reader.IsDBNull(reader.GetOrdinal("MaNV")) ? null : reader.GetInt32(reader.GetOrdinal("MaNV")),
                     TongTien = reader.GetDecimal(reader.GetOrdinal("TongTien")),
-                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
 
                 });
             }

@@ -39,38 +39,59 @@ INSERT IGNORE INTO Quyen (TenQuyen, TrangThai, Mota) VALUES
 
 -- 5. ChucNang
 INSERT IGNORE INTO ChucNang (TenChucNang, MoTa) VALUES
-('Thêm đơn hàng', 'Thêm đơn hàng'),
-('Thêm sản phẩm', 'Thêm sản phẩm'),
-('Xóa sản phẩm', 'Xóa sản phẩm'),
-('Sửa sản phẩm', 'Sửa sản phẩm'),
+-- Module: Thống kê
 ('Vào thống kê', 'Vào thống kê'),
+
+-- Module: Sản phẩm
+('Vào sản phẩm', 'Vào sản phẩm'),
+('Thêm sản phẩm', 'Thêm sản phẩm'),
+('Sửa sản phẩm', 'Sửa sản phẩm'),
+('Xóa sản phẩm', 'Xóa sản phẩm'),
+
+-- Module: Nguyên liệu
+('Vào nguyên liệu', 'Vào nguyên liệu'),
+('Thêm nguyên liệu', 'Thêm nguyên liệu'),
+('Sửa nguyên liệu', 'Sửa nguyên liệu'),
+('Xóa nguyên liệu', 'Xóa nguyên liệu'),
+
+-- Module: Nhà cung cấp
+('Vào nhà cung cấp', 'Vào nhà cung cấp'),
+('Thêm nhà cung cấp', 'Thêm nhà cung cấp'),
+('Sửa nhà cung cấp', 'Sửa nhà cung cấp'),
+('Xóa nhà cung cấp', 'Xóa nhà cung cấp'),
+
+-- Module: Khuyến mãi
+('Vào khuyến mãi', 'Vào khuyến mãi'),
+('Thêm khuyến mãi', 'Thêm khuyến mãi'),
+('Sửa khuyến mãi', 'Sửa khuyến mãi'),
+('Xóa khuyến mãi', 'Xóa khuyến mãi'),
+
+-- Module: Tài khoản
 ('Vào tài khoản', 'Vào tài khoản'),
 ('Thêm tài khoản', 'Thêm tài khoản'),
 ('Sửa tài khoản', 'Sửa tài khoản'),
 ('Xóa tài khoản', 'Xóa tài khoản'),
-('Xem tài khoản', 'Xem tài khoản'),
+
+-- Module: Quyền
 ('Thêm quyền', 'Thêm quyền'),
 ('Sửa quyền', 'Sửa quyền'),
 ('Xóa quyền', 'Xóa quyền'),
-('Vào khuyến mãi', 'Vào khuyến mãi'),
-('Thêm khuyến mãi', 'Thêm khuyến mãi'),
-('Xóa khuyến mãi', 'Xóa khuyến mãi'),
-('Sửa khuyến mãi', 'Sửa khuyến mãi'),
+
+-- Module: Đơn hàng
+('Vào đơn hàng', 'Vào đơn hàng'),
+('Thêm đơn hàng', 'Thêm đơn hàng'),
+
+-- Module: Hóa đơn
 ('Vào hóa đơn', 'Vào hóa đơn'),
 ('Xóa hóa đơn', 'Xóa hóa đơn'),
+
+-- Module: Nhập hàng
 ('Vào nhập hàng', 'Vào nhập hàng'),
 ('Thêm phiếu nhập', 'Thêm phiếu nhập'),
-('Xóa phiếu nhập', 'Xóa phiếu nhập'),
 ('Sửa phiếu nhập', 'Sửa phiếu nhập'),
-('Nhập excel phiếu nhập', 'Nhập excel phiếu nhập'),
-('Vào nguyên liệu', 'Vào nguyên liệu'),
-('Thêm nguyên liệu', 'Thêm nguyên liệu'),
-('Xóa nguyên liệu', 'Xóa nguyên liệu'),
-('Sửa nguyên liệu', 'Sửa nguyên liệu'),
-('Vào nhà cung cấp', 'Vào nhà cung cấp'),
-('Thêm nhà cung cấp', 'Thêm nhà cung cấp'),
-('Xóa nhà cung cấp', 'Xóa nhà cung cấp'),
-('Sửa nhà cung cấp', 'Sửa nhà cung cấp');
+('Xóa phiếu nhập', 'Xóa phiếu nhập'),
+('Nhập excel phiếu nhập', 'Nhập excel phiếu nhập');
+
 
 
 -- 6. TaiKhoan

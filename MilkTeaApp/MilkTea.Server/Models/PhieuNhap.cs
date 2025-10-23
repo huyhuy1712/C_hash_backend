@@ -11,6 +11,9 @@ namespace MilkTea.Server.Models
         // Tổng số lượng hàng nhập
         public int SoLuong { get; set; }
 
+        // Mã nhà cung cấp (FK tới bảng NhaCungCap)
+        public int? MaNCC { get; set; }
+
         // Mã nhân viên (FK tới bảng NhanVien)
         public int? MaNV { get; set; }
 

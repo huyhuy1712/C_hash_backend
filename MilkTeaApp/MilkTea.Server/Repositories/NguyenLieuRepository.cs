@@ -26,6 +26,7 @@ namespace MilkTea.Server.Repositories
             int idxTen = reader.GetOrdinal("Ten");
             int idxSoLuong = reader.GetOrdinal("SoLuong");
             int idxGiaBan = reader.GetOrdinal("GiaBan");
+            int idxTrangThai = reader.GetOrdinal("TrangThai");
 
             while (await reader.ReadAsync())
             {
@@ -34,7 +35,9 @@ namespace MilkTea.Server.Repositories
                     MaNL = reader.GetInt32(idxMaNL),
                     Ten = reader.GetString(idxTen),
                     SoLuong = reader.GetInt32(idxSoLuong),
-                    GiaBan = reader.GetDecimal(idxGiaBan)
+                    GiaBan = reader.GetDecimal(idxGiaBan),
+                    TrangThai = reader.GetInt32(idxTrangThai),
+
                 });
             }
 
@@ -45,12 +48,13 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(NguyenLieu nl)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO nguyenlieu (Ten, SoLuong, GiaBan)
-                          VALUES (@Ten, @SoLuong, @GiaBan)";
+            var query = @"INSERT INTO nguyenlieu (Ten, SoLuong, GiaBan, TrangThai)
+                          VALUES (@Ten, @SoLuong, @GiaBan, @TrangThai)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@Ten", nl.Ten);
             cmd.Parameters.AddWithValue("@SoLuong", nl.SoLuong);
             cmd.Parameters.AddWithValue("@GiaBan", nl.GiaBan);
+            cmd.Parameters.AddWithValue("@TrangThai", nl.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -61,13 +65,14 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE nguyenlieu 
-                          SET Ten = @Ten, SoLuong = @SoLuong, GiaBan = @GiaBan 
+                          SET Ten = @Ten, SoLuong = @SoLuong, GiaBan = @GiaBan, TrangThai = @TrangThai
                           WHERE MaNL = @MaNL";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@Ten", nl.Ten);
             cmd.Parameters.AddWithValue("@SoLuong", nl.SoLuong);
             cmd.Parameters.AddWithValue("@GiaBan", nl.GiaBan);
             cmd.Parameters.AddWithValue("@MaNL", nl.MaNL);
+            cmd.Parameters.AddWithValue("@TrangThai", nl.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -103,14 +108,41 @@ namespace MilkTea.Server.Repositories
                     MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
                     Ten = reader.GetString(reader.GetOrdinal("Ten")),
                     SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
-                    GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan"))
+                    GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+
                 });
             }
 
             return list;
         }
 
-        // 6. hàm trừ nguyên liệu
+        // Tìm kiếm theo mã nguyên liệu
+        public async Task<NguyenLieu?> SearchByMaNLAsync(int maNL)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM nguyenlieu WHERE MaNL = @MaNL";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaNL", maNL);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+            return new NguyenLieu
+            {
+                MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
+                Ten = reader.GetString(reader.GetOrdinal("Ten")),
+                SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
+                GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan")),
+                TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+
+            };
+            }
+
+            return null;
+        }
+
+        // 7. hàm trừ nguyên liệu
         public async Task<bool> TruSoLuongAsync(int maNL, int soLuongCanTru)
         {
             using var conn = await _db.GetConnectionAsync();

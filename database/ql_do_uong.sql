@@ -32,6 +32,7 @@ CREATE TABLE `TaiKhoan` (
 CREATE TABLE `Quyen` (
   `MaQuyen` int PRIMARY KEY AUTO_INCREMENT,
   `TenQuyen` varchar(100) UNIQUE NOT NULL,
+  `TrangThai` int,
   `Mota` text
 );
 
@@ -52,6 +53,14 @@ CREATE TABLE `NhanVien` (
   `SDT` varchar(50) NOT NULL,
   `NgayLam` date DEFAULT (current_date),
   `MaTK` int
+);
+
+CREATE TABLE `NhaCungCap` (
+  `MaNCC` int PRIMARY KEY AUTO_INCREMENT,
+  `TenNCC` varchar(50) NOT NULL,
+  `SDT` varchar(50) NOT NULL,
+  `DiaChi` varchar(100) NOT NULL,
+  `TrangThai` int
 );
 
 CREATE TABLE `Buzzer` (
@@ -95,6 +104,8 @@ CREATE TABLE `PhieuNhap` (
   `MaPN` int PRIMARY KEY AUTO_INCREMENT,
   `NgayNhap` date,
   `SoLuong` int,
+  `TrangThai` int,
+  `MaNCC` int,
   `MaNV` int,
   `TongTien` decimal(12,2)
 );
@@ -112,7 +123,8 @@ CREATE TABLE `NguyenLieu` (
   `MaNL` int PRIMARY KEY AUTO_INCREMENT,
   `SoLuong` int,
   `Ten` varchar(50),
-  `GiaBan` decimal(12,2)
+  `GiaBan` decimal(12,2),
+  `TrangThai` int
 );
 
 CREATE TABLE `CongThuc` (
@@ -143,18 +155,6 @@ CREATE TABLE `DoanhThu` (
   `TongDoanhThu` decimal(12,2)
 );
 
-CREATE TABLE `DoanhThuTopping` (
-  `MaDTTP` int PRIMARY KEY AUTO_INCREMENT,
-  `Ngay` int NOT NULL,
-  `Thang` int NOT NULL,
-  `Nam` int NOT NULL,
-  `Gio` time NOT NULL,
-  `SLBan` int,
-  `MaNL` int,
-  `TongChiPhi` int,
-  `TongDoanhThu` decimal(12,2)
-);
-
 CREATE TABLE `sanpham_khuyenmai` (
   `MaSP` int,
   `MaCTKhuyenMai` int
@@ -165,8 +165,6 @@ CREATE TABLE `ctdonhang_topping` (
   `MaCTDH` int,
   `SL` int
 );
-
-ALTER TABLE `NguyenLieu` ADD FOREIGN KEY (`MaNL`) REFERENCES `DoanhThuTopping` (`MaNL`);
 
 ALTER TABLE `ctdonhang_topping` ADD FOREIGN KEY (`MaNL`) REFERENCES `NguyenLieu` (`MaNL`);
 
@@ -193,6 +191,8 @@ ALTER TABLE `ChiTietDonHang` ADD FOREIGN KEY (`MaSP`) REFERENCES `SanPham` (`MaS
 ALTER TABLE `ChiTietDonHang` ADD FOREIGN KEY (`MaSize`) REFERENCES `Size` (`MaSize`);
 
 ALTER TABLE `PhieuNhap` ADD FOREIGN KEY (`MaNV`) REFERENCES `NhanVien` (`MaNV`);
+
+ALTER TABLE `PhieuNhap` ADD FOREIGN KEY (`MaNCC`) REFERENCES `NhaCungCap` (`MaNCC`);
 
 ALTER TABLE `ChiTietPhieuNhap` ADD FOREIGN KEY (`MaPN`) REFERENCES `PhieuNhap` (`MaPN`);
 

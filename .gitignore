@@ -428,4 +428,12 @@ FodyWeavers.xsd
 *.msi
 *.msix
 *.msm
+<<<<<<< HEAD
 *.msp
+=======
+*.msp
+
+**/bin/
+**/obj/
+
+>>>>>>> main

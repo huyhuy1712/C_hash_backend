@@ -26,6 +26,7 @@ namespace MilkTea.Server.Repositories
             int idxSoLuong = reader.GetOrdinal("SoLuong");
             int idxMaNV = reader.GetOrdinal("MaNV");
             int idxTongTien = reader.GetOrdinal("TongTien");
+            int idxTrangThai = reader.GetOrdinal("TrangThai");
 
             while (await reader.ReadAsync())
             {
@@ -35,7 +36,8 @@ namespace MilkTea.Server.Repositories
                     NgayNhap = reader.IsDBNull(idxNgayNhap) ? null : reader.GetDateTime(idxNgayNhap),
                     SoLuong = reader.GetInt32(idxSoLuong),
                     MaNV = reader.IsDBNull(idxMaNV) ? null : reader.GetInt32(idxMaNV),
-                    TongTien = reader.GetDecimal(idxTongTien)
+                    TongTien = reader.GetDecimal(idxTongTien),
+                    TrangThai = reader.GetInt32(idxTrangThai)
                 });
             }
 
@@ -43,19 +45,22 @@ namespace MilkTea.Server.Repositories
         }
 
         //  2. Thêm phiếu nhập
-        public async Task<bool> AddAsync(PhieuNhap pn)
+        public async Task<int> AddAsync(PhieuNhap pn)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, MaNV, TongTien)
-                          VALUES (@NgayNhap, @SoLuong, @MaNV, @TongTien)";
+            var query = @"INSERT INTO phieunhap (NgayNhap, SoLuong, TrangThai, MaNV, TongTien)
+                  VALUES (@NgayNhap, @SoLuong, @TrangThai, @MaNV, @TongTien);
+                  SELECT LAST_INSERT_ID();";
+
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
             cmd.Parameters.AddWithValue("@SoLuong", pn.SoLuong);
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
+            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+            var result = await cmd.ExecuteScalarAsync();
+            return Convert.ToInt32(result);
         }
 
         //  3. Cập nhật phiếu nhập
@@ -63,7 +68,7 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE phieunhap 
-                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNV = @MaNV, TongTien = @TongTien
+                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong, MaNV = @MaNV, TongTien = @TongTien, TrangThai = @TrangThai
                           WHERE MaPN = @MaPN";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
@@ -71,6 +76,7 @@ namespace MilkTea.Server.Repositories
             cmd.Parameters.AddWithValue("@MaNV", (object?)pn.MaNV ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TongTien", pn.TongTien);
             cmd.Parameters.AddWithValue("@MaPN", pn.MaPN);
+            cmd.Parameters.AddWithValue("@TrangThai", pn.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -110,7 +116,9 @@ namespace MilkTea.Server.Repositories
                     NgayNhap = reader.IsDBNull(reader.GetOrdinal("NgayNhap")) ? null : reader.GetDateTime(reader.GetOrdinal("NgayNhap")),
                     SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
                     MaNV = reader.IsDBNull(reader.GetOrdinal("MaNV")) ? null : reader.GetInt32(reader.GetOrdinal("MaNV")),
-                    TongTien = reader.GetDecimal(reader.GetOrdinal("TongTien"))
+                    TongTien = reader.GetDecimal(reader.GetOrdinal("TongTien")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+
                 });
             }
 

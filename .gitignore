@@ -428,12 +428,11 @@ FodyWeavers.xsd
 *.msi
 *.msix
 *.msm
-<<<<<<< HEAD
-*.msp
-=======
 *.msp
 
 **/bin/
 **/obj/
 
->>>>>>> main
+# Ignore appsettings files
+appsettings.json
+appsettings.*.json

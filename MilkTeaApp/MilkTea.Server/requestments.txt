@@ -1,5 +1,0 @@
-
-dotnet add package MySql.Data
-dotnet add package MySqlConnector
-dotnet add package Microsoft.EntityFrameworkCore
-dotnet add package Pomelo.EntityFrameworkCore.MySql

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MilkTea.Server.Repositories;
 
+
 namespace MilkTea.Server.Controllers
 {
     [ApiController]
@@ -33,7 +34,6 @@ namespace MilkTea.Server.Controllers
         }
 
 
-        // PUT: api/buzzer/update/trangthai/{sohieu}/{trangthai}
       // PUT: api/buzzer/update/trangthai/{soHieu}/{trangThai}
 [HttpPut("update/trangthai/{soHieu}/{trangThai}")]
 public async Task<IActionResult> UpdateTrangThai(string soHieu, int trangThai)

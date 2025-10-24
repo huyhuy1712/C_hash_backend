@@ -3,16 +3,16 @@ using MilkTea.Server.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Đọc connection string từ appsettings.json
+// ??c connection string t? appsettings.json
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Đăng ký DbConnection vào DI container
+// ??ng k� DbConnection v�o DI container
 builder.Services.AddSingleton(new DbConnection(connectionString));
 
-// Thêm dịch vụ MVC (Controllers + Views)
+// Th�m d?ch v? MVC (Controllers + Views)
 builder.Services.AddControllersWithViews();
 
-// Nếu có Repository thì đăng ký ở đây (ví dụ LoaiRepository)
+// N?u c� Repository th� ??ng k� ? ?�y (v� d? LoaiRepository)
 builder.Services.AddScoped<LoaiRepository>();
 builder.Services.AddScoped<SanPhamRepository>();
 builder.Services.AddScoped<NhaCungCapRepository>();
@@ -41,7 +41,7 @@ builder.Services.AddScoped<TaiKhoanRepository>();
 
 var app = builder.Build();
 
-// Middleware xử lý lỗi
+// Middleware x? l� l?i
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -50,7 +50,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 
-// Map route mặc định cho MVC
+// Map route m?c ??nh cho MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

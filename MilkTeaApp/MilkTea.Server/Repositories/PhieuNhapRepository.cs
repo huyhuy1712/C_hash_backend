@@ -73,7 +73,6 @@ namespace MilkTea.Server.Repositories
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE phieunhap 
                           SET NgayNhap = @NgayNhap, SoLuong = @SoLuong,TrangThai = @TrangThai, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien,
-
                           WHERE MaPN = @MaPN";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);

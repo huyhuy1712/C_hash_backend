@@ -15,6 +15,7 @@ builder.Services.AddControllersWithViews();
 // Nếu có Repository thì đăng ký ở đây (ví dụ LoaiRepository)
 builder.Services.AddScoped<LoaiRepository>();
 builder.Services.AddScoped<SanPhamRepository>();
+builder.Services.AddScoped<NhaCungCapRepository>();
 builder.Services.AddScoped<BuzzerRepository>();
 builder.Services.AddScoped<ChiPhiRepository>();
 builder.Services.AddScoped<ChiTietCongThucRepository>();

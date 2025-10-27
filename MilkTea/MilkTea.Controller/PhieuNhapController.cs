@@ -88,5 +88,22 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm phiếu nhập: {ex.Message}");
             }
         }
+
+                [HttpDelete("{maPN}/soft")]
+        public async Task<IActionResult> SoftDelete(int maPN)
+        {
+            try
+            {
+                bool deleted = await _repo.SoftDeleteAsync(maPN);
+                return deleted 
+                    ? Ok(new { Message = "Xóa phiếu nhập thành công (trạng thái = 0)!" })
+                    : NotFound($"Không tìm thấy phiếu nhập có mã {maPN} hoặc đã bị xóa.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa phiếu nhập: {ex.Message}");
+            }
+        }
+
     }
 }

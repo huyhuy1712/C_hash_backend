@@ -64,16 +64,16 @@ namespace MilkTea.Server.Controllers
             }
         }
 
-        //DELETE: api/quyenchucnang/{maQuyen}/{maChucNang}
-        [HttpDelete("{maQuyen}/{maChucNang}")]
-        public async Task<IActionResult> Delete(int maQuyen, int maChucNang)
+        // DELETE: api/quyenchucnang/{maQuyen}
+        [HttpDelete("{maQuyen}")]
+        public async Task<IActionResult> Delete(int maQuyen)
         {
             try
             {
-                bool deleted = await _repo.DeleteAsync(maQuyen, maChucNang);
+                bool deleted = await _repo.DeleteByQuyenAsync(maQuyen);
                 return deleted
-                    ? Ok(new { Message = "Xóa thành công!" })
-                    : NotFound("Không tìm thấy bản ghi cần xóa.");
+                    ? Ok(new { Message = "Xóa tất cả chức năng theo quyền thành công!" })
+                    : NotFound("Không tìm thấy bản ghi nào với mã quyền này.");
             }
             catch (Exception ex)
             {

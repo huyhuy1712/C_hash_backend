@@ -66,14 +66,13 @@ namespace MilkTea.Server.Repositories
             return rows > 0;
         }
 
-        //  4. Xóa
-        public async Task<bool> DeleteAsync(int maQuyen, int maChucNang)
+        //  4. Xóa tất cả theo mã quyền
+        public async Task<bool> DeleteByQuyenAsync(int maQuyen)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = "DELETE FROM quyen_chucnang WHERE MaQuyen = @MaQuyen AND MaChucNang = @MaChucNang";
+            var query = "DELETE FROM quyen_chucnang WHERE MaQuyen = @MaQuyen";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaQuyen", maQuyen);
-            cmd.Parameters.AddWithValue("@MaChucNang", maChucNang);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;

@@ -129,20 +129,7 @@ namespace MilkTea.Server.Repositories
             string query;
             MySqlCommand cmd;
 
-            // Tìm theo ngày
-            //if (column == "NgayLap")
-            //{
-            //    query = $"SELECT * FROM donhang WHERE DATE_FORMAT(NgayLap, '%Y-%m-%d') LIKE @value";
-            //    cmd = new MySqlCommand(query, conn);
-            //    cmd.Parameters.AddWithValue("@value", $"%{value}%");
-            //}
-            //// Tìm theo giờ
-            //else if (column == "GioLap")
-            //{
-            //    query = $"SELECT * FROM donhang WHERE TIME_FORMAT(GioLap, '%H:%i:%s') LIKE @value";
-            //    cmd = new MySqlCommand(query, conn);
-            //    cmd.Parameters.AddWithValue("@value", $"%{value}%");
-            //}
+           
             // Tìm theo số nguyên (MaDH, MaNV, MaBuzzer, PhuongThucThanhToan)
             if (column == "PhuongThucThanhToan")
             {

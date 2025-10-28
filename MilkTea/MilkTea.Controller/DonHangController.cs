@@ -78,13 +78,38 @@ namespace MilkTea.Server.Controllers
             }
         }
 
-        // GET: api/donhang/search?column=TrangThai&value=1
+        //// GET: api/donhang/search?column=TrangThai&value=1
+        //[HttpGet("search")]
+        //public async Task<IActionResult> Search([FromQuery] string column, [FromQuery] string value)
+        //{
+        //    try
+        //    {
+        //        var list = await _repo.SearchAsync(column, value);
+        //        return Ok(list);
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Lỗi khi tìm kiếm đơn hàng: {ex.Message}");
+        //    }
+        //}
+        // 🔍 GET: api/donhang/search?column=MaNV&value=An
         [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] string column, [FromQuery] string value)
         {
             try
             {
+                if (string.IsNullOrEmpty(column) || string.IsNullOrEmpty(value))
+                    return BadRequest("Thiếu tham số column hoặc value.");
+
                 var list = await _repo.SearchAsync(column, value);
+
+                if (list.Count == 0)
+                    return Ok(new { Message = "Không tìm thấy kết quả phù hợp.", Data = new List<DonHang>() });
+
                 return Ok(list);
             }
             catch (ArgumentException ex)

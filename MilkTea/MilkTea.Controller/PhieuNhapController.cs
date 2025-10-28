@@ -104,6 +104,5 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi xóa phiếu nhập: {ex.Message}");
             }
         }
-
     }
 }

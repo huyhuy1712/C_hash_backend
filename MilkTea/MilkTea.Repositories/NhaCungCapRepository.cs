@@ -25,6 +25,7 @@ namespace MilkTea.Server.Repositories
             int idxTenNCC = reader.GetOrdinal("TenNCC");
             int idxSDT = reader.GetOrdinal("SDT");
             int idxDiaChi = reader.GetOrdinal("DiaChi");
+            int idxTrangThai = reader.GetOrdinal("TrangThai");
 
             while (await reader.ReadAsync())
             {
@@ -33,7 +34,8 @@ namespace MilkTea.Server.Repositories
                     MaNCC = reader.GetInt32(idxMaNCC),
                     TenNCC = reader.GetString(idxTenNCC),
                     SDT = reader.GetString(idxSDT),
-                    DiaChi = reader.GetString(idxDiaChi)
+                    DiaChi = reader.GetString(idxDiaChi),
+                    TrangThai = reader.GetInt32(idxTrangThai)
                 });
             }
 
@@ -44,12 +46,13 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(NhaCungCap ncc)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO nhacungcap (TenNCC, SDT, DiaChi)
-                          VALUES (@TenNCC, @SDT, @DiaChi)";
+            var query = @"INSERT INTO nhacungcap (TenNCC, SDT, DiaChi, TrangThai)
+                          VALUES (@TenNCC, @SDT, @DiaChi, @TrangThai)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenNCC", ncc.TenNCC);
             cmd.Parameters.AddWithValue("@SDT", ncc.SDT);
             cmd.Parameters.AddWithValue("@DiaChi", ncc.DiaChi);
+            cmd.Parameters.AddWithValue("@TrangThai", ncc.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -60,13 +63,14 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"UPDATE nhacungcap 
-                          SET TenNCC = @TenNCC, SDT = @SDT, DiaChi = @DiaChi
+                          SET TenNCC = @TenNCC, SDT = @SDT, DiaChi = @DiaChi, TrangThai = @TrangThai
                           WHERE MaNCC = @MaNCC";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenNCC", ncc.TenNCC);
             cmd.Parameters.AddWithValue("@SDT", ncc.SDT);
             cmd.Parameters.AddWithValue("@DiaChi", ncc.DiaChi);
             cmd.Parameters.AddWithValue("@MaNCC", ncc.MaNCC);
+            cmd.Parameters.AddWithValue("@TrangThai", ncc.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
@@ -87,7 +91,7 @@ namespace MilkTea.Server.Repositories
         // 5. Tìm kiếm linh hoạt theo cột và giá trị
         public async Task<List<NhaCungCap>> SearchAsync(string column, string value)
         {
-            var allowedColumns = new List<string> { "TenNCC", "SDT", "DiaChi" };
+            var allowedColumns = new List<string> { "TenNCC", "SDT", "DiaChi", "TrangThai" };
             if (!allowedColumns.Contains(column))
                 throw new ArgumentException($"Không thể tìm theo cột '{column}'.");
 
@@ -106,7 +110,8 @@ namespace MilkTea.Server.Repositories
                     MaNCC = reader.GetInt32(reader.GetOrdinal("MaNCC")),
                     TenNCC = reader.GetString(reader.GetOrdinal("TenNCC")),
                     SDT = reader.GetString(reader.GetOrdinal("SDT")),
-                    DiaChi = reader.GetString(reader.GetOrdinal("DiaChi"))
+                    DiaChi = reader.GetString(reader.GetOrdinal("DiaChi")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
                 });
             }
 
@@ -129,7 +134,8 @@ namespace MilkTea.Server.Repositories
                     MaNCC = reader.GetInt32(reader.GetOrdinal("MaNCC")),
                     TenNCC = reader.GetString(reader.GetOrdinal("TenNCC")),
                     SDT = reader.GetString(reader.GetOrdinal("SDT")),
-                    DiaChi = reader.GetString(reader.GetOrdinal("DiaChi"))
+                    DiaChi = reader.GetString(reader.GetOrdinal("DiaChi")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
                 };
             }
             return null;
@@ -149,6 +155,18 @@ namespace MilkTea.Server.Repositories
                 return Convert.ToInt32(result);
             }
             return null; // không tìm thấy
+        }
+
+        // 8.soft delete nhà cung cấp
+        public async Task<bool> SoftDeleteAsync(int maNCC)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "UPDATE nhacungcap SET TrangThai = 0 WHERE MaNCC = @MaNCC AND TrangThai = 1";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaNCC", maNCC);
+
+            var rows = await cmd.ExecuteNonQueryAsync();
+            return rows > 0;
         }
     }
 }

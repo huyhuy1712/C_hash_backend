@@ -89,8 +89,7 @@ namespace MilkTea.Server.Controllers
             }
         }
 
-        // Trong PhieuNhapController.cs
-        [HttpDelete("{maPN}/soft")]
+                [HttpDelete("{maPN}/soft")]
         public async Task<IActionResult> SoftDelete(int maPN)
         {
             try

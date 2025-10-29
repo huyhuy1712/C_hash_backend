@@ -36,15 +36,21 @@ namespace MilkTea.Server.Controllers
         {
             try
             {
-                bool added = await _repo.AddAsync(q);
-                return added ? Ok(new { Message = "Thêm quyền thành công!" })
-                             : StatusCode(500, "Không thể thêm quyền.");
+                int newId = await _repo.AddAsync(q);
+
+                if (newId > 0)
+                {
+                    return Ok(new{newId});
+                }
+
+                return StatusCode(500, "Không thể thêm quyền.");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Lỗi khi thêm quyền: {ex.Message}");
             }
         }
+
 
         //  PUT: api/quyen
         [HttpPut]
@@ -92,7 +98,7 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm quyền: {ex.Message}");
             }
         }
-        
+
         // GET: api/quyen/{maQuyen}
         [HttpGet("{maQuyen}")]
         public async Task<IActionResult> GetById(int maQuyen)

@@ -156,5 +156,17 @@ namespace MilkTea.Server.Repositories
             }
             return null; // không tìm thấy
         }
+
+        // 8.soft delete nhà cung cấp
+        public async Task<bool> SoftDeleteAsync(int maNCC)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "UPDATE nhacungcap SET TrangThai = 0 WHERE MaNCC = @MaNCC AND TrangThai = 1";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaNCC", maNCC);
+
+            var rows = await cmd.ExecuteNonQueryAsync();
+            return rows > 0;
+        }
     }
 }

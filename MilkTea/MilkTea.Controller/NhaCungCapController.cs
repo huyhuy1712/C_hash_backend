@@ -137,5 +137,21 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi lấy mã nhà cung cấp: {ex.Message}");
             }
         }
+
+        [HttpDelete("{maNCC}/soft")]
+        public async Task<IActionResult> SoftDelete(int maNCC)
+        {
+            try
+            {
+                bool deleted = await _repo.SoftDeleteAsync(maNCC);
+                return deleted
+                    ? Ok(new { Message = "Xóa nhà cung cấp thành công (trạng thái = 0)!" })
+                    : NotFound($"Không tìm thấy nhà cung cấp có mã {maNCC} hoặc đã bị xóa.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa nhà cung cấp: {ex.Message}");
+            }
+        }
     }
 }

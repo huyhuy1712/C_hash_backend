@@ -158,7 +158,39 @@ CREATE TABLE `chucnang` (
 
 LOCK TABLES `chucnang` WRITE;
 /*!40000 ALTER TABLE `chucnang` DISABLE KEYS */;
-INSERT INTO `chucnang` VALUES (1,'Thêm đơn hàng','Thêm đơn hàng'),(2,'Thêm sản phẩm','Thêm sản phẩm'),(3,'Xóa sản phẩm','Xóa sản phẩm'),(4,'Sửa sản phẩm','Sửa sản phẩm'),(5,'Vào thống kê','Vào thống kê'),(6,'Vào tài khoản','Vào tài khoản'),(7,'Thêm tài khoản','Thêm tài khoản'),(8,'Sửa tài khoản','Sửa tài khoản'),(9,'Xóa tài khoản','Xóa tài khoản'),(10,'Xem tài khoản','Xem tài khoản'),(11,'Thêm quyền','Thêm quyền'),(12,'Sửa quyền','Sửa quyền'),(13,'Xóa quyền','Xóa quyền'),(14,'Vào khuyến mãi','Vào khuyến mãi'),(15,'Thêm khuyến mãi','Thêm khuyến mãi'),(16,'Xóa khuyến mãi','Xóa khuyến mãi'),(17,'Sửa khuyến mãi','Sửa khuyến mãi'),(18,'Vào hóa đơn','Vào hóa đơn'),(19,'Xóa hóa đơn','Xóa hóa đơn'),(20,'Vào nhập hàng','Vào nhập hàng'),(21,'Thêm phiếu nhập','Thêm phiếu nhập'),(22,'Xóa phiếu nhập','Xóa phiếu nhập'),(23,'Sửa phiếu nhập','Sửa phiếu nhập'),(24,'Nhập excel phiếu nhập','Nhập excel phiếu nhập'),(25,'Vào nguyên liệu','Vào nguyên liệu'),(26,'Thêm nguyên liệu','Thêm nguyên liệu'),(27,'Xóa nguyên liệu','Xóa nguyên liệu'),(28,'Sửa nguyên liệu','Sửa nguyên liệu'),(29,'Vào nhà cung cấp','Vào nhà cung cấp'),(30,'Thêm nhà cung cấp','Thêm nhà cung cấp'),(31,'Xóa nhà cung cấp','Xóa nhà cung cấp'),(32,'Sửa nhà cung cấp','Sửa nhà cung cấp');
+INSERT INTO `chucnang` VALUES 
+(1,'Vào đặt hàng','Vào đặt hàng'),
+(2,'Thêm sản phẩm','Thêm sản phẩm'),
+(3,'Xóa sản phẩm','Xóa sản phẩm'),
+(4,'Sửa sản phẩm','Sửa sản phẩm'),
+(5,'Vào thống kê','Vào thống kê'),
+(6,'Vào tài khoản','Vào tài khoản'),
+(7,'Thêm tài khoản','Thêm tài khoản'),
+(8,'Sửa tài khoản','Sửa tài khoản'),
+(9,'Xóa tài khoản','Xóa tài khoản'),
+(10,'Xem tài khoản','Xem tài khoản'),
+(11,'Thêm quyền','Thêm quyền'),
+(12,'Sửa quyền','Sửa quyền'),
+(13,'Xóa quyền','Xóa quyền'),
+(14,'Vào khuyến mãi','Vào khuyến mãi'),
+(15,'Thêm khuyến mãi','Thêm khuyến mãi'),
+(16,'Xóa khuyến mãi','Xóa khuyến mãi'),
+(17,'Sửa khuyến mãi','Sửa khuyến mãi'),
+(18,'Vào hóa đơn','Vào hóa đơn'),
+(19,'Xóa hóa đơn','Xóa hóa đơn'),
+(20,'Vào nhập hàng','Vào nhập hàng'),
+(21,'Thêm phiếu nhập','Thêm phiếu nhập'),
+(22,'Xóa phiếu nhập','Xóa phiếu nhập'),
+(23,'Sửa phiếu nhập','Sửa phiếu nhập'),
+(24,'Nhập excel phiếu nhập','Nhập excel phiếu nhập'),
+(25,'Vào nguyên liệu','Vào nguyên liệu'),
+(26,'Thêm nguyên liệu','Thêm nguyên liệu'),
+(27,'Xóa nguyên liệu','Xóa nguyên liệu'),
+(28,'Sửa nguyên liệu','Sửa nguyên liệu'),
+(29,'Vào nhà cung cấp','Vào nhà cung cấp'),
+(30,'Thêm nhà cung cấp','Thêm nhà cung cấp'),
+(31,'Xóa nhà cung cấp','Xóa nhà cung cấp'),
+(32,'Sửa nhà cung cấp','Sửa nhà cung cấp');
 /*!40000 ALTER TABLE `chucnang` ENABLE KEYS */;
 UNLOCK TABLES;
 

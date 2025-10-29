@@ -42,7 +42,7 @@ namespace MilkTea.Server.Repositories
         }
 
         //  2. Thêm quyền
-        public async Task<bool> AddAsync(Quyen q)
+        public async Task<int> AddAsync(Quyen q)
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"INSERT INTO quyen (TenQuyen, TrangThai, Mota) VALUES (@TenQuyen, @TrangThai, @Mota)";
@@ -51,8 +51,11 @@ namespace MilkTea.Server.Repositories
             cmd.Parameters.AddWithValue("@Mota", (object?)q.Mota ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@Trangthai", q.TrangThai);
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+            await cmd.ExecuteNonQueryAsync();
+
+            // Lấy ID vừa thêm
+            int newId = (int)cmd.LastInsertedId;
+            return newId;
         }
 
         // 3. Cập nhật quyền

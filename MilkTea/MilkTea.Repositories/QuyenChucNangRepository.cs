@@ -77,5 +77,32 @@ namespace MilkTea.Server.Repositories
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
         }
+
+        // Lấy danh sách quyền - chức năng theo mã quyền
+        public async Task<List<Quyen_ChucNang>> GetByQuyenAsync(int maQuyen)
+        {
+            var list = new List<Quyen_ChucNang>();
+            using var conn = await _db.GetConnectionAsync();
+
+            var query = "SELECT * FROM quyen_chucnang WHERE MaQuyen = @MaQuyen";
+            using var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaQuyen", maQuyen);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMaQuyen = reader.GetOrdinal("MaQuyen");
+            int idxMaChucNang = reader.GetOrdinal("MaChucNang");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new Quyen_ChucNang
+                {
+                    MaQuyen = reader.GetInt32(idxMaQuyen),
+                    MaChucNang = reader.GetInt32(idxMaChucNang)
+                });
+            }
+
+            return list;
+        }
     }
 }

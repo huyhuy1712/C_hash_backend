@@ -80,5 +80,23 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi xóa: {ex.Message}");
             }
         }
+
+        // GET: api/quyenchucnang/{maQuyen}
+        [HttpGet("{maQuyen}")]
+        public async Task<IActionResult> GetByQuyen(int maQuyen)
+        {
+            try
+            {
+                var list = await _repo.GetByQuyenAsync(maQuyen);
+                if (list == null || list.Count == 0)
+                    return NotFound("Không tìm thấy chức năng nào cho quyền này.");
+
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy dữ liệu: {ex.Message}");
+            }
+        }
     }
 }

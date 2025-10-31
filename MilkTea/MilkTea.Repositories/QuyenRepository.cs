@@ -49,7 +49,7 @@ namespace MilkTea.Server.Repositories
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenQuyen", q.TenQuyen);
             cmd.Parameters.AddWithValue("@Mota", (object?)q.Mota ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@Trangthai", q.TrangThai);
+            cmd.Parameters.AddWithValue("@TrangThai", q.TrangThai);
 
             await cmd.ExecuteNonQueryAsync();
 

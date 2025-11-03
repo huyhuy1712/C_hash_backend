@@ -28,7 +28,7 @@ CREATE TABLE `buzzer` (
   `TrangThai` int DEFAULT '1',
   PRIMARY KEY (`MaBuzzer`),
   UNIQUE KEY `SoHieu` (`SoHieu`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +56,7 @@ CREATE TABLE `chitietcongthuc` (
   KEY `MaNL` (`MaNL`),
   CONSTRAINT `chitietcongthuc_ibfk_1` FOREIGN KEY (`MaCT`) REFERENCES `congthuc` (`MaCT`),
   CONSTRAINT `chitietcongthuc_ibfk_2` FOREIGN KEY (`MaNL`) REFERENCES `nguyenlieu` (`MaNL`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `chitietdonhang` (
   CONSTRAINT `chitietdonhang_ibfk_1` FOREIGN KEY (`MaDH`) REFERENCES `donhang` (`MaDH`),
   CONSTRAINT `chitietdonhang_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
   CONSTRAINT `chitietdonhang_ibfk_3` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,7 @@ CREATE TABLE `chitietphieunhap` (
   KEY `MaNguyenLieu` (`MaNguyenLieu`),
   CONSTRAINT `chitietphieunhap_ibfk_1` FOREIGN KEY (`MaPN`) REFERENCES `phieunhap` (`MaPN`),
   CONSTRAINT `chitietphieunhap_ibfk_2` FOREIGN KEY (`MaNguyenLieu`) REFERENCES `nguyenlieu` (`MaNL`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +149,7 @@ CREATE TABLE `chucnang` (
   `MoTa` text,
   PRIMARY KEY (`MaChucNang`),
   UNIQUE KEY `TenChucNang` (`TenChucNang`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,39 @@ CREATE TABLE `chucnang` (
 
 LOCK TABLES `chucnang` WRITE;
 /*!40000 ALTER TABLE `chucnang` DISABLE KEYS */;
-INSERT INTO `chucnang` VALUES (1,'Thêm đơn hàng','Thêm đơn hàng'),(2,'Thêm sản phẩm','Thêm sản phẩm'),(3,'Xóa sản phẩm','Xóa sản phẩm'),(4,'Sửa sản phẩm','Sửa sản phẩm'),(5,'Vào thống kê','Vào thống kê'),(6,'Vào tài khoản','Vào tài khoản'),(7,'Thêm tài khoản','Thêm tài khoản'),(8,'Sửa tài khoản','Sửa tài khoản'),(9,'Xóa tài khoản','Xóa tài khoản'),(10,'Xem tài khoản','Xem tài khoản'),(11,'Thêm quyền','Thêm quyền'),(12,'Sửa quyền','Sửa quyền'),(13,'Xóa quyền','Xóa quyền'),(14,'Vào khuyến mãi','Vào khuyến mãi'),(15,'Thêm khuyến mãi','Thêm khuyến mãi'),(16,'Xóa khuyến mãi','Xóa khuyến mãi'),(17,'Sửa khuyến mãi','Sửa khuyến mãi'),(18,'Vào hóa đơn','Vào hóa đơn'),(19,'Xóa hóa đơn','Xóa hóa đơn'),(20,'Vào nhập hàng','Vào nhập hàng'),(21,'Thêm phiếu nhập','Thêm phiếu nhập'),(22,'Xóa phiếu nhập','Xóa phiếu nhập'),(23,'Sửa phiếu nhập','Sửa phiếu nhập'),(24,'Nhập excel phiếu nhập','Nhập excel phiếu nhập'),(25,'Vào nguyên liệu','Vào nguyên liệu'),(26,'Thêm nguyên liệu','Thêm nguyên liệu'),(27,'Xóa nguyên liệu','Xóa nguyên liệu'),(28,'Sửa nguyên liệu','Sửa nguyên liệu'),(29,'Vào nhà cung cấp','Vào nhà cung cấp'),(30,'Thêm nhà cung cấp','Thêm nhà cung cấp'),(31,'Xóa nhà cung cấp','Xóa nhà cung cấp'),(32,'Sửa nhà cung cấp','Sửa nhà cung cấp');
+INSERT INTO `chucnang` VALUES 
+(1,'Vào đặt hàng','Vào đặt hàng'),
+(2,'Thêm sản phẩm','Thêm sản phẩm'),
+(3,'Xóa sản phẩm','Xóa sản phẩm'),
+(4,'Sửa sản phẩm','Sửa sản phẩm'),
+(5,'Vào thống kê','Vào thống kê'),
+(6,'Vào tài khoản','Vào tài khoản'),
+(7,'Thêm tài khoản','Thêm tài khoản'),
+(8,'Sửa tài khoản','Sửa tài khoản'),
+(9,'Xóa tài khoản','Xóa tài khoản'),
+(10,'Xem tài khoản','Xem tài khoản'),
+(11,'Thêm quyền','Thêm quyền'),
+(12,'Sửa quyền','Sửa quyền'),
+(13,'Xóa quyền','Xóa quyền'),
+(14,'Vào khuyến mãi','Vào khuyến mãi'),
+(15,'Thêm khuyến mãi','Thêm khuyến mãi'),
+(16,'Xóa khuyến mãi','Xóa khuyến mãi'),
+(17,'Sửa khuyến mãi','Sửa khuyến mãi'),
+(18,'Vào hóa đơn','Vào hóa đơn'),
+(19,'Xóa hóa đơn','Xóa hóa đơn'),
+(20,'Vào nhập hàng','Vào nhập hàng'),
+(21,'Thêm phiếu nhập','Thêm phiếu nhập'),
+(22,'Xóa phiếu nhập','Xóa phiếu nhập'),
+(23,'Sửa phiếu nhập','Sửa phiếu nhập'),
+(24,'Nhập excel phiếu nhập','Nhập excel phiếu nhập'),
+(25,'Vào nguyên liệu','Vào nguyên liệu'),
+(26,'Thêm nguyên liệu','Thêm nguyên liệu'),
+(27,'Xóa nguyên liệu','Xóa nguyên liệu'),
+(28,'Sửa nguyên liệu','Sửa nguyên liệu'),
+(29,'Vào nhà cung cấp','Vào nhà cung cấp'),
+(30,'Thêm nhà cung cấp','Thêm nhà cung cấp'),
+(31,'Xóa nhà cung cấp','Xóa nhà cung cấp'),
+(32,'Sửa nhà cung cấp','Sửa nhà cung cấp');
 /*!40000 ALTER TABLE `chucnang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +209,7 @@ CREATE TABLE `congthuc` (
   PRIMARY KEY (`MaCT`),
   KEY `MaSP` (`MaSP`),
   CONSTRAINT `congthuc_ibfk_1` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +237,7 @@ CREATE TABLE `ctdonhang_topping` (
   KEY `MaCTDH` (`MaCTDH`),
   CONSTRAINT `ctdonhang_topping_ibfk_1` FOREIGN KEY (`MaNL`) REFERENCES `nguyenlieu` (`MaNL`),
   CONSTRAINT `ctdonhang_topping_ibfk_2` FOREIGN KEY (`MaCTDH`) REFERENCES `chitietdonhang` (`MaCTDH`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,7 +266,7 @@ CREATE TABLE `ctkhuyenmai` (
   `PhanTramKhuyenMai` int DEFAULT NULL,
   `TrangThai` int DEFAULT NULL,
   PRIMARY KEY (`MaCTKhuyenMai`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +310,7 @@ CREATE TABLE `doanhthu` (
   CONSTRAINT `doanhthu_ibfk_3` FOREIGN KEY (`MaKM`) REFERENCES `ctkhuyenmai` (`MaCTKhuyenMai`),
   CONSTRAINT `doanhthu_ibfk_4` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`),
   CONSTRAINT `doanhthu_ibfk_5` FOREIGN KEY (`TongChiPhi`) REFERENCES `doanhthu` (`MaDT`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +344,7 @@ CREATE TABLE `donhang` (
   KEY `MaBuzzer` (`MaBuzzer`),
   CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`MaNV`) REFERENCES `nhanvien` (`MaNV`),
   CONSTRAINT `donhang_ibfk_2` FOREIGN KEY (`MaBuzzer`) REFERENCES `buzzer` (`MaBuzzer`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -337,7 +369,7 @@ CREATE TABLE `loai` (
   `TenLoai` varchar(50) NOT NULL,
   `MoTa` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`MaLoai`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +396,7 @@ CREATE TABLE `nguyenlieu` (
   `GiaBan` decimal(12,2) DEFAULT NULL,
   `TrangThai` int DEFAULT NULL,
   PRIMARY KEY (`MaNL`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -391,7 +423,7 @@ CREATE TABLE `nhacungcap` (
   `DiaChi` varchar(100) NOT NULL,
   `TrangThai` int DEFAULT NULL,
   PRIMARY KEY (`MaNCC`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,7 +452,7 @@ CREATE TABLE `nhanvien` (
   PRIMARY KEY (`MaNV`),
   KEY `MaTK` (`MaTK`),
   CONSTRAINT `nhanvien_ibfk_1` FOREIGN KEY (`MaTK`) REFERENCES `taikhoan` (`MaTK`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,7 +485,7 @@ CREATE TABLE `phieunhap` (
   KEY `MaNCC` (`MaNCC`),
   CONSTRAINT `phieunhap_ibfk_1` FOREIGN KEY (`MaNV`) REFERENCES `nhanvien` (`MaNV`),
   CONSTRAINT `phieunhap_ibfk_2` FOREIGN KEY (`MaNCC`) REFERENCES `nhacungcap` (`MaNCC`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,9 +510,8 @@ CREATE TABLE `quyen` (
   `TenQuyen` varchar(100) NOT NULL,
   `TrangThai` int DEFAULT NULL,
   `Mota` text,
-  PRIMARY KEY (`MaQuyen`),
-  UNIQUE KEY `TenQuyen` (`TenQuyen`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`MaQuyen`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -507,7 +538,7 @@ CREATE TABLE `quyen_chucnang` (
   KEY `MaChucNang` (`MaChucNang`),
   CONSTRAINT `quyen_chucnang_ibfk_1` FOREIGN KEY (`MaQuyen`) REFERENCES `quyen` (`MaQuyen`),
   CONSTRAINT `quyen_chucnang_ibfk_2` FOREIGN KEY (`MaChucNang`) REFERENCES `chucnang` (`MaChucNang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -538,7 +569,7 @@ CREATE TABLE `sanpham` (
   PRIMARY KEY (`MaSP`),
   KEY `MaLoai` (`MaLoai`),
   CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`MaLoai`) REFERENCES `loai` (`MaLoai`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -565,7 +596,7 @@ CREATE TABLE `sanpham_khuyenmai` (
   KEY `MaCTKhuyenMai` (`MaCTKhuyenMai`),
   CONSTRAINT `sanpham_khuyenmai_ibfk_1` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
   CONSTRAINT `sanpham_khuyenmai_ibfk_2` FOREIGN KEY (`MaCTKhuyenMai`) REFERENCES `ctkhuyenmai` (`MaCTKhuyenMai`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,7 +621,7 @@ CREATE TABLE `size` (
   `TenSize` varchar(50) NOT NULL,
   `PhuThu` int DEFAULT '0',
   PRIMARY KEY (`MaSize`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -621,7 +652,7 @@ CREATE TABLE `taikhoan` (
   UNIQUE KEY `TenTaiKhoan` (`TenTaiKhoan`),
   KEY `MaQuyen` (`MaQuyen`),
   CONSTRAINT `taikhoan_ibfk_1` FOREIGN KEY (`MaQuyen`) REFERENCES `quyen` (`MaQuyen`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

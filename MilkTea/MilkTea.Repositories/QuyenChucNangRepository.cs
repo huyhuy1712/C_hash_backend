@@ -66,17 +66,43 @@ namespace MilkTea.Server.Repositories
             return rows > 0;
         }
 
-        //  4. Xóa
-        public async Task<bool> DeleteAsync(int maQuyen, int maChucNang)
+        //  4. Xóa tất cả theo mã quyền
+        public async Task<bool> DeleteByQuyenAsync(int maQuyen)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = "DELETE FROM quyen_chucnang WHERE MaQuyen = @MaQuyen AND MaChucNang = @MaChucNang";
+            var query = "DELETE FROM quyen_chucnang WHERE MaQuyen = @MaQuyen";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaQuyen", maQuyen);
-            cmd.Parameters.AddWithValue("@MaChucNang", maChucNang);
 
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
+        }
+
+        // Lấy danh sách quyền - chức năng theo mã quyền
+        public async Task<List<Quyen_ChucNang>> GetByQuyenAsync(int maQuyen)
+        {
+            var list = new List<Quyen_ChucNang>();
+            using var conn = await _db.GetConnectionAsync();
+
+            var query = "SELECT * FROM quyen_chucnang WHERE MaQuyen = @MaQuyen";
+            using var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaQuyen", maQuyen);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMaQuyen = reader.GetOrdinal("MaQuyen");
+            int idxMaChucNang = reader.GetOrdinal("MaChucNang");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new Quyen_ChucNang
+                {
+                    MaQuyen = reader.GetInt32(idxMaQuyen),
+                    MaChucNang = reader.GetInt32(idxMaChucNang)
+                });
+            }
+
+            return list;
         }
     }
 }

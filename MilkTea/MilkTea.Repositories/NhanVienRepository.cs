@@ -158,5 +158,27 @@ namespace MilkTea.Server.Repositories
             return null; // không tìm thấy
         }
 
+        // 8. Get nhan vien by MaTK
+        public async Task<NhanVien?> GetByMaTKAsync(int maTK)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM nhanvien WHERE MaTK = @MaTK LIMIT 1";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaTK", maTK);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new NhanVien
+                {
+                    MaNV = reader.GetInt32(reader.GetOrdinal("MaNV")),
+                    TenNV = reader.GetString(reader.GetOrdinal("TenNV")),
+                    SDT = reader.GetString(reader.GetOrdinal("SDT")),
+                    NgayLam = reader.GetDateTime(reader.GetOrdinal("NgayLam")),
+                    MaTK = reader.IsDBNull(reader.GetOrdinal("MaTK")) ? null : reader.GetInt32(reader.GetOrdinal("MaTK"))
+                };
+            }
+            return null;
+        }
     }
 }

@@ -126,5 +126,21 @@ namespace MilkTea.Server.Controllers
 
             return Ok(new { MaNV = maNV });
         }
+
+        //Lay nhan vien theo ma tai khoan
+        [HttpGet("nhanvien-by-matk/{maTK}")]
+        public async Task<IActionResult> GetNhanVienByMaTK(int maTK)
+        {
+            try
+            {
+                var nv = await _repo.GetByMaTKAsync(maTK);
+                return nv != null ? Ok(nv) : NotFound($"Không tìm thấy nhân viên có mã tài khoản {maTK}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy nhân viên: {ex.Message}");
+            }
+
+        }
     }
 }

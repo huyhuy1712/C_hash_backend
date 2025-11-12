@@ -3,16 +3,12 @@ using MilkTea.Server.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ??c connection string t? appsettings.json
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// ??ng ký DbConnection vào DI container
 builder.Services.AddSingleton(new DbConnection(connectionString));
 
-// Thêm d?ch v? MVC (Controllers + Views)
 builder.Services.AddControllersWithViews();
 
-// N?u có Repository thì ??ng ký ? ?ây (ví d? LoaiRepository)
 builder.Services.AddScoped<LoaiRepository>();
 builder.Services.AddScoped<SanPhamRepository>();
 builder.Services.AddScoped<NhaCungCapRepository>();
@@ -41,7 +37,6 @@ builder.Services.AddScoped<TaiKhoanRepository>();
 
 var app = builder.Build();
 
-// Middleware x? lý l?i
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

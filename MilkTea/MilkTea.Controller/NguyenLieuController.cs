@@ -47,18 +47,23 @@ namespace MilkTea.Server.Controllers
         }
 
         // PUT: api/nguyenlieu
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] NguyenLieu nl)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] NguyenLieu nl)
         {
             try
             {
-                bool updated = await _repo.UpdateAsync(nl);
-                return updated ? Ok(new { Message = "Cập nhật nguyên liệu thành công!" })
-                               : NotFound($"Không tìm thấy nguyên liệu có mã {nl.MaNL}.");
+                if (id != nl.MaNL)
+                    return BadRequest("ID không khớp.");
+
+                var updatedNl = await _repo.UpdateAsync(nl);
+                if (updatedNl == null)
+                    return NotFound($"Không tìm thấy nguyên liệu {nl.MaNL}.");
+
+                return Ok(updatedNl);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi khi cập nhật nguyên liệu: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
 

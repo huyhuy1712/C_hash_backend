@@ -39,19 +39,33 @@ namespace MilkTea.Server.Repositories
         }
 
         // Thêm
-        public async Task<bool> AddAsync(CTKhuyenMai km)
+        public async Task<CTKhuyenMai> AddAsync(CTKhuyenMai km)
         {
             using var conn = await _db.GetConnectionAsync();
             var cmd = new MySqlCommand(
                 @"INSERT INTO ctkhuyenmai (TenCTKhuyenMai, MoTa, NgayBatDau, NgayKetThuc, PhanTramKhuyenMai, TrangThai)
-                  VALUES (@Ten, @MoTa, @NgayBatDau, @NgayKetThuc, @PhanTram, @TrangThai)", conn);
+          VALUES (@Ten, @MoTa, @NgayBatDau, @NgayKetThuc, @PhanTram, @TrangThai);
+          SELECT LAST_INSERT_ID();", conn);
             cmd.Parameters.AddWithValue("@Ten", km.TenCTKhuyenMai);
             cmd.Parameters.AddWithValue("@MoTa", km.MoTa ?? "");
             cmd.Parameters.AddWithValue("@NgayBatDau", km.NgayBatDau);
             cmd.Parameters.AddWithValue("@NgayKetThuc", km.NgayKetThuc);
             cmd.Parameters.AddWithValue("@PhanTram", km.PhanTramKhuyenMai);
             cmd.Parameters.AddWithValue("@TrangThai", km.TrangThai);
-            return await cmd.ExecuteNonQueryAsync() > 0;
+
+            var rowsAffected = await cmd.ExecuteNonQueryAsync();
+            if (rowsAffected > 0)
+            {
+                // Retrieve the generated ID
+                var idCmd = new MySqlCommand("SELECT LAST_INSERT_ID();", conn);
+                var idObj = await idCmd.ExecuteScalarAsync();
+                if (idObj != null && int.TryParse(idObj.ToString(), out int newId))
+                {
+                    km.MaCTKhuyenMai = newId;
+                    return km; // Return the object with ID populated
+                }
+            }
+            return null; // Or throw exception if failed
         }
 
         // Sửa
@@ -138,6 +152,7 @@ namespace MilkTea.Server.Repositories
 
             return null;
         }
+        
 
     }
 }

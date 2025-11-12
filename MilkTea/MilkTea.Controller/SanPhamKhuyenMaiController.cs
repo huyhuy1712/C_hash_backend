@@ -31,15 +31,21 @@ namespace MilkTea.Server.Controllers
         }
 
         // POST: api/sanphamkhuyenmai
+        // POST: api/sanphamkhuyenmai
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] SanPhamKhuyenMai spkm)
         {
             try
             {
-                bool added = await _repo.AddAsync(spkm);
-                return added
-                    ? Ok(new { Message = "Thêm sản phẩm khuyến mãi thành công!" })
-                    : StatusCode(500, "Không thể thêm sản phẩm khuyến mãi.");
+                var (success, rows) = await _repo.AddAsync(spkm); // Match new repo return
+                if (success)
+                {
+                    return Ok(new { Message = "Thêm sản phẩm khuyến mãi thành công!", RowsAffected = rows });
+                }
+                else
+                {
+                    return StatusCode(500, "Không thể thêm sản phẩm khuyến mãi.");
+                }
             }
             catch (Exception ex)
             {
@@ -99,19 +105,35 @@ namespace MilkTea.Server.Controllers
         }
 
         //  GET: api/sanphamkhuyenmai/ctkhuyenmai/{MaSP}
-        [HttpGet("ctkhuyenmai/{MaSP}")]
-        public async Task<IActionResult> GetByMaSP(int MaSP)
+        // [HttpGet("ctkhuyenmai/{MaSP}")]
+        // public async Task<IActionResult> GetByMaSP(int MaSP)
+        // {
+        //     try
+        //     {
+        //         var list = await _repo.GetByMaSPAsync(MaSP);
+        //         return Ok(list);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return StatusCode(500, $"Lỗi khi lấy dữ liệu: {ex.Message}");
+        //     }
+        // }
+        // GET: api/sanphamkhuyenmai/ctkhuyenmai/{maCTKhuyenMai}
+        [HttpGet("ctkhuyenmai/{maCTKhuyenMai}")]
+        public async Task<IActionResult> GetByCTKhuyenMai(int maCTKhuyenMai)
         {
             try
             {
-                var list = await _repo.GetByMaSPAsync(MaSP);
+                var list = await _repo.GetByMaCTKhuyenMaiAsync(maCTKhuyenMai);
+                if (list == null || !list.Any())
+                    return Ok(new List<SanPhamKhuyenMai>()); // trả empty list thay vì null
                 return Ok(list);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi khi lấy dữ liệu: {ex.Message}");
+                return StatusCode(500, $"Lỗi khi lấy sản phẩm khuyến mãi: {ex.Message}");
             }
         }
-        
+
     }
 }

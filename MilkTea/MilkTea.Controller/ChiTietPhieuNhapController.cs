@@ -124,5 +124,21 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi đọc dữ liệu: {ex.Message}");
             }
         }
+        //GET : api/chitietphieunhap/by-manl?maNL={maNL}
+        [HttpGet("by-manl")]
+        public async Task<IActionResult> GetByMaNL(int maNL)
+        {
+            try
+            {
+                var list = await _repo.GetByMaNLAsync(maNL);
+                if (list == null || !list.Any())
+                    return NotFound($"Không tìm thấy chi tiết phiếu nhập nào cho mã nguyên liệu {maNL}.");
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi đọc dữ liệu: {ex.Message}");
+            }
+        }
     }
 }

@@ -30,6 +30,8 @@ namespace MilkTea.Server.Controllers
             }
         }
 
+        
+
         // POST: api/ctkhuyenmai
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CTKhuyenMai km)
@@ -39,14 +41,25 @@ namespace MilkTea.Server.Controllers
                 if (string.IsNullOrWhiteSpace(km.TenCTKhuyenMai))
                     return BadRequest("Tên chương trình không được để trống.");
 
-                bool added = await _repo.AddAsync(km);
-                return added ? Ok(new { Message = "Thêm chương trình khuyến mãi thành công!" })
-                             : StatusCode(500, "Không thể thêm chương trình khuyến mãi.");
+                var addedKm = await _repo.AddAsync(km);
+                if (addedKm != null)
+                {
+                    // Return 201 Created with the full object and Location header
+                    return CreatedAtAction(nameof(GetById), new { id = addedKm.MaCTKhuyenMai }, addedKm);
+                }
+                return StatusCode(500, "Không thể thêm chương trình khuyến mãi.");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Lỗi khi thêm chương trình khuyến mãi: {ex.Message}");
             }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            // Your existing GetById implementation
+            var km = await _repo.GetByIdAsync(id);
+            return km != null ? Ok(km) : NotFound();
         }
 
         // PUT: api/ctkhuyenmai
@@ -109,23 +122,7 @@ namespace MilkTea.Server.Controllers
             }
         }
 
-        // GET: api/ctkhuyenmai/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            try
-            {
-                var km = await _repo.GetByIdAsync(id);
-                if (km == null)
-                    return NotFound($"Không tìm thấy chương trình khuyến mãi có mã {id}.");
 
-                return Ok(km);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Lỗi khi lấy chi tiết chương trình khuyến mãi: {ex.Message}");
-            }
-        }
 
     }
 }

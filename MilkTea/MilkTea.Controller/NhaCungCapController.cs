@@ -36,14 +36,20 @@ namespace MilkTea.Server.Controllers
         {
             try
             {
-                bool added = await _repo.AddAsync(ncc);
-                return added
-                    ? Ok(new { Message = "Thêm nhà cung cấp thành công!" })
-                    : StatusCode(500, "Không thể thêm nhà cung cấp.");
+                var addedNcc = await _repo.AddAsync(ncc);
+                if (addedNcc != null)
+                {
+                    return CreatedAtAction(
+                        nameof(GetByMaNCC),
+                        new { maNCC = addedNcc.MaNCC },
+                        addedNcc
+                    );
+                }
+                return StatusCode(500, "Không thể thêm nhà cung cấp.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi khi thêm nhà cung cấp: {ex.Message}");
+                return StatusCode(500, $"Lỗi khi thêm: {ex.Message}");
             }
         }
 

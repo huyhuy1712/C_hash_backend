@@ -297,7 +297,7 @@ CREATE TABLE `doanhthu` (
   `MaLoai` int DEFAULT NULL,
   `MaKM` int DEFAULT NULL,
   `MaSize` int DEFAULT NULL,
-  `TongChiPhi` int DEFAULT NULL,
+  `TongChiPhi` decimal(12,2) DEFAULT NULL,
   `TongDoanhThu` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`MaDT`),
   KEY `MaSP` (`MaSP`),
@@ -308,8 +308,7 @@ CREATE TABLE `doanhthu` (
   CONSTRAINT `doanhthu_ibfk_1` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
   CONSTRAINT `doanhthu_ibfk_2` FOREIGN KEY (`MaLoai`) REFERENCES `loai` (`MaLoai`),
   CONSTRAINT `doanhthu_ibfk_3` FOREIGN KEY (`MaKM`) REFERENCES `ctkhuyenmai` (`MaCTKhuyenMai`),
-  CONSTRAINT `doanhthu_ibfk_4` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`),
-  CONSTRAINT `doanhthu_ibfk_5` FOREIGN KEY (`TongChiPhi`) REFERENCES `doanhthu` (`MaDT`)
+  CONSTRAINT `doanhthu_ibfk_4` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

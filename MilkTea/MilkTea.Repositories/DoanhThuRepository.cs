@@ -62,8 +62,8 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"INSERT INTO doanhthu 
-                        (Ngay, Thang, Nam, Gio, SLBan, MaSP, MaLoai, MaKM, MaSize, TongDoanhThu)
-                        VALUES (@Ngay, @Thang, @Nam, @Gio, @SLBan, @MaSP, @MaLoai, @MaKM, @MaSize, @TongDoanhThu)";
+                        (Ngay, Thang, Nam, Gio, SLBan, MaSP, MaLoai, MaKM, MaSize, TongChiPhi, TongDoanhThu)
+                        VALUES (@Ngay, @Thang, @Nam, @Gio, @SLBan, @MaSP, @MaLoai, @MaKM, @MaSize, @TongChiPhi, @TongDoanhThu)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@Ngay", dt.Ngay);
             cmd.Parameters.AddWithValue("@Thang", dt.Thang);
@@ -74,6 +74,7 @@ namespace MilkTea.Server.Repositories
             cmd.Parameters.AddWithValue("@MaLoai", dt.MaLoai);
             cmd.Parameters.AddWithValue("@MaKM", dt.MaKM);
             cmd.Parameters.AddWithValue("@MaSize", dt.MaSize);
+            cmd.Parameters.AddWithValue("@TongChiPhi", dt.TongChiPhi);
             cmd.Parameters.AddWithValue("@TongDoanhThu", dt.TongDoanhThu);
 
             var rows = await cmd.ExecuteNonQueryAsync();

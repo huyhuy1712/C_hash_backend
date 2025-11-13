@@ -65,5 +65,26 @@ public async Task<List<Buzzer>> GetBuzzersByTrangThaiAsync(int trangThai)
             }
             return null; // không tìm thấy
         }
+        
+        // lấy buzzer theo mã máy
+        public async Task<Buzzer> GetByMaMayAsync(int mamay)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT MaBuzzer, SoHieu, TrangThai FROM buzzer WHERE MaBuzzer = @MaBuzzer LIMIT 1";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaBuzzer", mamay);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new Buzzer
+                {
+                    MaBuzzer = reader.GetInt32(reader.GetOrdinal("MaBuzzer")),
+                    SoHieu = reader.GetString(reader.GetOrdinal("SoHieu")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+                };
+            }
+            return null; // không tìm thấy
+        }
     }
 }

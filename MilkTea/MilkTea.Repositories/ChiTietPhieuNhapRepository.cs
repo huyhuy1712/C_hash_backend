@@ -134,5 +134,38 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+
+        public async Task<List<ChiTietPhieuNhap>> GetByMaNLAsync(int maNL)
+        {
+            var list = new List<ChiTietPhieuNhap>();
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM chitietphieunhap WHERE MaNguyenLieu = @MaNguyenLieu";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaNguyenLieu", maNL);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMaCTPN = reader.GetOrdinal("MaChiTietPhieuNhap");
+            int idxMaPN = reader.GetOrdinal("MaPN");
+            int idxMaNL = reader.GetOrdinal("MaNguyenLieu");
+            int idxSoLuong = reader.GetOrdinal("SoLuong");
+            int idxDonGia = reader.GetOrdinal("DonGiaNhap");
+            int idxTongGia = reader.GetOrdinal("TongGia");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new ChiTietPhieuNhap
+                {
+                    MaChiTietPhieuNhap = reader.GetInt32(idxMaCTPN),
+                    MaPN = reader.GetInt32(idxMaPN),
+                    MaNguyenLieu = reader.GetInt32(idxMaNL),
+                    SoLuong = reader.GetInt32(idxSoLuong),
+                    DonGiaNhap = reader.GetDecimal(idxDonGia),
+                    TongGia = reader.GetDecimal(idxTongGia)
+                });
+            }
+
+            return list;
+        }
     }
 }

@@ -61,21 +61,47 @@ namespace MilkTea.Server.Repositories
         }
 
         // 3. Cập nhật nguyên liệu
-        public async Task<bool> UpdateAsync(NguyenLieu nl)
+       // 3. Cập nhật nguyên liệu (Sửa: Return entity thay vì bool)
+        public async Task<NguyenLieu?> UpdateAsync(NguyenLieu nl)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"UPDATE nguyenlieu 
-                          SET Ten = @Ten, SoLuong = @SoLuong, GiaBan = @GiaBan, TrangThai = @TrangThai
-                          WHERE MaNL = @MaNL";
-            var cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Ten", nl.Ten);
-            cmd.Parameters.AddWithValue("@SoLuong", nl.SoLuong);
-            cmd.Parameters.AddWithValue("@GiaBan", nl.GiaBan);
-            cmd.Parameters.AddWithValue("@MaNL", nl.MaNL);
-            cmd.Parameters.AddWithValue("@TrangThai", nl.TrangThai);
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+            // Bước 1: Update
+            var updateQuery = @"UPDATE nguyenlieu 
+                                SET Ten = @Ten, SoLuong = @SoLuong, GiaBan = @GiaBan, TrangThai = @TrangThai
+                                WHERE MaNL = @MaNL";
+            var updateCmd = new MySqlCommand(updateQuery, conn);
+            updateCmd.Parameters.AddWithValue("@Ten", nl.Ten);
+            updateCmd.Parameters.AddWithValue("@SoLuong", nl.SoLuong);
+            updateCmd.Parameters.AddWithValue("@GiaBan", nl.GiaBan);
+            updateCmd.Parameters.AddWithValue("@MaNL", nl.MaNL);
+            updateCmd.Parameters.AddWithValue("@TrangThai", nl.TrangThai);
+
+            var rowsAffected = await updateCmd.ExecuteNonQueryAsync();
+            if (rowsAffected == 0)
+            {
+                return null;  // Không tìm thấy hoặc không update
+            }
+
+            // Bước 2: Query lại entity sau update để return full
+            var selectQuery = "SELECT * FROM nguyenlieu WHERE MaNL = @MaNL";
+            var selectCmd = new MySqlCommand(selectQuery, conn);
+            selectCmd.Parameters.AddWithValue("@MaNL", nl.MaNL);
+
+            using var reader = await selectCmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new NguyenLieu
+                {
+                    MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
+                    Ten = reader.GetString(reader.GetOrdinal("Ten")),
+                    SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
+                    GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan")),
+                    TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
+                };
+            }
+
+            return null;  
         }
 
         // 4. Xóa nguyên liệu

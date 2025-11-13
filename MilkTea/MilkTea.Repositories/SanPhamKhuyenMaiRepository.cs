@@ -37,16 +37,32 @@ namespace MilkTea.Server.Repositories
         }
 
         // 2. Thêm mới
-        public async Task<bool> AddAsync(SanPhamKhuyenMai spkm)
+        public async Task<(bool Success, int RowsAffected)> AddAsync(SanPhamKhuyenMai spkm) // Return tuple để client biết rows
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = "INSERT INTO sanpham_khuyenmai (MaSP, MaCTKhuyenMai) VALUES (@MaSP, @MaCTKhuyenMai)";
+
+            // Check existing trước (optional, để log)
+            var checkQuery = "SELECT COUNT(*) FROM sanpham_khuyenmai WHERE MaSP = @MaSP AND MaCTKhuyenMai = @MaCTKhuyenMai";
+            var checkCmd = new MySqlCommand(checkQuery, conn);
+            checkCmd.Parameters.AddWithValue("@MaSP", spkm.MaSP);
+            checkCmd.Parameters.AddWithValue("@MaCTKhuyenMai", spkm.MaCTKhuyenMai);
+            int existingCount = Convert.ToInt32(await checkCmd.ExecuteScalarAsync());
+
+            if (existingCount > 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"[REPO] Duplicate association: MaSP={spkm.MaSP}, MaCT={spkm.MaCTKhuyenMai} - Skipping INSERT");
+                return (true, 0); // Consider success (already exists)
+            }
+
+            // INSERT IGNORE để tránh error duplicate
+            var query = "INSERT IGNORE INTO sanpham_khuyenmai (MaSP, MaCTKhuyenMai) VALUES (@MaSP, @MaCTKhuyenMai)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaSP", spkm.MaSP);
             cmd.Parameters.AddWithValue("@MaCTKhuyenMai", spkm.MaCTKhuyenMai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+            System.Diagnostics.Debug.WriteLine($"[REPO] INSERT Rows Affected: {rows} for MaSP={spkm.MaSP}, MaCT={spkm.MaCTKhuyenMai}");
+            return (rows > 0, rows);
         }
 
         //  3. Cập nhật (nếu cần thay đổi mã khuyến mãi của sản phẩm)
@@ -88,7 +104,7 @@ namespace MilkTea.Server.Repositories
             return rows > 0;
         }
 
-       // 6. Tìm kiếm chương trình khuyến mãi theo MaSP
+        // 6. Tìm kiếm chương trình khuyến mãi theo MaSP
         public async Task<CTKhuyenMai?> GetByMaSPAsync(int maSP)
         {
             using var conn = await _db.GetConnectionAsync();
@@ -117,6 +133,29 @@ namespace MilkTea.Server.Repositories
                 };
             }
             return null;
+        }
+        public async Task<List<SanPhamKhuyenMai>> GetByMaCTKhuyenMaiAsync(int maCTKhuyenMai)
+        {
+            var list = new List<SanPhamKhuyenMai>();
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT MaSP, MaCTKhuyenMai FROM sanpham_khuyenmai WHERE MaCTKhuyenMai = @MaCTKhuyenMai";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaCTKhuyenMai", maCTKhuyenMai);
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMaSP = reader.GetOrdinal("MaSP");
+            int idxMaCTKM = reader.GetOrdinal("MaCTKhuyenMai");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new SanPhamKhuyenMai
+                {
+                    MaSP = reader.GetInt32(idxMaSP),
+                    MaCTKhuyenMai = reader.GetInt32(idxMaCTKM)
+                });
+            }
+
+            return list;
         }
 
     }

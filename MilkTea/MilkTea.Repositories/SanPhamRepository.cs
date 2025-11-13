@@ -160,9 +160,9 @@ namespace MilkTea.Server.Repositories
                 // Truy vấn linh hoạt: chỉ dùng LIKE với kiểu chuỗi
                 string query;
                 if (column is "TenSP" or "Anh")
-                    query = $"SELECT * FROM sanpham WHERE {column} LIKE @value";
+                    query = $"SELECT * FROM sanpham WHERE {column} LIKE @value AND TrangThai = 1";
                 else
-                    query = $"SELECT * FROM sanpham WHERE {column} = @value";
+                    query = $"SELECT * FROM sanpham WHERE {column} = @value AND TrangThai = 1";
 
                 using var cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@value",

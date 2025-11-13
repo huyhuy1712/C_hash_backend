@@ -139,6 +139,31 @@ public async Task<bool> AddAsync(ChiTietDonHang ct)
                 var rows = await cmd.ExecuteNonQueryAsync();
                 return rows > 0; // true nếu có ít nhất 1 dòng bị xóa
             }
+        //lấy topping theo mã chi tiết đơn hàng
+        public async Task<List<ctdonhang_topping>> GetToppingsByMaCTDHAsync(int maCTDH)
+        {
+            var list = new List<ctdonhang_topping>();
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT * FROM ctdonhang_topping WHERE MaCTDH = @MaCTDH";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaCTDH", maCTDH);
 
+            using var reader = await cmd.ExecuteReaderAsync();
+            int idxMaCTDH = reader.GetOrdinal("MaCTDH");
+            int idxMaNL = reader.GetOrdinal("MaNL");
+            int idxSL = reader.GetOrdinal("SL");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new ctdonhang_topping
+                {
+                    MaCTDH = reader.GetInt32(idxMaCTDH),
+                    MaNL = reader.GetInt32(idxMaNL),
+                    SL = reader.GetInt32(idxSL)
+                });
+            }
+
+            return list;
+        }
     }
 }

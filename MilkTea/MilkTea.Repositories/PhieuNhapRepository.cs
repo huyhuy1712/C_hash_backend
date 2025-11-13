@@ -102,7 +102,7 @@ namespace MilkTea.Server.Repositories
         //  5. Tìm kiếm theo cột & giá trị
         public async Task<List<PhieuNhap>> SearchAsync(string column, string value)
         {
-            var allowedColumns = new List<string> { "NgayNhap", "SoLuong", "MaNCC", "MaNV", "TongTien" };
+            var allowedColumns = new List<string> {"MaPN", "NgayNhap", "SoLuong", "MaNCC", "MaNV", "TongTien" };
             if (!allowedColumns.Contains(column))
                 throw new ArgumentException($"Không thể tìm kiếm theo cột '{column}'.");
 

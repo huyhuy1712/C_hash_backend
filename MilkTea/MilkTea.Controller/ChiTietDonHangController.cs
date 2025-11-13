@@ -107,6 +107,24 @@ namespace MilkTea.Server.Controllers
                     return StatusCode(500, $"Lỗi khi xóa chi tiết đơn hàng theo mã đơn hàng: {ex.Message}");
                 }
             }
+            //lấy topping theo mã chi tiết đơn hàng
+                [HttpGet("topping-by-mactdh/{maCTDH}")]
+                public async Task<IActionResult> GetToppingByMaCTDH(int maCTDH)
+                {
+                    try
+                    {
+                        var toppings = await _repo.GetToppingsByMaCTDHAsync(maCTDH);
+
+                        if (toppings == null || toppings.Count == 0)
+                            return NotFound($"Không tìm thấy topping cho chi tiết đơn hàng có mã {maCTDH}.");
+
+                        return Ok(toppings);
+                    }
+                    catch (Exception ex)
+                    {
+                        return StatusCode(500, $"Lỗi khi lấy topping: {ex.Message}");
+                    }
+                }
 
                 }
 }

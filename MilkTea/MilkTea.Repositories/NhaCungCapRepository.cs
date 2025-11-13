@@ -43,19 +43,28 @@ namespace MilkTea.Server.Repositories
         }
 
         // 2. Thêm nhà cung cấp
-        public async Task<bool> AddAsync(NhaCungCap ncc)
+        public async Task<NhaCungCap?> AddAsync(NhaCungCap ncc)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO nhacungcap (TenNCC, SDT, DiaChi, TrangThai)
-                          VALUES (@TenNCC, @SDT, @DiaChi, @TrangThai)";
-            var cmd = new MySqlCommand(query, conn);
+            var query = @"
+                INSERT INTO nhacungcap (TenNCC, SDT, DiaChi, TrangThai)
+                VALUES (@TenNCC, @SDT, @DiaChi, @TrangThai);
+                SELECT LAST_INSERT_ID();";
+
+            using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenNCC", ncc.TenNCC);
             cmd.Parameters.AddWithValue("@SDT", ncc.SDT);
             cmd.Parameters.AddWithValue("@DiaChi", ncc.DiaChi);
             cmd.Parameters.AddWithValue("@TrangThai", ncc.TrangThai);
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+            var newId = await cmd.ExecuteScalarAsync();
+            if (newId != null && int.TryParse(newId.ToString(), out int maNCC))
+            {
+                ncc.MaNCC = maNCC;
+                return ncc;
+            }
+
+            return null;
         }
 
         // 3. Cập nhật thông tin nhà cung cấp

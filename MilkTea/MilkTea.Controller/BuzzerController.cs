@@ -72,5 +72,23 @@ public async Task<IActionResult> UpdateTrangThai(string soHieu, int trangThai)
 
             return Ok(new { MaBuzzer = mamay });
         }
+
+        // lấy theo má máy
+        [HttpGet("buzzer-by-mamay/{mamay}")]
+        public async Task<IActionResult> GetBuzzerByMaMayAsync(int mamay)
+        {
+            try
+            {
+                var buzzer = await _buzzerRepo.GetByMaMayAsync(mamay);
+                if (buzzer == null)
+                    return NotFound($"Không tìm thấy buzzer với MaBuzzer: {mamay}");
+
+                return Ok(buzzer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy buzzer: {ex.Message}");
+            }
+        }
     }
 }

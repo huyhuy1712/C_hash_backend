@@ -31,6 +31,7 @@ namespace MilkTea.Server.Repositories
             int idxMaLoai = reader.GetOrdinal("MaLoai");
             int idxMaKM = reader.GetOrdinal("MaKM");
             int idxMaSize = reader.GetOrdinal("MaSize");
+            int idxTongChiPhi = reader.GetOrdinal("TongChiPhi");
             int idxTongDT = reader.GetOrdinal("TongDoanhThu");
 
             while (await reader.ReadAsync())
@@ -50,6 +51,7 @@ namespace MilkTea.Server.Repositories
                     MaLoai = reader.IsDBNull(idxMaLoai) ? null : reader.GetInt32(idxMaLoai),
                     MaKM = reader.IsDBNull(idxMaKM) ? null : reader.GetInt32(idxMaKM),
                     MaSize = reader.IsDBNull(idxMaSize) ? null : reader.GetInt32(idxMaSize),
+                    TongChiPhi = reader.GetDecimal(idxTongChiPhi),
                     TongDoanhThu = reader.GetDecimal(idxTongDT)
                 });
             }
@@ -110,6 +112,7 @@ namespace MilkTea.Server.Repositories
             int idxMaLoai = reader.GetOrdinal("MaLoai");
             int idxMaKM = reader.GetOrdinal("MaKM");
             int idxMaSize = reader.GetOrdinal("MaSize");
+            int idxTongChiPhi = reader.GetOrdinal("TongChiPhi");
             int idxTongDT = reader.GetOrdinal("TongDoanhThu");
 
             while (await reader.ReadAsync())
@@ -128,6 +131,7 @@ namespace MilkTea.Server.Repositories
                     MaLoai = reader.IsDBNull(idxMaLoai) ? null : reader.GetInt32(idxMaLoai),
                     MaKM = reader.IsDBNull(idxMaKM) ? null : reader.GetInt32(idxMaKM),
                     MaSize = reader.IsDBNull(idxMaSize) ? null : reader.GetInt32(idxMaSize),
+                    TongChiPhi = reader.GetDecimal(idxTongChiPhi),
                     TongDoanhThu = reader.GetDecimal(idxTongDT)
                 });
             }

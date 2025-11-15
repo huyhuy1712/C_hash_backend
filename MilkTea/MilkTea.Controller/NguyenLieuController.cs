@@ -146,5 +146,29 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm nguyên liệu: {ex.Message}");
             }
         }
+
+        [HttpDelete("{maNL}")]
+        public async Task<IActionResult> SoftDelete(int maNL)
+        {
+            try
+            {
+                var nl = await _repo.SearchByMaNLAsync(maNL);
+                if (nl == null)
+                    return NotFound($"Không tìm thấy nguyên liệu có mã {maNL}.");
+
+                nl.TrangThai = 0;
+
+                var updated = await _repo.UpdateAsync(nl);
+                if (updated == null)
+                    return StatusCode(500, "Không thể cập nhật trạng thái.");
+
+                return Ok(new { Message = "Đã xóa (ẩn) nguyên liệu thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa nguyên liệu: {ex.Message}");
+            }
+        }
+
     }
 }

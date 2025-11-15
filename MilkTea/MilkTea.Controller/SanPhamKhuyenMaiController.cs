@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MilkTea.Server.Models;
 using MilkTea.Server.Repositories;
@@ -110,11 +111,14 @@ namespace MilkTea.Server.Controllers
         {
             try
             {
-                var list = await _repo.GetByMaSPAsync(MaSP);
-                return Ok(list);
+                // Use new repo method: Get all associations without JOIN/filter
+                var associations = await _repo.GetAssociationsByMaSPAsync(MaSP);
+                Debug.WriteLine($"[CONTROLLER GetByMaSP] MaSP={MaSP}: Returning {associations.Count} assocs: [{string.Join(", ", associations.Select(a => a.MaCTKhuyenMai))}]");
+                return Ok(associations);
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"[CONTROLLER ERROR] GetByMaSP {MaSP}: {ex.Message}");
                 return StatusCode(500, $"Lỗi khi lấy dữ liệu: {ex.Message}");
             }
         }
@@ -132,6 +136,20 @@ namespace MilkTea.Server.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Lỗi khi lấy sản phẩm khuyến mãi: {ex.Message}");
+            }
+        }
+        [HttpGet("sanpham/active/{MaSP}")]
+        public async Task<IActionResult> GetActiveKMByMaSP(int MaSP)
+        {
+            try
+            {
+                // Call old repo method for single active KM (if needed elsewhere)
+                var km = await _repo.GetByMaSPAsync(MaSP);
+                return km != null ? Ok(km) : NotFound("No active KM found");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy KM active: {ex.Message}");
             }
         }
 

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MilkTea.Server.Data;
 using MilkTea.Server.Models;
 using MySql.Data.MySqlClient;
@@ -157,6 +158,31 @@ namespace MilkTea.Server.Repositories
 
             return list;
         }
+        public async Task<List<SanPhamKhuyenMai>> GetAssociationsByMaSPAsync(int maSP)
+        {
+            var list = new List<SanPhamKhuyenMai>();
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT MaSP, MaCTKhuyenMai FROM sanpham_khuyenmai WHERE MaSP = @MaSP ORDER BY MaCTKhuyenMai";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaSP", maSP);
+            using var reader = await cmd.ExecuteReaderAsync();
 
+            int idxMaSP = reader.GetOrdinal("MaSP");
+            int idxMaCTKM = reader.GetOrdinal("MaCTKhuyenMai");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new SanPhamKhuyenMai
+                {
+                    MaSP = reader.GetInt32(idxMaSP),
+                    MaCTKhuyenMai = reader.GetInt32(idxMaCTKM)
+                });
+            }
+
+            // Log for debug
+            Debug.WriteLine($"[REPO GetAssociationsByMaSP] MaSP={maSP}: Found {list.Count} assocs: [{string.Join(", ", list.Select(i => i.MaCTKhuyenMai))}]");
+
+            return list;
+        }
     }
 }

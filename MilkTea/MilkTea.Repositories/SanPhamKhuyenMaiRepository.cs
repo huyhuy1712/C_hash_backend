@@ -114,7 +114,7 @@ namespace MilkTea.Server.Repositories
         km.NgayBatDau, km.NgayKetThuc, km.PhanTramKhuyenMai, km.TrangThai
         FROM sanpham_khuyenmai spkm
         JOIN ctkhuyenmai km ON spkm.MaCTKhuyenMai = km.MaCTKhuyenMai
-        WHERE spkm.MaSP = @MaSP
+        WHERE spkm.MaSP = @MaSP AND km.TrangThai = 1
         LIMIT 1;";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaSP", maSP);

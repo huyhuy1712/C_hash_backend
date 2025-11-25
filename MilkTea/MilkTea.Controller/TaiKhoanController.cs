@@ -99,7 +99,7 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm tài khoản: {ex.Message}");
             }
         }
-        
+
         // GET: api/taikhoan/{maTK}
         [HttpGet("{maTK}")]
         public async Task<IActionResult> GetById(int maTK)
@@ -115,6 +115,29 @@ namespace MilkTea.Server.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Lỗi khi lấy tài khoản theo ID: {ex.Message}");
+            }
+        }
+
+        // GET: api/taikhoan/check-username?username=abc
+        [HttpGet("check-username")]
+        public async Task<IActionResult> CheckUsername([FromQuery] string username)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(username))
+                    return BadRequest("Tên tài khoản không hợp lệ.");
+
+                bool exists = await _repo.CheckUsernameExistsAsync(username);
+
+                return Ok(new
+                {
+                    exists,            // true = đã tồn tại
+                    available = !exists // false = không thể dùng
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi kiểm tra tên tài khoản: {ex.Message}");
             }
         }
     }

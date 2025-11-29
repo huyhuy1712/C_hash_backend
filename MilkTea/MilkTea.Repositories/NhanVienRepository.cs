@@ -180,5 +180,18 @@ namespace MilkTea.Server.Repositories
             }
             return null;
         }
+
+        // 9. Xóa nhân viên theo MaTK
+        public async Task<bool> DeleteByMaTKAsync(int maTK)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "DELETE FROM nhanvien WHERE MaTK = @MaTK";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@MaTK", maTK);
+
+            var rows = await cmd.ExecuteNonQueryAsync();
+            return rows > 0;
+        }
+
     }
 }

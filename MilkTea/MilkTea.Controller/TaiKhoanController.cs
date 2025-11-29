@@ -36,9 +36,10 @@ namespace MilkTea.Server.Controllers
         {
             try
             {
-                bool added = await _repo.AddAsync(tk);
-                return added
-                    ? Ok(new { Message = "Thêm tài khoản thành công!" })
+                var newId = await _repo.AddAsync(tk);
+
+                return newId != null
+                    ? Ok(newId)
                     : StatusCode(500, "Không thể thêm tài khoản.");
             }
             catch (Exception ex)

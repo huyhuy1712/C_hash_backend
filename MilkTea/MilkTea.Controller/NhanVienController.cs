@@ -113,7 +113,7 @@ namespace MilkTea.Server.Controllers
 
         }
 
-                //  Lấy MaNV theo tên nhân viên
+        //  Lấy MaNV theo tên nhân viên
         [HttpGet("manv-by-ten")]
         public async Task<IActionResult> GetMaNVByTen(string tenNV)
         {
@@ -142,5 +142,22 @@ namespace MilkTea.Server.Controllers
             }
 
         }
+
+        // DELETE: api/nhanvien/delete-by-matk/{maTK}
+        [HttpDelete("delete-by-matk/{maTK}")]
+        public async Task<IActionResult> DeleteByMaTK(int maTK)
+        {
+            try
+            {
+                bool deleted = await _repo.DeleteByMaTKAsync(maTK);
+                return deleted ? Ok(new { Message = "Xóa nhân viên theo mã tài khoản thành công!" })
+                               : NotFound($"Không tìm thấy nhân viên có mã tài khoản {maTK}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa nhân viên: {ex.Message}");
+            }
+        }
+
     }
 }

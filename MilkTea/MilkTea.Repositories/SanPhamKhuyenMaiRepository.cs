@@ -55,14 +55,33 @@ namespace MilkTea.Server.Repositories
                 return (true, 0); // Consider success (already exists)
             }
 
-            // INSERT IGNORE để tránh error duplicate
-            var query = "INSERT IGNORE INTO sanpham_khuyenmai (MaSP, MaCTKhuyenMai) VALUES (@MaSP, @MaCTKhuyenMai)";
+            // Lấy NgayBatDau và NgayKetThuc từ CTKhuyenMai
+            var dateQuery = "SELECT NgayBatDau, NgayKetThuc FROM ctkhuyenmai WHERE MaCTKhuyenMai = @MaCTKhuyenMai";
+            var dateCmd = new MySqlCommand(dateQuery, conn);
+            dateCmd.Parameters.AddWithValue("@MaCTKhuyenMai", spkm.MaCTKhuyenMai);
+            
+            DateTime? ngayBatDau = null;
+            DateTime? ngayKetThuc = null;
+            
+            using (var reader = await dateCmd.ExecuteReaderAsync())
+            {
+                if (await reader.ReadAsync())
+                {
+                    ngayBatDau = reader.IsDBNull(reader.GetOrdinal("NgayBatDau")) ? null : reader.GetDateTime(reader.GetOrdinal("NgayBatDau"));
+                    ngayKetThuc = reader.IsDBNull(reader.GetOrdinal("NgayKetThuc")) ? null : reader.GetDateTime(reader.GetOrdinal("NgayKetThuc"));
+                }
+            }
+
+            // INSERT với NgayBatDau và NgayKetThuc
+            var query = "INSERT IGNORE INTO sanpham_khuyenmai (MaSP, MaCTKhuyenMai, NgayBatDau, NgayKetThuc) VALUES (@MaSP, @MaCTKhuyenMai, @NgayBatDau, @NgayKetThuc)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaSP", spkm.MaSP);
             cmd.Parameters.AddWithValue("@MaCTKhuyenMai", spkm.MaCTKhuyenMai);
+            cmd.Parameters.AddWithValue("@NgayBatDau", ngayBatDau.HasValue ? (object)ngayBatDau.Value : DBNull.Value);
+            cmd.Parameters.AddWithValue("@NgayKetThuc", ngayKetThuc.HasValue ? (object)ngayKetThuc.Value : DBNull.Value);
 
             var rows = await cmd.ExecuteNonQueryAsync();
-            System.Diagnostics.Debug.WriteLine($"[REPO] INSERT Rows Affected: {rows} for MaSP={spkm.MaSP}, MaCT={spkm.MaCTKhuyenMai}");
+            System.Diagnostics.Debug.WriteLine($"[REPO] INSERT Rows Affected: {rows} for MaSP={spkm.MaSP}, MaCT={spkm.MaCTKhuyenMai}, NgayBatDau={ngayBatDau}, NgayKetThuc={ngayKetThuc}");
             return (rows > 0, rows);
         }
 

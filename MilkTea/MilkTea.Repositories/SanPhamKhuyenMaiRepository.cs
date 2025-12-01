@@ -129,12 +129,15 @@ namespace MilkTea.Server.Repositories
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"
-        SELECT km.MaCTKhuyenMai, km.TenCTKhuyenMai, km.MoTa,
-        km.NgayBatDau, km.NgayKetThuc, km.PhanTramKhuyenMai, km.TrangThai
-        FROM sanpham_khuyenmai spkm
-        JOIN ctkhuyenmai km ON spkm.MaCTKhuyenMai = km.MaCTKhuyenMai
-        WHERE spkm.MaSP = @MaSP AND km.TrangThai = 1
-        LIMIT 1;";
+                SELECT km.MaCTKhuyenMai, km.TenCTKhuyenMai, km.MoTa,
+                    km.NgayBatDau, km.NgayKetThuc, km.PhanTramKhuyenMai, km.TrangThai
+                FROM sanpham_khuyenmai spkm
+                JOIN ctkhuyenmai km ON spkm.MaCTKhuyenMai = km.MaCTKhuyenMai
+                WHERE spkm.MaSP = @MaSP
+                AND km.TrangThai = 0
+                AND NOW() BETWEEN km.NgayBatDau AND km.NgayKetThuc
+                LIMIT 1;";
+
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaSP", maSP);
 
@@ -154,6 +157,7 @@ namespace MilkTea.Server.Repositories
             }
             return null;
         }
+
         public async Task<List<SanPhamKhuyenMai>> GetByMaCTKhuyenMaiAsync(int maCTKhuyenMai)
         {
             var list = new List<SanPhamKhuyenMai>();

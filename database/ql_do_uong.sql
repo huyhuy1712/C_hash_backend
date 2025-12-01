@@ -404,7 +404,7 @@ CREATE TABLE `nguyenlieu` (
 
 LOCK TABLES `nguyenlieu` WRITE;
 /*!40000 ALTER TABLE `nguyenlieu` DISABLE KEYS */;
-INSERT INTO `nguyenlieu` VALUES (1,85,'Trà đen',5000.00,1),(2,75,'Trà xanh',6000.00,1),(3,100,'Sữa đặc',10000.00,1),(4,100,'Đường',2000.00,1),(5,70,'Trân châu đen',15000.00,1),(6,100,'Trân châu trắng',16000.00,1),(7,100,'Pudding',12000.00,1),(8,75,'Thạch dừa',10000.00,1),(9,75,'Đá viên',1000.00,1),(10,100,'Matcha bột',20000.00,1);
+INSERT INTO `nguyenlieu` VALUES (1,100,'Trà đen',5000.00,1),(2,100,'Trà xanh',6000.00,1),(3,100,'Sữa đặc',10000.00,1),(4,100,'Đường',2000.00,1),(5,100,'Trân châu đen',15000.00,1),(6,100,'Trân châu trắng',16000.00,1),(7,100,'Pudding',12000.00,1),(8,75,'Thạch dừa',10000.00,1),(9,100,'Đá viên',1000.00,1),(10,100,'Matcha bột',20000.00,1);
 /*!40000 ALTER TABLE `nguyenlieu` ENABLE KEYS */;
 UNLOCK TABLES;
 

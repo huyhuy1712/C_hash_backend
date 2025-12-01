@@ -45,20 +45,22 @@ namespace MilkTea.Server.Repositories
         }
 
         // 2. Thêm tài khoản
-        public async Task<bool> AddAsync(TaiKhoan tk)
+        public async Task<int?> AddAsync(TaiKhoan tk)
         {
             using var conn = await _db.GetConnectionAsync();
             var query = @"INSERT INTO taikhoan (TenTaiKhoan, Anh, MatKhau, TrangThai, MaQuyen)
-                          VALUES (@TenTaiKhoan, @Anh, @MatKhau, @TrangThai, @MaQuyen)";
+                  VALUES (@TenTaiKhoan, @Anh, @MatKhau, @TrangThai, @MaQuyen);
+                  SELECT LAST_INSERT_ID();";
+
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@TenTaiKhoan", tk.TenTaiKhoan);
             cmd.Parameters.AddWithValue("@Anh", tk.anh ?? "");
+            cmd.Parameters.AddWithValue("@MatKhau", tk.MatKhau);
             cmd.Parameters.AddWithValue("@TrangThai", tk.TrangThai);
             cmd.Parameters.AddWithValue("@MaQuyen", tk.MaQuyen);
-            cmd.Parameters.AddWithValue("@MatKhau", tk.MatKhau);
 
-            var rows = await cmd.ExecuteNonQueryAsync();
-            return rows > 0;
+            var result = await cmd.ExecuteScalarAsync();
+            return result != null ? Convert.ToInt32(result) : null;
         }
 
         // 3. Cập nhật tài khoản
@@ -89,9 +91,9 @@ namespace MilkTea.Server.Repositories
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
         }
-        
 
-  
+
+
 
         //5. Tìm kiếm theo cột và giá trị
         public async Task<List<TaiKhoan>> SearchAsync(string column, string value)
@@ -146,6 +148,18 @@ namespace MilkTea.Server.Repositories
             }
 
             return null;
+        }
+
+        // 7. Kiểm tra tên tài khoản có tồn tại hay chưa
+        public async Task<bool> CheckUsernameExistsAsync(string username)
+        {
+            using var conn = await _db.GetConnectionAsync();
+            var query = "SELECT COUNT(*) FROM taikhoan WHERE TenTaiKhoan = @username";
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@username", username);
+
+            var count = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+            return count > 0; // true = đã tồn tại
         }
     }
 }

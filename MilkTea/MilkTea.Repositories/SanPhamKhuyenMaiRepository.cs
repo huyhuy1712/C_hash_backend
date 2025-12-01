@@ -134,7 +134,6 @@ namespace MilkTea.Server.Repositories
                 FROM sanpham_khuyenmai spkm
                 JOIN ctkhuyenmai km ON spkm.MaCTKhuyenMai = km.MaCTKhuyenMai
                 WHERE spkm.MaSP = @MaSP
-                AND km.TrangThai = 0
                 AND NOW() BETWEEN km.NgayBatDau AND km.NgayKetThuc
                 LIMIT 1;";
 

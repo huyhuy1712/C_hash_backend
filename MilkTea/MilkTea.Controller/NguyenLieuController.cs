@@ -1,0 +1,174 @@
+using Microsoft.AspNetCore.Mvc;
+using MilkTea.Server.Repositories;
+using MilkTea.Server.Models;
+
+namespace MilkTea.Server.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class NguyenLieuController : ControllerBase
+    {
+        private readonly NguyenLieuRepository _repo;
+
+        public NguyenLieuController(NguyenLieuRepository repo)
+        {
+            _repo = repo;
+        }
+
+        // GET: api/nguyenlieu
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var list = await _repo.GetAllAsync();
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy danh sách nguyên liệu: {ex.Message}");
+            }
+        }
+
+        // POST: api/nguyenlieu
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] NguyenLieu nl)
+        {
+            try
+            {
+                bool added = await _repo.AddAsync(nl);
+                return added ? Ok(new { Message = "Thêm nguyên liệu thành công!" })
+                             : StatusCode(500, "Không thể thêm nguyên liệu.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi thêm nguyên liệu: {ex.Message}");
+            }
+        }
+
+        // PUT: api/nguyenlieu
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] NguyenLieu nl)
+        {
+            try
+            {
+                if (id != nl.MaNL)
+                    return BadRequest("ID không khớp.");
+
+                var updatedNl = await _repo.UpdateAsync(nl);
+                if (updatedNl == null)
+                    return NotFound($"Không tìm thấy nguyên liệu {nl.MaNL}.");
+
+                return Ok(updatedNl);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // PUT: api/nguyenlieu/tru/{maNL}/{soLuong}
+        [HttpPut("tru/{maNL:int}/{soLuong:int}")]
+        public async Task<IActionResult> TruNguyenLieu(int maNL, int soLuong)
+        {
+            try
+            {
+                bool result = await _repo.TruSoLuongAsync(maNL, soLuong);
+                return result
+                    ? Ok(new { Message = $"Đã trừ {soLuong} nguyên liệu (mã {maNL}) thành công!" })
+                    : BadRequest($"Không đủ tồn kho hoặc không tìm thấy nguyên liệu có mã {maNL}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi trừ nguyên liệu: {ex.Message}");
+            }
+        }
+
+        // PUT: api/nguyenlieu/cong/{maNL}/{soLuong}
+        [HttpPut("cong/{maNL:int}/{soLuong:int}")]
+        public async Task<IActionResult> CongNguyenLieu(int maNL, int soLuong)
+        {
+            try
+            {
+                bool result = await _repo.CongSoLuongAsync(maNL, soLuong);
+                return result
+                    ? Ok(new { Message = $"Đã cộng {soLuong} nguyên liệu (mã {maNL}) thành công!" })
+                    : BadRequest($"Không đủ tồn kho hoặc không tìm thấy nguyên liệu có mã {maNL}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi cộng nguyên liệu: {ex.Message}");
+            }
+        }
+
+        // DELETE: api/nguyenlieu/{maNL}
+        [HttpDelete("{maNL}")]
+        public async Task<IActionResult> Delete(int maNL)
+        {
+            try
+            {
+                bool deleted = await _repo.DeleteAsync(maNL);
+                return deleted ? Ok(new { Message = "Xóa nguyên liệu thành công!" })
+                               : NotFound($"Không tìm thấy nguyên liệu có mã {maNL}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa nguyên liệu: {ex.Message}");
+            }
+        }
+
+        // GET: api/nguyenlieu/search?ten=Trà
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string ten)
+        {
+            try
+            {
+                var list = await _repo.SearchByNameAsync(ten);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi tìm kiếm nguyên liệu: {ex.Message}");
+            }
+        }
+
+        // GET: api/nguyenlieu/search/byid?maNL=1
+        [HttpGet("search/byid")]
+        public async Task<IActionResult> GetById([FromQuery] int maNL)
+        {
+            try
+            {
+                var list = await _repo.SearchByMaNLAsync(maNL);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi tìm kiếm nguyên liệu: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{maNL}")]
+        public async Task<IActionResult> SoftDelete(int maNL)
+        {
+            try
+            {
+                var nl = await _repo.SearchByMaNLAsync(maNL);
+                if (nl == null)
+                    return NotFound($"Không tìm thấy nguyên liệu có mã {maNL}.");
+
+                nl.TrangThai = 0;
+
+                var updated = await _repo.UpdateAsync(nl);
+                if (updated == null)
+                    return StatusCode(500, "Không thể cập nhật trạng thái.");
+
+                return Ok(new { Message = "Đã xóa (ẩn) nguyên liệu thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa nguyên liệu: {ex.Message}");
+            }
+        }
+
+    }
+}

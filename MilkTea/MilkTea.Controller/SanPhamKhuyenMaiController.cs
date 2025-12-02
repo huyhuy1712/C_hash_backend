@@ -1,0 +1,157 @@
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using MilkTea.Server.Models;
+using MilkTea.Server.Repositories;
+
+namespace MilkTea.Server.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class SanPhamKhuyenMaiController : ControllerBase
+    {
+        private readonly SanPhamKhuyenMaiRepository _repo;
+
+        public SanPhamKhuyenMaiController(SanPhamKhuyenMaiRepository repo)
+        {
+            _repo = repo;
+        }
+
+        //  GET: api/sanphamkhuyenmai
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var list = await _repo.GetAllAsync();
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy dữ liệu: {ex.Message}");
+            }
+        }
+
+        // POST: api/sanphamkhuyenmai
+        // POST: api/sanphamkhuyenmai
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] SanPhamKhuyenMai spkm)
+        {
+            try
+            {
+                var (success, rows) = await _repo.AddAsync(spkm); // Match new repo return
+                if (success)
+                {
+                    return Ok(new { Message = "Thêm sản phẩm khuyến mãi thành công!", RowsAffected = rows });
+                }
+                else
+                {
+                    return StatusCode(500, "Không thể thêm sản phẩm khuyến mãi.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi thêm: {ex.Message}");
+            }
+        }
+
+        // PUT: api/sanphamkhuyenmai/1/5
+        [HttpPut("{maSP}/{maCTKhuyenMaiMoi}")]
+        public async Task<IActionResult> Update(int maSP, int maCTKhuyenMaiMoi)
+        {
+            try
+            {
+                bool updated = await _repo.UpdateAsync(maSP, maCTKhuyenMaiMoi);
+                return updated
+                    ? Ok(new { Message = "Cập nhật khuyến mãi cho sản phẩm thành công!" })
+                    : NotFound("Không tìm thấy sản phẩm để cập nhật.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi cập nhật: {ex.Message}");
+            }
+        }
+
+        // DELETE: api/sanphamkhuyenmai/sanpham/1
+        [HttpDelete("sanpham/{maSP}")]
+        public async Task<IActionResult> DeleteBySP(int maSP)
+        {
+            try
+            {
+                bool deleted = await _repo.DeleteAsync(maSP);
+                return deleted
+                    ? Ok(new { Message = "Đã xóa sản phẩm khỏi khuyến mãi." })
+                    : NotFound("Không tìm thấy sản phẩm cần xóa.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa: {ex.Message}");
+            }
+        }
+
+        // DELETE: api/sanphamkhuyenmai/khuyenmai/3
+        [HttpDelete("khuyenmai/{maCTKM}")]
+        public async Task<IActionResult> DeleteByCTKM(int maCTKM)
+        {
+            try
+            {
+                bool deleted = await _repo.DeleteByCTKMAsync(maCTKM);
+                return deleted
+                    ? Ok(new { Message = "Đã xóa tất cả sản phẩm thuộc chương trình khuyến mãi." })
+                    : NotFound("Không tìm thấy chương trình cần xóa.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi xóa: {ex.Message}");
+            }
+        }
+
+        //  GET: api/sanphamkhuyenmai/sanpham/{MaSP}
+        [HttpGet("sanpham/{MaSP}")]
+        public async Task<IActionResult> GetByMaSP(int MaSP)
+        {
+            try
+            {
+                // Use new repo method: Get all associations without JOIN/filter
+                var associations = await _repo.GetAssociationsByMaSPAsync(MaSP);
+                Debug.WriteLine($"[CONTROLLER GetByMaSP] MaSP={MaSP}: Returning {associations.Count} assocs: [{string.Join(", ", associations.Select(a => a.MaCTKhuyenMai))}]");
+                return Ok(associations);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[CONTROLLER ERROR] GetByMaSP {MaSP}: {ex.Message}");
+                return StatusCode(500, $"Lỗi khi lấy dữ liệu: {ex.Message}");
+            }
+        }
+        // GET: api/sanphamkhuyenmai/ctkhuyenmai/{maCTKhuyenMai}
+        [HttpGet("ctkhuyenmai/{maCTKhuyenMai}")]
+        public async Task<IActionResult> GetByCTKhuyenMai(int maCTKhuyenMai)
+        {
+            try
+            {
+                var list = await _repo.GetByMaCTKhuyenMaiAsync(maCTKhuyenMai);
+                if (list == null || !list.Any())
+                    return Ok(new List<SanPhamKhuyenMai>()); // trả empty list thay vì null
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy sản phẩm khuyến mãi: {ex.Message}");
+            }
+        }
+        [HttpGet("sanpham/active/{MaSP}")]
+        public async Task<IActionResult> GetActiveKMByMaSP(int MaSP)
+        {
+            try
+            {
+                // Call old repo method for single active KM (if needed elsewhere)
+                var km = await _repo.GetByMaSPAsync(MaSP);
+                return km != null ? Ok(km) : NotFound("No active KM found");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy KM active: {ex.Message}");
+            }
+        }
+
+    }
+}

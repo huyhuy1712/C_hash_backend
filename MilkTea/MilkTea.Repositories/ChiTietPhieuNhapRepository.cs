@@ -25,6 +25,7 @@ namespace MilkTea.Server.Repositories
             int idxMaPN = reader.GetOrdinal("MaPN");
             int idxMaNL = reader.GetOrdinal("MaNguyenLieu");
             int idxSoLuong = reader.GetOrdinal("SoLuong");
+            int idxDonViTinh = reader.GetOrdinal("DonViTinh");
             int idxDonGia = reader.GetOrdinal("DonGiaNhap");
             int idxTongGia = reader.GetOrdinal("TongGia");
 
@@ -36,6 +37,7 @@ namespace MilkTea.Server.Repositories
                     MaPN = reader.GetInt32(idxMaPN),
                     MaNguyenLieu = reader.GetInt32(idxMaNL),
                     SoLuong = reader.GetInt32(idxSoLuong),
+                    DonViTinh = reader.GetString(idxDonViTinh),
                     DonGiaNhap = reader.GetDecimal(idxDonGia),
                     TongGia = reader.GetDecimal(idxTongGia)
                 });
@@ -48,12 +50,13 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(ChiTietPhieuNhap ctpn)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO chitietphieunhap (MaPN, MaNguyenLieu, SoLuong, DonGiaNhap, TongGia)
-                          VALUES (@MaPN, @MaNguyenLieu, @SoLuong, @DonGia, @TongGia)";
+            var query = @"INSERT INTO chitietphieunhap (MaPN, MaNguyenLieu, SoLuong, DonViTinh, DonGiaNhap, TongGia)
+                          VALUES (@MaPN, @MaNguyenLieu, @SoLuong, @DonViTinh, @DonGia, @TongGia)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaPN", ctpn.MaPN);
             cmd.Parameters.AddWithValue("@MaNguyenLieu", ctpn.MaNguyenLieu);
             cmd.Parameters.AddWithValue("@SoLuong", ctpn.SoLuong);
+            cmd.Parameters.AddWithValue("@DonViTinh", ctpn.DonViTinh);
             cmd.Parameters.AddWithValue("@DonGia", ctpn.DonGiaNhap);
             cmd.Parameters.AddWithValue("@TongGia", ctpn.TongGia);
 
@@ -116,6 +119,7 @@ namespace MilkTea.Server.Repositories
             int idxMaPN = reader.GetOrdinal("MaPN");
             int idxMaNL = reader.GetOrdinal("MaNguyenLieu");
             int idxSoLuong = reader.GetOrdinal("SoLuong");
+            int idxDonViTinh = reader.GetOrdinal("DonViTinh");
             int idxDonGia = reader.GetOrdinal("DonGiaNhap");
             int idxTongGia = reader.GetOrdinal("TongGia");
 
@@ -127,6 +131,7 @@ namespace MilkTea.Server.Repositories
                     MaPN = reader.GetInt32(idxMaPN),
                     MaNguyenLieu = reader.GetInt32(idxMaNL),
                     SoLuong = reader.GetInt32(idxSoLuong),
+                    DonViTinh = reader.GetString(idxDonViTinh),
                     DonGiaNhap = reader.GetDecimal(idxDonGia),
                     TongGia = reader.GetDecimal(idxTongGia)
                 });
@@ -149,6 +154,7 @@ namespace MilkTea.Server.Repositories
             int idxMaPN = reader.GetOrdinal("MaPN");
             int idxMaNL = reader.GetOrdinal("MaNguyenLieu");
             int idxSoLuong = reader.GetOrdinal("SoLuong");
+            int idxDonViTinh = reader.GetOrdinal("DonViTinh");
             int idxDonGia = reader.GetOrdinal("DonGiaNhap");
             int idxTongGia = reader.GetOrdinal("TongGia");
 
@@ -160,6 +166,7 @@ namespace MilkTea.Server.Repositories
                     MaPN = reader.GetInt32(idxMaPN),
                     MaNguyenLieu = reader.GetInt32(idxMaNL),
                     SoLuong = reader.GetInt32(idxSoLuong),
+                    DonViTinh = reader.GetString(idxDonViTinh),
                     DonGiaNhap = reader.GetDecimal(idxDonGia),
                     TongGia = reader.GetDecimal(idxTongGia)
                 });

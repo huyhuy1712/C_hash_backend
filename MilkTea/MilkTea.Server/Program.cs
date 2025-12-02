@@ -30,6 +30,7 @@ builder.Services.AddScoped<QuyenRepository>();
 builder.Services.AddScoped<SanPhamKhuyenMaiRepository>();
 builder.Services.AddScoped<SizeRepository>();
 builder.Services.AddScoped<TaiKhoanRepository>();
+builder.Services.AddScoped<DonViTinhRepository>();
 
 
 

@@ -20,6 +20,9 @@ namespace MilkTea.Server.Models
         // Tổng tiền nhập
         public decimal TongTien { get; set; }
 
+        // Đơn vị tính
+        public string DonViTinh { get; set; }
+
         public int TrangThai { get; set; }
     }
 }

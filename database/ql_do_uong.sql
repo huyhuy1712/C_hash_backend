@@ -116,7 +116,6 @@ CREATE TABLE `chitietphieunhap` (
   `MaPN` int DEFAULT NULL,
   `SoLuong` int DEFAULT NULL,
   `MaNguyenLieu` int DEFAULT NULL,
-  `DonViTinh` varchar(50) DEFAULT NULL,
   `DonGiaNhap` decimal(12,2) DEFAULT NULL,
   `TongGia` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`MaChiTietPhieuNhap`),
@@ -133,7 +132,7 @@ CREATE TABLE `chitietphieunhap` (
 
 LOCK TABLES `chitietphieunhap` WRITE;
 /*!40000 ALTER TABLE `chitietphieunhap` DISABLE KEYS */;
-INSERT INTO `chitietphieunhap` VALUES (1,1,50,1,'Kg',4400.00,220000.00),(2,2,30,2,'Kg',5000.00,150000.00),(3,3,40,3,'Kg',4500.00,180000.00),(4,4,20,4,'Kg',5000.00,100000.00),(5,5,60,5,'Kg',5000.00,300000.00),(6,6,25,6,'Kg',5000.00,125000.00),(7,7,35,7,'Kg',5000.00,175000.00),(8,8,45,8,'Kg',5000.00,225000.00),(9,9,55,9,'Kg',5000.00,275000.00),(10,10,15,10,'Kg',5000.00,75000.00),(11,11,20,1,'Kg',5000.00,100000.00),(12,12,30,2,'Kg',5000.00,150000.00),(13,13,25,3,'Kg',5000.00,125000.00),(14,14,40,4,'Kg',5000.00,200000.00);
+INSERT INTO `chitietphieunhap` VALUES (1,1,20,1,5000.00,100000.00),(2,1,30,2,4000.00,120000.00),(3,2,15,3,6000.00,90000.00),(4,2,15,4,5000.00,75000.00),(5,3,25,1,5000.00,125000.00),(6,3,15,5,7000.00,105000.00),(7,4,10,2,4000.00,40000.00),(8,5,30,3,6000.00,180000.00),(9,6,20,4,5000.00,100000.00),(10,7,25,5,7000.00,175000.00),(11,11,4,1,5000.00,20000.00),(12,11,1,1,5000.00,5000.00),(13,12,5,1,5000.00,25000.00),(14,12,3,1,5000.00,15000.00),(15,13,4,1,5000.00,20000.00);
 /*!40000 ALTER TABLE `chitietphieunhap` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +404,7 @@ CREATE TABLE `nguyenlieu` (
 
 LOCK TABLES `nguyenlieu` WRITE;
 /*!40000 ALTER TABLE `nguyenlieu` DISABLE KEYS */;
-INSERT INTO `nguyenlieu` VALUES (1,100,'Trà đen',5000.00,1),(2,100,'Trà xanh',6000.00,1),(3,100,'Sữa đặc',10000.00,1),(4,100,'Đường',2000.00,1),(5,100,'Trân châu đen',15000.00,1),(6,100,'Trân châu trắng',16000.00,1),(7,100,'Pudding',12000.00,1),(8,75,'Thạch dừa',10000.00,1),(9,100,'Đá viên',1000.00,1),(10,100,'Matcha bột',20000.00,1);
+INSERT INTO `nguyenlieu` VALUES (1,85,'Trà đen',5000.00,1),(2,75,'Trà xanh',6000.00,1),(3,100,'Sữa đặc',10000.00,1),(4,100,'Đường',2000.00,1),(5,70,'Trân châu đen',15000.00,1),(6,100,'Trân châu trắng',16000.00,1),(7,100,'Pudding',12000.00,1),(8,75,'Thạch dừa',10000.00,1),(9,75,'Đá viên',1000.00,1),(10,100,'Matcha bột',20000.00,1);
 /*!40000 ALTER TABLE `nguyenlieu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -435,31 +434,6 @@ LOCK TABLES `nhacungcap` WRITE;
 INSERT INTO `nhacungcap` VALUES (1,'Công ty TNHH Trà Sữa A','0901111001','123 Lê Lợi, Quận 1, TP.HCM',1),(2,'Công ty TNHH Nguyên Liệu B','0901111002','45 Trần Hưng Đạo, Quận 5, TP.HCM',1),(3,'Cơ Sở Cung Ứng C','0901111003','78 Nguyễn Huệ, Quận 1, TP.HCM',1),(4,'Công ty TNHH Đóng Gói D','0901111004','9 Lý Thường Kiệt, Quận 11, TP.HCM',1),(5,'Nhà Cung Cấp E','0901111005','210 Phan Đình Phùng, TP.Đà Lạt',1),(6,'Công ty F','0901111006','56 Hai Bà Trưng, Quận 3, TP.HCM',1),(7,'Cơ Sở G','0901111007','12 Trần Phú, Hà Đông, Hà Nội',1),(8,'Công ty H','0901111008','88 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM',1),(9,'Nhà Cung Cấp I','0901111009','33 Bà Triệu, Hoàn Kiếm, Hà Nội',1),(10,'Công ty J','0901111010','150 Võ Văn Kiệt, Quận 1, TP.HCM',1);
 /*!40000 ALTER TABLE `nhacungcap` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `donvitinh`
---
-
-DROP TABLE IF EXISTS `donvitinh`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `donvitinh` (
-  `MaDVT` int NOT NULL AUTO_INCREMENT,
-  `TenDVT` varchar(50) NOT NULL,
-  PRIMARY KEY (`MaDVT`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `donvitinh`
---
-
-LOCK TABLES `donvitinh` WRITE;
-/*!40000 ALTER TABLE `donvitinh` DISABLE KEYS */;
-INSERT INTO `donvitinh` VALUES (1,'Kg'),(2,'Gram'),(3,'Lít'),(4,'ml'),(5,'Chai'),(6,'Lon'),(7,'Gói'),(8,'Cái'),(9,'Thùng'),(10,'Hộp');
-/*!40000 ALTER TABLE `donvitinh` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 --
 -- Table structure for table `nhanvien`
@@ -504,7 +478,6 @@ CREATE TABLE `phieunhap` (
   `TrangThai` int DEFAULT NULL,
   `MaNCC` int DEFAULT NULL,
   `MaNV` int DEFAULT NULL,
-  `DonViTinh` varchar(50) DEFAULT NULL,
   `TongTien` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`MaPN`),
   KEY `MaNV` (`MaNV`),
@@ -520,7 +493,7 @@ CREATE TABLE `phieunhap` (
 
 LOCK TABLES `phieunhap` WRITE;
 /*!40000 ALTER TABLE `phieunhap` DISABLE KEYS */;
-INSERT INTO `phieunhap` VALUES (1,'2025-09-20',50,1,1,1,'Kg',220000.00),(2,'2025-09-21',30,1,2,2,'Kg',150000.00),(3,'2025-09-22',40,1,3,3,'Kg',180000.00),(4,'2025-09-23',20,1,4,4,'Kg',100000.00),(5,'2025-09-24',60,1,5,5,'Kg',300000.00),(6,'2025-09-25',25,1,6,6,'Kg',125000.00),(7,'2025-09-26',35,1,7,7,'Kg',175000.00),(8,'2025-09-27',45,1,8,8,'Kg',225000.00),(9,'2025-09-28',55,1,9,9,'Kg',275000.00),(10,'2025-09-29',15,1,10,10,'Kg',75000.00),(11,'2025-10-20',20,1,1,1,'Kg',100000.00),(12,'2025-10-21',30,1,2,2,'Kg',150000.00),(13,'2025-10-22',25,1,3,3,'Kg',125000.00),(14,'2025-10-23',40,1,4,4,'Kg',200000.00);
+INSERT INTO `phieunhap` VALUES (1,'2025-09-01',50,1,1,1,500000.00),(2,'2025-09-02',30,1,2,2,300000.00),(3,'2025-09-03',40,1,3,3,400000.00),(4,'2025-09-04',25,1,4,4,250000.00),(5,'2025-09-05',60,1,5,5,600000.00),(6,'2025-09-06',35,1,6,6,350000.00),(7,'2025-09-07',45,0,7,7,450000.00),(8,'2025-09-08',20,1,8,8,200000.00),(9,'2025-09-09',55,1,9,9,550000.00),(10,'2025-09-10',50,1,9,10,500000.00),(11,'2025-10-23',5,1,1,1,25000.00),(12,'2025-10-23',8,1,1,1,40000.00),(13,'2025-10-24',4,0,1,1,20000.00),(14,'2025-10-25',3,1,1,1,15000.00);
 /*!40000 ALTER TABLE `phieunhap` ENABLE KEYS */;
 UNLOCK TABLES;
 

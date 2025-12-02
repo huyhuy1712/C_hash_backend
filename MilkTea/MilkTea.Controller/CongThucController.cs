@@ -30,6 +30,25 @@ namespace MilkTea.Server.Controllers
             }
         }
 
+        // GET: api/congthuc/masp/5
+        [HttpGet("masp/{maSP}")]
+        public async Task<IActionResult> GetByMaSP(int maSP)
+        {
+            try
+            {
+                var list = await _repo.GetByMaSPAsync(maSP);
+
+                if (list == null)
+                    return NotFound($"Không tìm thấy công thức thuộc sản phẩm có mã {maSP}.");
+
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy công thức theo MaSP: {ex.Message}");
+            }
+        }
+
         //  POST: api/congthuc
 [HttpPost]
 public async Task<IActionResult> Add([FromBody] CongThuc ct)

@@ -14,6 +14,9 @@ namespace MilkTea.Server.Models
         // Mã nguyên liệu (FK tới bảng NguyenLieu)
         public int MaNguyenLieu { get; set; }
 
+        // Đơn vị tính
+        public string DonViTinh { get; set; }
+
         // Đơn giá nhập (giá 1 đơn vị nguyên liệu)
         public decimal DonGiaNhap { get; set; }
 

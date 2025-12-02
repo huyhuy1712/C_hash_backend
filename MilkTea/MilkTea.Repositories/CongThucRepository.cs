@@ -118,5 +118,39 @@ public async Task<int> AddAsync(CongThuc ct)
 
             return list;
         }
+
+        // 6. Lấy công thức theo MaSP
+// 6. Lấy 1 công thức theo MaSP
+public async Task<CongThuc?> GetByMaSPAsync(int maSP)
+{
+    using var conn = await _db.GetConnectionAsync();
+    var query = @"SELECT MaCT, Ten, MaSP, MoTa 
+                  FROM congthuc 
+                  WHERE MaSP = @MaSP
+                  LIMIT 1";
+
+    using var cmd = new MySqlCommand(query, conn);
+    cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+    using var reader = await cmd.ExecuteReaderAsync();
+
+    if (await reader.ReadAsync())
+    {
+        return new CongThuc
+        {
+            MaCT = reader.GetInt32(reader.GetOrdinal("MaCT")),
+            Ten = reader.GetString(reader.GetOrdinal("Ten")),
+            MaSP = reader.GetInt32(reader.GetOrdinal("MaSP")),
+            MoTa = reader.IsDBNull(reader.GetOrdinal("MoTa")) 
+                   ? null 
+                   : reader.GetString(reader.GetOrdinal("MoTa"))
+        };
+    }
+
+    return null; // không có công thức
+}
+
+
+
     }
 }

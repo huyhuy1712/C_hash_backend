@@ -398,6 +398,7 @@ CREATE TABLE `nguyenlieu` (
   `SoLuong` int DEFAULT NULL,
   `Ten` varchar(50) DEFAULT NULL,
   `GiaBan` decimal(12,2) DEFAULT NULL,
+  `DonVi` varchar(20) DEFAULT NULL,
   `TrangThai` int DEFAULT NULL,
   PRIMARY KEY (`MaNL`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -409,7 +410,17 @@ CREATE TABLE `nguyenlieu` (
 
 LOCK TABLES `nguyenlieu` WRITE;
 /*!40000 ALTER TABLE `nguyenlieu` DISABLE KEYS */;
-INSERT INTO `nguyenlieu` VALUES (1,85,'Trà đen',5000.00,1),(2,75,'Trà xanh',6000.00,1),(3,100,'Sữa đặc',10000.00,1),(4,100,'Đường',2000.00,1),(5,70,'Trân châu đen',15000.00,1),(6,100,'Trân châu trắng',16000.00,1),(7,100,'Pudding',12000.00,1),(8,75,'Thạch dừa',10000.00,1),(9,75,'Đá viên',1000.00,1),(10,100,'Matcha bột',20000.00,1);
+INSERT INTO `nguyenlieu` (`MaNL`, `SoLuong`, `Ten`, `GiaBan`, `DonVi`, `TrangThai`) VALUES 
+(1, 85, 'Trà đen', 5000.00, 'kg', 1),
+(2, 75, 'Trà xanh', 6000.00, 'kg', 1),
+(3, 100, 'Sữa đặc', 10000.00, 'lon', 1),
+(4, 100, 'Đường', 2000.00, 'kg', 1),
+(5, 70, 'Trân châu đen', 15000.00, 'kg', 1),
+(6, 100, 'Trân châu trắng', 16000.00, 'kg', 1),
+(7, 100, 'Pudding', 12000.00, 'hộp', 1),
+(8, 75, 'Thạch dừa', 10000.00, 'kg', 1),
+(9, 75, 'Đá viên', 1000.00, 'bịch', 1),
+(10, 100, 'Matcha bột', 20000.00, 'gói', 1);
 /*!40000 ALTER TABLE `nguyenlieu` ENABLE KEYS */;
 UNLOCK TABLES;
 

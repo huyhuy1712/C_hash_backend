@@ -26,6 +26,7 @@ namespace MilkTea.Server.Repositories
             int idxTen = reader.GetOrdinal("Ten");
             int idxSoLuong = reader.GetOrdinal("SoLuong");
             int idxGiaBan = reader.GetOrdinal("GiaBan");
+            int idxDonVi = reader.GetOrdinal("DonVi");
             int idxTrangThai = reader.GetOrdinal("TrangThai");
 
             while (await reader.ReadAsync())
@@ -33,9 +34,10 @@ namespace MilkTea.Server.Repositories
                 list.Add(new NguyenLieu
                 {
                     MaNL = reader.GetInt32(idxMaNL),
-                    Ten = reader.GetString(idxTen),
+                    Ten = reader.IsDBNull(idxTen) ? null : reader.GetString(idxTen),
                     SoLuong = reader.GetInt32(idxSoLuong),
                     GiaBan = reader.GetDecimal(idxGiaBan),
+                    DonVi = reader.IsDBNull(idxDonVi) ? null : reader.GetString(idxDonVi),
                     TrangThai = reader.GetInt32(idxTrangThai),
 
                 });
@@ -48,12 +50,13 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(NguyenLieu nl)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO nguyenlieu (Ten, SoLuong, GiaBan, TrangThai)
-                          VALUES (@Ten, @SoLuong, @GiaBan, @TrangThai)";
-            var cmd = new MySqlCommand(query, conn);
+            var cmd = new MySqlCommand(
+                "INSERT INTO nguyenlieu (Ten, SoLuong, GiaBan, DonVi, TrangThai) VALUES (@Ten, @SoLuong, @GiaBan, @DonVi, @TrangThai)",
+                conn);
             cmd.Parameters.AddWithValue("@Ten", nl.Ten);
             cmd.Parameters.AddWithValue("@SoLuong", nl.SoLuong);
             cmd.Parameters.AddWithValue("@GiaBan", nl.GiaBan);
+            cmd.Parameters.AddWithValue("@DonVi", nl.DonVi ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@TrangThai", nl.TrangThai);
 
             var rows = await cmd.ExecuteNonQueryAsync();
@@ -68,13 +71,14 @@ namespace MilkTea.Server.Repositories
 
             // Bước 1: Update
             var updateQuery = @"UPDATE nguyenlieu 
-                                SET Ten = @Ten, SoLuong = @SoLuong, GiaBan = @GiaBan, TrangThai = @TrangThai
+                                SET Ten = @Ten, SoLuong = @SoLuong, GiaBan = @GiaBan, DonVi = @DonVi, TrangThai = @TrangThai
                                 WHERE MaNL = @MaNL";
             var updateCmd = new MySqlCommand(updateQuery, conn);
             updateCmd.Parameters.AddWithValue("@Ten", nl.Ten);
             updateCmd.Parameters.AddWithValue("@SoLuong", nl.SoLuong);
             updateCmd.Parameters.AddWithValue("@GiaBan", nl.GiaBan);
             updateCmd.Parameters.AddWithValue("@MaNL", nl.MaNL);
+            updateCmd.Parameters.AddWithValue("@DonVi", nl.DonVi ?? (object)DBNull.Value);
             updateCmd.Parameters.AddWithValue("@TrangThai", nl.TrangThai);
 
             var rowsAffected = await updateCmd.ExecuteNonQueryAsync();
@@ -94,9 +98,10 @@ namespace MilkTea.Server.Repositories
                 return new NguyenLieu
                 {
                     MaNL = reader.GetInt32(reader.GetOrdinal("MaNL")),
-                    Ten = reader.GetString(reader.GetOrdinal("Ten")),
+                    Ten = reader.IsDBNull(reader.GetOrdinal("Ten")) ? null : reader.GetString(reader.GetOrdinal("Ten")),
                     SoLuong = reader.GetInt32(reader.GetOrdinal("SoLuong")),
                     GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan")),
+                    DonVi = reader.IsDBNull(reader.GetOrdinal("DonVi")) ? null : reader.GetString(reader.GetOrdinal("DonVi")),
                     TrangThai = reader.GetInt32(reader.GetOrdinal("TrangThai"))
                 };
             }

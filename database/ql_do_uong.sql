@@ -310,6 +310,11 @@ CREATE TABLE `doanhthu` (
   CONSTRAINT `doanhthu_ibfk_3` FOREIGN KEY (`MaKM`) REFERENCES `ctkhuyenmai` (`MaCTKhuyenMai`),
   CONSTRAINT `doanhthu_ibfk_4` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE doanhthu
+ADD COLUMN MaDH INT DEFAULT NULL,
+ADD KEY MaDH (MaDH),
+ADD CONSTRAINT doanhthu_ibfk_5 FOREIGN KEY (MaDH) REFERENCES donhang(MaDH);
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

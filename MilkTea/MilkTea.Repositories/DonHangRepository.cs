@@ -184,6 +184,51 @@ namespace MilkTea.Server.Repositories
             return list;
         }
 
+        public async Task<List<DonHang>> FilterByDateAsync(DateTime from, DateTime to)
+        {
+            var list = new List<DonHang>();
+            using var conn = await _db.GetConnectionAsync();
+
+            string query = @"SELECT * FROM donhang 
+                     WHERE DATE(NgayLap) BETWEEN @from AND @to";
+
+            var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@from", from);
+            cmd.Parameters.AddWithValue("@to", to);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            int idxMaDH = reader.GetOrdinal("MaDH");
+            int idxMaNV = reader.GetOrdinal("MaNV");
+            int idxNgayLap = reader.GetOrdinal("NgayLap");
+            int idxGioLap = reader.GetOrdinal("GioLap");
+            int idxTrangThai = reader.GetOrdinal("TrangThai");
+            int idxMaBuzzer = reader.GetOrdinal("MaBuzzer");
+            int idxPTTT = reader.GetOrdinal("PhuongThucThanhToan");
+            int idxTongGia = reader.GetOrdinal("TongGia");
+
+            while (await reader.ReadAsync())
+            {
+                list.Add(new DonHang
+                {
+                    MaDH = reader.GetInt32(idxMaDH),
+                    MaNV = reader.IsDBNull(idxMaNV) ? null : reader.GetInt32(idxMaNV),
+                    NgayLap = reader.GetDateTime(idxNgayLap),
+                    GioLap = reader.IsDBNull(idxGioLap)
+                            ? (TimeSpan?)null
+                            : (TimeSpan?)reader.GetValue(idxGioLap),
+                    TrangThai = reader.GetInt32(idxTrangThai),
+                    MaBuzzer = reader.IsDBNull(idxMaBuzzer) ? null : reader.GetInt32(idxMaBuzzer),
+                    PhuongThucThanhToan = reader.IsDBNull(idxPTTT) ? null : reader.GetInt32(idxPTTT),
+                    TongGia = reader.GetDecimal(idxTongGia)
+                });
+            }
+
+            return list;
+        }
+
+
+
 
 
     }

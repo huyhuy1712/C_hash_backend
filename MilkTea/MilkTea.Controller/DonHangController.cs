@@ -121,5 +121,13 @@ namespace MilkTea.Server.Controllers
                 return StatusCode(500, $"Lỗi khi tìm kiếm đơn hàng: {ex.Message}");
             }
         }
+
+        [HttpGet("filter-date")]
+        public async Task<IActionResult> FilterByDate(DateTime from, DateTime to)
+        {
+            var result = await _repo.FilterByDateAsync(from, to);
+            return Ok(result);
+        }
+
     }
 }

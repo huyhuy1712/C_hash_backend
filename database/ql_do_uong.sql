@@ -588,7 +588,7 @@ CREATE TABLE `quyen_chucnang` (
 
 LOCK TABLES `quyen_chucnang` WRITE;
 /*!40000 ALTER TABLE `quyen_chucnang` DISABLE KEYS */;
-INSERT INTO `quyen_chucnang` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,32),(2,2),(2,5),(3,4),(4,5),(5,1),(5,2),(5,3),(5,4),(5,5);
+INSERT INTO `quyen_chucnang` VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,32),(2,2),(2,5),(3,4),(4,5),(5,1),(5,2),(5,3),(5,4),(5,5);
 /*!40000 ALTER TABLE `quyen_chucnang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -738,3 +738,21 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-10-25 22:42:40
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 2;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(2,1),(2,2),(2,3),(2,4);
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 3;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(3,20),(3,21),(3,22),(3,23),(3,24),
+(3,25),(3,26),(3,27),(3,28),(3,29);
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 4;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(4,18),(4,19),(4,5);
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 5;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(5,5),(5,6),(5,10),(5,14),(5,20),
+(5,18),(5,25),(5,29);

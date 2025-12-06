@@ -116,6 +116,7 @@ CREATE TABLE `chitietphieunhap` (
   `MaPN` int DEFAULT NULL,
   `SoLuong` int DEFAULT NULL,
   `MaNguyenLieu` int DEFAULT NULL,
+  `DonViTinh` varchar(50) DEFAULT NULL,
   `DonGiaNhap` decimal(12,2) DEFAULT NULL,
   `TongGia` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`MaChiTietPhieuNhap`),
@@ -132,7 +133,7 @@ CREATE TABLE `chitietphieunhap` (
 
 LOCK TABLES `chitietphieunhap` WRITE;
 /*!40000 ALTER TABLE `chitietphieunhap` DISABLE KEYS */;
-INSERT INTO `chitietphieunhap` VALUES (1,1,20,1,5000.00,100000.00),(2,1,30,2,4000.00,120000.00),(3,2,15,3,6000.00,90000.00),(4,2,15,4,5000.00,75000.00),(5,3,25,1,5000.00,125000.00),(6,3,15,5,7000.00,105000.00),(7,4,10,2,4000.00,40000.00),(8,5,30,3,6000.00,180000.00),(9,6,20,4,5000.00,100000.00),(10,7,25,5,7000.00,175000.00),(11,11,4,1,5000.00,20000.00),(12,11,1,1,5000.00,5000.00),(13,12,5,1,5000.00,25000.00),(14,12,3,1,5000.00,15000.00),(15,13,4,1,5000.00,20000.00);
+INSERT INTO `chitietphieunhap` VALUES (1,1,50,1,'Kg',4400.00,220000.00),(2,2,30,2,'Kg',5000.00,150000.00),(3,3,40,3,'Kg',4500.00,180000.00),(4,4,20,4,'Kg',5000.00,100000.00),(5,5,60,5,'Kg',5000.00,300000.00),(6,6,25,6,'Kg',5000.00,125000.00),(7,7,35,7,'Kg',5000.00,175000.00),(8,8,45,8,'Kg',5000.00,225000.00),(9,9,55,9,'Kg',5000.00,275000.00),(10,10,15,10,'Kg',5000.00,75000.00),(11,11,20,1,'Kg',5000.00,100000.00),(12,12,30,2,'Kg',5000.00,150000.00),(13,13,25,3,'Kg',5000.00,125000.00),(14,14,40,4,'Kg',5000.00,200000.00);
 /*!40000 ALTER TABLE `chitietphieunhap` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,6 +245,30 @@ CREATE TABLE `ctdonhang_topping` (
 -- Dumping data for table `ctdonhang_topping`
 --
 
+--
+-- Table structure for table `donvitinh`
+--
+
+DROP TABLE IF EXISTS `donvitinh`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `donvitinh` (
+  `MaDVT` int NOT NULL AUTO_INCREMENT,
+  `TenDVT` varchar(50) NOT NULL,
+  PRIMARY KEY (`MaDVT`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `donvitinh`
+--
+
+LOCK TABLES `donvitinh` WRITE;
+/*!40000 ALTER TABLE `donvitinh` DISABLE KEYS */;
+INSERT INTO `donvitinh` VALUES (1,'Kg'),(2,'Gram'),(3,'Lít'),(4,'ml'),(5,'Chai'),(6,'Lon'),(7,'Gói'),(8,'Cái'),(9,'Thùng'),(10,'Hộp');
+/*!40000 ALTER TABLE `donvitinh` ENABLE KEYS */;
+UNLOCK TABLES;
+
 LOCK TABLES `ctdonhang_topping` WRITE;
 /*!40000 ALTER TABLE `ctdonhang_topping` DISABLE KEYS */;
 INSERT INTO `ctdonhang_topping` VALUES (8,8,25),(9,8,25);
@@ -310,6 +335,11 @@ CREATE TABLE `doanhthu` (
   CONSTRAINT `doanhthu_ibfk_3` FOREIGN KEY (`MaKM`) REFERENCES `ctkhuyenmai` (`MaCTKhuyenMai`),
   CONSTRAINT `doanhthu_ibfk_4` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE doanhthu
+ADD COLUMN MaDH INT DEFAULT NULL,
+ADD KEY MaDH (MaDH),
+ADD CONSTRAINT doanhthu_ibfk_5 FOREIGN KEY (MaDH) REFERENCES donhang(MaDH);
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -489,6 +519,7 @@ CREATE TABLE `phieunhap` (
   `TrangThai` int DEFAULT NULL,
   `MaNCC` int DEFAULT NULL,
   `MaNV` int DEFAULT NULL,
+  `DonViTinh` varchar(50) DEFAULT NULL,
   `TongTien` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`MaPN`),
   KEY `MaNV` (`MaNV`),

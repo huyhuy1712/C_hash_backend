@@ -38,6 +38,8 @@ namespace MilkTea.Server.Models
         // Tổng doanh thu
         public decimal TongDoanhThu { get; set; }
 
+        // Mã đơn hàng (FK tới DonHang)
+        public int? MaDH { get; set; }
         
     }
 

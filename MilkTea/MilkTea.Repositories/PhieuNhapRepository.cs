@@ -71,9 +71,14 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> UpdateAsync(PhieuNhap pn)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"UPDATE phieunhap 
-                          SET NgayNhap = @NgayNhap, SoLuong = @SoLuong,TrangThai = @TrangThai, MaNCC = @MaNCC, MaNV = @MaNV, TongTien = @TongTien,
-                          WHERE MaPN = @MaPN";
+            var query = @"UPDATE phieunhap
+                        SET NgayNhap = @NgayNhap,
+                            SoLuong = @SoLuong,
+                            TrangThai = @TrangThai,
+                            TongTien = @TongTien,
+                            MaNCC = @MaNCC,
+                            MaNV = @MaNV
+                        WHERE MaPN = @MaPN;";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@NgayNhap", pn.NgayNhap);
             cmd.Parameters.AddWithValue("@SoLuong", pn.SoLuong);

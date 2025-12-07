@@ -287,7 +287,7 @@ CREATE TABLE `donvitinh` (
 
 LOCK TABLES `donvitinh` WRITE;
 /*!40000 ALTER TABLE `donvitinh` DISABLE KEYS */;
-INSERT INTO `donvitinh` VALUES (1,'Kg'),(2,'Gram'),(3,'Lít'),(4,'ml'),(5,'Chai'),(6,'Lon'),(7,'Gói'),(8,'Cái'),(9,'Thùng'),(10,'Hộp');
+INSERT INTO `donvitinh` VALUES (1,'Kg'),(2,'Gram'),(3,'Lít'),(4,'ml'),(7,'Gói'),(8,'Cái');
 /*!40000 ALTER TABLE `donvitinh` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,16 +459,16 @@ CREATE TABLE `nguyenlieu` (
 LOCK TABLES `nguyenlieu` WRITE;
 /*!40000 ALTER TABLE `nguyenlieu` DISABLE KEYS */;
 INSERT INTO `nguyenlieu` (`MaNL`, `SoLuong`, `Ten`, `GiaBan`, `MaDVT`, `TrangThai`) VALUES 
-(1, 85, 'Trà đen', 5000.00, 1, 1),
-(2, 75, 'Trà xanh', 6000.00, 1, 1),
-(3, 100, 'Sữa đặc', 10000.00, 6, 1),
-(4, 100, 'Đường', 2000.00, 1, 1),
-(5, 70, 'Trân châu đen', 15000.00, 1, 1),
-(6, 100, 'Trân châu trắng', 16000.00, 1, 1),
-(7, 100, 'Pudding', 12000.00, 10, 1),
-(8, 75, 'Thạch dừa', 10000.00, 1, 1),
-(9, 75, 'Đá viên', 1000.00, 7, 1),
-(10, 100, 'Matcha bột', 20000.00, 7, 1);
+(1, 85, 'Trà đen', 5000.00, 4, 1),
+(2, 75, 'Trà xanh', 6000.00, 4, 1),
+(3, 100, 'Sữa đặc', 10000.00, 4, 1),
+(4, 100, 'Đường', 2000.00, 2, 1),
+(5, 70, 'Trân châu đen', 15000.00, 2, 1),
+(6, 100, 'Trân châu trắng', 16000.00, 2, 1),
+(7, 100, 'Pudding', 12000.00, 8, 1),
+(8, 75, 'Thạch dừa', 10000.00, 2, 1),
+(9, 75, 'Đá viên', 1000.00, 2, 1),
+(10, 100, 'Matcha bột', 20000.00, 2, 1);
 /*!40000 ALTER TABLE `nguyenlieu` ENABLE KEYS */;
 UNLOCK TABLES;
 

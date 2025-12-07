@@ -39,18 +39,20 @@ namespace MilkTea.Server.Controllers
         }
 
         // PUT: api/phieunhap
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] PhieuNhap pn)
+        [HttpPut("{maPN:int}")]
+        public async Task<IActionResult> Update(int maPN, [FromBody] PhieuNhap pn)
         {
             try
             {
+                pn.MaPN = maPN;
                 bool updated = await _repo.UpdateAsync(pn);
-                return updated ? Ok(new { Message = "Cập nhật phiếu nhập thành công!" })
-                               : NotFound($"Không tìm thấy phiếu nhập có mã {pn.MaPN}.");
+                return updated 
+                    ? Ok(new { Message = "Cập nhật thành công!" })
+                    : NotFound("Không tìm thấy phiếu nhập (có thể đã bị xóa)");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi khi cập nhật phiếu nhập: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -103,6 +105,58 @@ namespace MilkTea.Server.Controllers
             {
                 return StatusCode(500, $"Lỗi khi xóa phiếu nhập: {ex.Message}");
             }
+        }
+
+        [HttpGet("{maPN}")]
+        public async Task<IActionResult> GetById(int maPN)
+        {
+            try
+            {
+                var list = await _repo.GetAllAsync();
+                var phieuNhap = list.FirstOrDefault(p => p.MaPN == maPN && p.TrangThai == 2);
+                
+                if (phieuNhap == null)
+                    return NotFound($"Không tìm thấy phiếu nhập có mã {maPN}");
+
+                return Ok(phieuNhap);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi lấy phiếu nhập: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{maPN}/trangthai")]
+        public async Task<IActionResult> CapNhatTrangThai(int maPN, [FromBody] CapNhatTrangThaiRequest request)
+        {
+            try
+            {
+                var list = await _repo.GetAllAsync();
+                var pn = list.FirstOrDefault(p => p.MaPN == maPN && (p.TrangThai == 1 || p.TrangThai == 2));
+
+                if (pn == null)
+                    return NotFound("Không tìm thấy phiếu nhập hoặc đã bị xóa.");
+
+                // Chỉ cho phép chuyển từ 2 → 1 (chưa nhập → đã nhập), hoặc ngược lại
+                if (request.TrangThai != 1 && request.TrangThai != 2)
+                    return BadRequest("Trạng thái chỉ có thể là 1 (đã nhập) hoặc 2 (chưa nhập).");
+
+                pn.TrangThai = request.TrangThai;
+                bool success = await _repo.UpdateAsync(pn);
+
+                return success 
+                    ? Ok(new { Message = "Cập nhật trạng thái thành công!" })
+                    : StatusCode(500, "Cập nhật thất bại.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        public class CapNhatTrangThaiRequest
+        {
+            public int TrangThai { get; set; }
         }
     }
 }

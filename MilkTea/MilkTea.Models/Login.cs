@@ -1,0 +1,13 @@
+﻿namespace MilkTea.Server.Models
+{
+    public class Login
+    {
+        //public int MaTK { get; set; }
+        public string TenTaiKhoan { get; set; }
+        //public string anh { get; set; }
+        public string MatKhau { get; set; }
+
+        //public int TrangThai { get; set; }
+        //public int MaQuyen { get; set; }
+    }
+}

@@ -52,10 +52,12 @@ CREATE TABLE `chitietcongthuc` (
   `MaCT` int DEFAULT NULL,
   `MaNL` int DEFAULT NULL,
   `SL` int DEFAULT NULL,
+  `MaDVT` int,
   KEY `MaCT` (`MaCT`),
   KEY `MaNL` (`MaNL`),
   CONSTRAINT `chitietcongthuc_ibfk_1` FOREIGN KEY (`MaCT`) REFERENCES `congthuc` (`MaCT`),
-  CONSTRAINT `chitietcongthuc_ibfk_2` FOREIGN KEY (`MaNL`) REFERENCES `nguyenlieu` (`MaNL`)
+  CONSTRAINT `chitietcongthuc_ibfk_2` FOREIGN KEY (`MaNL`) REFERENCES `nguyenlieu` (`MaNL`),
+  CONSTRAINT `chitietcongthuc_ibfk_3` FOREIGN KEY (`MaDVT`) REFERENCES `donvitinh` (`MaDVT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -65,7 +67,27 @@ CREATE TABLE `chitietcongthuc` (
 
 LOCK TABLES `chitietcongthuc` WRITE;
 /*!40000 ALTER TABLE `chitietcongthuc` DISABLE KEYS */;
-INSERT INTO `chitietcongthuc` VALUES (1,1,20),(1,3,10),(2,2,25),(2,10,5),(3,1,15),(3,5,5),(4,1,10),(4,4,5),(5,2,5),(5,6,3),(6,2,10),(6,7,5),(7,1,10),(7,8,5),(8,2,5),(8,4,5),(9,2,5),(9,5,5),(10,1,10),(10,3,10);
+INSERT INTO `chitietcongthuc` VALUES 
+(1,1,20,1),
+(1,3,10,1),
+(2,2,25,1),
+(2,10,5,1),
+(3,1,15,1),
+(3,5,5,1),
+(4,1,10,1),
+(4,4,5,1),
+(5,2,5,1),
+(5,6,3,1),
+(6,2,10,1),
+(6,7,5,1),
+(7,1,10,1),
+(7,8,5,1),
+(8,2,5,1),
+(8,4,5,1),
+(9,2,5,1),
+(9,5,5,1),
+(10,1,10,1),
+(10,3,10,1);
 /*!40000 ALTER TABLE `chitietcongthuc` ENABLE KEYS */;
 UNLOCK TABLES;
 

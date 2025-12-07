@@ -113,7 +113,7 @@ namespace MilkTea.Server.Controllers
             try
             {
                 var list = await _repo.GetAllAsync();
-                var phieuNhap = list.FirstOrDefault(p => p.MaPN == maPN && p.TrangThai == 1);
+                var phieuNhap = list.FirstOrDefault(p => p.MaPN == maPN && p.TrangThai == 2);
                 
                 if (phieuNhap == null)
                     return NotFound($"Không tìm thấy phiếu nhập có mã {maPN}");

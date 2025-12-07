@@ -116,6 +116,7 @@ CREATE TABLE `chitietphieunhap` (
   `MaPN` int DEFAULT NULL,
   `SoLuong` int DEFAULT NULL,
   `MaNguyenLieu` int DEFAULT NULL,
+  `DonViTinh` varchar(50) DEFAULT NULL,
   `DonGiaNhap` decimal(12,2) DEFAULT NULL,
   `TongGia` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`MaChiTietPhieuNhap`),
@@ -132,7 +133,7 @@ CREATE TABLE `chitietphieunhap` (
 
 LOCK TABLES `chitietphieunhap` WRITE;
 /*!40000 ALTER TABLE `chitietphieunhap` DISABLE KEYS */;
-INSERT INTO `chitietphieunhap` VALUES (1,1,20,1,5000.00,100000.00),(2,1,30,2,4000.00,120000.00),(3,2,15,3,6000.00,90000.00),(4,2,15,4,5000.00,75000.00),(5,3,25,1,5000.00,125000.00),(6,3,15,5,7000.00,105000.00),(7,4,10,2,4000.00,40000.00),(8,5,30,3,6000.00,180000.00),(9,6,20,4,5000.00,100000.00),(10,7,25,5,7000.00,175000.00),(11,11,4,1,5000.00,20000.00),(12,11,1,1,5000.00,5000.00),(13,12,5,1,5000.00,25000.00),(14,12,3,1,5000.00,15000.00),(15,13,4,1,5000.00,20000.00);
+INSERT INTO `chitietphieunhap` VALUES (1,1,50,1,'Kg',4400.00,220000.00),(2,2,30,2,'Kg',5000.00,150000.00),(3,3,40,3,'Kg',4500.00,180000.00),(4,4,20,4,'Kg',5000.00,100000.00),(5,5,60,5,'Kg',5000.00,300000.00),(6,6,25,6,'Kg',5000.00,125000.00),(7,7,35,7,'Kg',5000.00,175000.00),(8,8,45,8,'Kg',5000.00,225000.00),(9,9,55,9,'Kg',5000.00,275000.00),(10,10,15,10,'Kg',5000.00,75000.00),(11,11,20,1,'Kg',5000.00,100000.00),(12,12,30,2,'Kg',5000.00,150000.00),(13,13,25,3,'Kg',5000.00,125000.00),(14,14,40,4,'Kg',5000.00,200000.00);
 /*!40000 ALTER TABLE `chitietphieunhap` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,6 +245,30 @@ CREATE TABLE `ctdonhang_topping` (
 -- Dumping data for table `ctdonhang_topping`
 --
 
+--
+-- Table structure for table `donvitinh`
+--
+
+DROP TABLE IF EXISTS `donvitinh`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `donvitinh` (
+  `MaDVT` int NOT NULL AUTO_INCREMENT,
+  `TenDVT` varchar(50) NOT NULL,
+  PRIMARY KEY (`MaDVT`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `donvitinh`
+--
+
+LOCK TABLES `donvitinh` WRITE;
+/*!40000 ALTER TABLE `donvitinh` DISABLE KEYS */;
+INSERT INTO `donvitinh` VALUES (1,'Kg'),(2,'Gram'),(3,'Lít'),(4,'ml'),(5,'Chai'),(6,'Lon'),(7,'Gói'),(8,'Cái'),(9,'Thùng'),(10,'Hộp');
+/*!40000 ALTER TABLE `donvitinh` ENABLE KEYS */;
+UNLOCK TABLES;
+
 LOCK TABLES `ctdonhang_topping` WRITE;
 /*!40000 ALTER TABLE `ctdonhang_topping` DISABLE KEYS */;
 INSERT INTO `ctdonhang_topping` VALUES (8,8,25),(9,8,25);
@@ -310,6 +335,11 @@ CREATE TABLE `doanhthu` (
   CONSTRAINT `doanhthu_ibfk_3` FOREIGN KEY (`MaKM`) REFERENCES `ctkhuyenmai` (`MaCTKhuyenMai`),
   CONSTRAINT `doanhthu_ibfk_4` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE doanhthu
+ADD COLUMN MaDH INT DEFAULT NULL,
+ADD KEY MaDH (MaDH),
+ADD CONSTRAINT doanhthu_ibfk_5 FOREIGN KEY (MaDH) REFERENCES donhang(MaDH);
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,8 +348,7 @@ CREATE TABLE `doanhthu` (
 
 LOCK TABLES `doanhthu` WRITE;
 /*!40000 ALTER TABLE `doanhthu` DISABLE KEYS */;
-INSERT INTO `doanhthu` VALUES (11,27,9,2025,'09:00:00',2,1,1,1,2,10000,50000.00),(12,27,9,2025,'10:15:00',1,2,2,2,2,10000,30000.00),(13,27,9,2025,'11:30:00',3,3,3,3,3,10000,84000.00),(14,27,9,2025,'12:45:00',1,1,1,4,1,10000,25000.00),(15,27,9,2025,'14:00:00',2,4,4,5,2,10000,64000.00),(16,27,9,2025,'15:30:00',1,2,2,6,3,10000,30000.00),(17,27,9,2025,'16:45:00',1,5,5,7,2,10000,35000.00),(18,26,9,2025,'17:00:00',2,6,6,8,2,10000,60000.00),(19,26,9,2025,'18:00:00',1,7,2,9,3,10000,85000.00),(20,26,9,2025,'19:00:00',1,8,2,10,2,10000,40000.00);
-/*!40000 ALTER TABLE `doanhthu` ENABLE KEYS */;
+INSERT INTO `doanhthu` VALUES (1,12,12,2025,'09:00:00',2,1,1,NULL,2,40000.00,50000.00,1),(2,27,12,2025,'10:15:00',1,2,2,NULL,2,30000.00,30000.00,2),(3,12,9,2025,'11:30:00',3,3,3,NULL,3,60000.00,84000.00,3),(4,12,9,2025,'12:45:00',1,1,1,NULL,1,25000.00,25000.00,4),(5,1,12,2025,'14:00:00',2,4,4,NULL,2,50000.00,64000.00,5),(6,27,12,2025,'15:30:00',1,2,2,NULL,3,30000.00,30000.00,6),(7,27,12,2025,'16:45:00',1,5,5,NULL,2,35000.00,35000.00,7),(8,23,12,2025,'00:52:57',4,9,2,NULL,3,150000.00,209600.00,8),(9,25,12,2025,'19:06:44',1,3,2,NULL,1,27000.00,32400.00,9);
 UNLOCK TABLES;
 
 --
@@ -352,7 +381,7 @@ CREATE TABLE `donhang` (
 
 LOCK TABLES `donhang` WRITE;
 /*!40000 ALTER TABLE `donhang` DISABLE KEYS */;
-INSERT INTO `donhang` VALUES (1,1,'2025-09-27 00:00:00','09:00:00',1,1,1,50000.00),(2,2,'2025-09-27 00:00:00','10:15:00',1,2,1,30000.00),(3,3,'2025-09-27 00:00:00','11:30:00',1,3,1,84000.00),(4,4,'2025-09-27 00:00:00','12:45:00',1,4,1,25000.00),(5,5,'2025-09-27 00:00:00','14:00:00',1,5,1,64000.00),(6,6,'2025-09-27 00:00:00','15:30:00',1,6,1,30000.00),(7,7,'2025-09-27 00:00:00','16:45:00',1,7,1,35000.00),(8,6,'2025-10-23 00:52:57','00:52:57',0,1,0,209600.00),(9,6,'2025-10-25 19:06:44','19:06:44',0,2,0,32400.00);
+INSERT INTO `donhang` VALUES (1,1,'2025-12-27 00:00:00','09:00:00',1,1,1,50000.00),(2,2,'2025-12-27 00:00:00','10:15:00',1,2,1,30000.00),(3,3,'2025-12-27 00:00:00','11:30:00',1,3,1,84000.00),(4,4,'2025-12-27 00:00:00','12:45:00',1,4,1,25000.00),(5,5,'2025-12-27 00:00:00','14:00:00',1,5,1,64000.00),(6,6,'2025-12-27 00:00:00','15:30:00',1,6,1,30000.00),(7,7,'2025-12-27 00:00:00','16:45:00',1,7,1,35000.00),(8,6,'2025-12-23 00:52:57','00:52:57',0,1,0,209600.00),(9,6,'2025-12-25 19:06:44','19:06:44',0,2,0,32400.00);
 /*!40000 ALTER TABLE `donhang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,8 +422,11 @@ CREATE TABLE `nguyenlieu` (
   `SoLuong` int DEFAULT NULL,
   `Ten` varchar(50) DEFAULT NULL,
   `GiaBan` decimal(12,2) DEFAULT NULL,
+  `MaDVT` int DEFAULT NULL,
   `TrangThai` int DEFAULT NULL,
-  PRIMARY KEY (`MaNL`)
+  PRIMARY KEY (`MaNL`),
+  KEY `MaDVT` (`MaDVT`),
+  CONSTRAINT `nguyenlieu_ibfk_1` FOREIGN KEY (`MaDVT`) REFERENCES `donvitinh` (`MaDVT`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -404,7 +436,17 @@ CREATE TABLE `nguyenlieu` (
 
 LOCK TABLES `nguyenlieu` WRITE;
 /*!40000 ALTER TABLE `nguyenlieu` DISABLE KEYS */;
-INSERT INTO `nguyenlieu` VALUES (1,85,'Trà đen',5000.00,1),(2,75,'Trà xanh',6000.00,1),(3,100,'Sữa đặc',10000.00,1),(4,100,'Đường',2000.00,1),(5,70,'Trân châu đen',15000.00,1),(6,100,'Trân châu trắng',16000.00,1),(7,100,'Pudding',12000.00,1),(8,75,'Thạch dừa',10000.00,1),(9,75,'Đá viên',1000.00,1),(10,100,'Matcha bột',20000.00,1);
+INSERT INTO `nguyenlieu` (`MaNL`, `SoLuong`, `Ten`, `GiaBan`, `MaDVT`, `TrangThai`) VALUES 
+(1, 85, 'Trà đen', 5000.00, 1, 1),
+(2, 75, 'Trà xanh', 6000.00, 1, 1),
+(3, 100, 'Sữa đặc', 10000.00, 6, 1),
+(4, 100, 'Đường', 2000.00, 1, 1),
+(5, 70, 'Trân châu đen', 15000.00, 1, 1),
+(6, 100, 'Trân châu trắng', 16000.00, 1, 1),
+(7, 100, 'Pudding', 12000.00, 10, 1),
+(8, 75, 'Thạch dừa', 10000.00, 1, 1),
+(9, 75, 'Đá viên', 1000.00, 7, 1),
+(10, 100, 'Matcha bột', 20000.00, 7, 1);
 /*!40000 ALTER TABLE `nguyenlieu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -478,6 +520,7 @@ CREATE TABLE `phieunhap` (
   `TrangThai` int DEFAULT NULL,
   `MaNCC` int DEFAULT NULL,
   `MaNV` int DEFAULT NULL,
+  `DonViTinh` varchar(50) DEFAULT NULL,
   `TongTien` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`MaPN`),
   KEY `MaNV` (`MaNV`),
@@ -493,7 +536,8 @@ CREATE TABLE `phieunhap` (
 
 LOCK TABLES `phieunhap` WRITE;
 /*!40000 ALTER TABLE `phieunhap` DISABLE KEYS */;
-INSERT INTO `phieunhap` VALUES (1,'2025-09-01',50,1,1,1,500000.00),(2,'2025-09-02',30,1,2,2,300000.00),(3,'2025-09-03',40,1,3,3,400000.00),(4,'2025-09-04',25,1,4,4,250000.00),(5,'2025-09-05',60,1,5,5,600000.00),(6,'2025-09-06',35,1,6,6,350000.00),(7,'2025-09-07',45,0,7,7,450000.00),(8,'2025-09-08',20,1,8,8,200000.00),(9,'2025-09-09',55,1,9,9,550000.00),(10,'2025-09-10',50,1,9,10,500000.00),(11,'2025-10-23',5,1,1,1,25000.00),(12,'2025-10-23',8,1,1,1,40000.00),(13,'2025-10-24',4,0,1,1,20000.00),(14,'2025-10-25',3,1,1,1,15000.00);
+
+INSERT INTO `phieunhap` VALUES (1,'2025-09-20',50,1,1,1,'Kg',220000.00),(2,'2025-09-21',30,1,2,2,'Kg',150000.00),(3,'2025-09-22',40,1,3,3,'Kg',180000.00),(4,'2025-09-23',20,1,4,4,'Kg',100000.00),(5,'2025-09-24',60,1,5,5,'Kg',300000.00),(6,'2025-09-25',25,1,6,6,'Kg',125000.00),(7,'2025-09-26',35,1,7,7,'Kg',175000.00),(8,'2025-09-27',45,1,8,8,'Kg',225000.00),(9,'2025-09-28',55,1,9,9,'Kg',275000.00),(10,'2025-09-29',15,1,10,10,'Kg',75000.00),(11,'2025-10-20',20,1,1,1,'Kg',100000.00),(12,'2025-10-21',30,1,2,2,'Kg',150000.00),(13,'2025-10-22',25,1,3,3,'Kg',125000.00),(14,'2025-10-23',40,1,4,4,'Kg',200000.00);
 /*!40000 ALTER TABLE `phieunhap` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,7 +590,7 @@ CREATE TABLE `quyen_chucnang` (
 
 LOCK TABLES `quyen_chucnang` WRITE;
 /*!40000 ALTER TABLE `quyen_chucnang` DISABLE KEYS */;
-INSERT INTO `quyen_chucnang` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,32),(2,2),(2,5),(3,4),(4,5),(5,1),(5,2),(5,3),(5,4),(5,5);
+INSERT INTO `quyen_chucnang` VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,32),(2,2),(2,5),(3,4),(4,5),(5,1),(5,2),(5,3),(5,4),(5,5);
 /*!40000 ALTER TABLE `quyen_chucnang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -696,3 +740,21 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-10-25 22:42:40
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 2;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(2,1),(2,2),(2,3),(2,4);
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 3;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(3,20),(3,21),(3,22),(3,23),(3,24),
+(3,25),(3,26),(3,27),(3,28),(3,29);
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 4;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(4,18),(4,19),(4,5);
+
+DELETE FROM quyen_chucnang WHERE MaQuyen = 5;
+INSERT INTO quyen_chucnang (MaQuyen, MaChucNang) VALUES
+(5,5),(5,6),(5,10),(5,14),(5,20),
+(5,18),(5,25),(5,29);

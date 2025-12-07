@@ -42,13 +42,13 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> AddAsync(ChiTietCongThuc ct)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = @"INSERT INTO chitietcongthuc (MaCT, MaNL, SL)
-                          VALUES (@MaCT, @MaNL, @SL)";
+            var query = @"INSERT INTO chitietcongthuc (MaCT, MaNL, SL, MaDVT)
+                          VALUES (@MaCT, @MaNL, @SL, @MaDVT)";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaCT", ct.MaCT);
             cmd.Parameters.AddWithValue("@MaNL", ct.MaNL);
             cmd.Parameters.AddWithValue("@SL", ct.SL);
-
+            cmd.Parameters.AddWithValue("@MaDVT", ct.MaDVT);
             var rows = await cmd.ExecuteNonQueryAsync();
             return rows > 0;
         }
@@ -109,10 +109,12 @@ public async Task<List<CTCongThucSP>> GetChiTietCongThucByMaSPAsync(int maSP)
             nl.Ten AS TenNguyenLieu,
             ctc.SL AS SoLuongCanDung,
             nl.SoLuong AS SoLuongTonKho,
+            dv.TenDVT AS DonViTinh,
             nl.GiaBan
         FROM congthuc ct
         INNER JOIN chitietcongthuc ctc ON ct.MaCT = ctc.MaCT
         INNER JOIN nguyenlieu nl ON ctc.MaNL = nl.MaNL
+        INNER JOIN donvitinh dv ON ctc.MaDVT = dv.MaDVT
         WHERE ct.MaSP = @MaSP;
     ";
 
@@ -131,7 +133,8 @@ public async Task<List<CTCongThucSP>> GetChiTietCongThucByMaSPAsync(int maSP)
             TenNguyenLieu = reader.GetString(reader.GetOrdinal("TenNguyenLieu")),
             SoLuongCanDung = reader.GetInt32(reader.GetOrdinal("SoLuongCanDung")),
             SoLuongTonKho = reader.GetInt32(reader.GetOrdinal("SoLuongTonKho")),
-            GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan"))
+            GiaBan = reader.GetDecimal(reader.GetOrdinal("GiaBan")),
+            DonViTinh = reader.GetString(reader.GetOrdinal("DonViTinh"))
         });
     }
 

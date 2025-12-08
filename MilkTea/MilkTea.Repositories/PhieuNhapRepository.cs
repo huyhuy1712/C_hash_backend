@@ -147,7 +147,7 @@ namespace MilkTea.Server.Repositories
         public async Task<bool> SoftDeleteAsync(int maPN)
         {
             using var conn = await _db.GetConnectionAsync();
-            var query = "UPDATE phieunhap SET TrangThai = 0 WHERE MaPN = @MaPN AND TrangThai = 1";
+            var query = "UPDATE phieunhap SET TrangThai = 0 WHERE MaPN = @MaPN AND TrangThai = 2";
             var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@MaPN", maPN);
 

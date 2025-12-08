@@ -52,10 +52,12 @@ CREATE TABLE `chitietcongthuc` (
   `MaCT` int DEFAULT NULL,
   `MaNL` int DEFAULT NULL,
   `SL` int DEFAULT NULL,
+  `MaDVT` int,
   KEY `MaCT` (`MaCT`),
   KEY `MaNL` (`MaNL`),
   CONSTRAINT `chitietcongthuc_ibfk_1` FOREIGN KEY (`MaCT`) REFERENCES `congthuc` (`MaCT`),
-  CONSTRAINT `chitietcongthuc_ibfk_2` FOREIGN KEY (`MaNL`) REFERENCES `nguyenlieu` (`MaNL`)
+  CONSTRAINT `chitietcongthuc_ibfk_2` FOREIGN KEY (`MaNL`) REFERENCES `nguyenlieu` (`MaNL`),
+  CONSTRAINT `chitietcongthuc_ibfk_3` FOREIGN KEY (`MaDVT`) REFERENCES `donvitinh` (`MaDVT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -65,7 +67,27 @@ CREATE TABLE `chitietcongthuc` (
 
 LOCK TABLES `chitietcongthuc` WRITE;
 /*!40000 ALTER TABLE `chitietcongthuc` DISABLE KEYS */;
-INSERT INTO `chitietcongthuc` VALUES (1,1,20),(1,3,10),(2,2,25),(2,10,5),(3,1,15),(3,5,5),(4,1,10),(4,4,5),(5,2,5),(5,6,3),(6,2,10),(6,7,5),(7,1,10),(7,8,5),(8,2,5),(8,4,5),(9,2,5),(9,5,5),(10,1,10),(10,3,10);
+INSERT INTO `chitietcongthuc` VALUES 
+(1,1,20,4),
+(1,3,10,4),
+(2,2,25,4),
+(2,10,5,2),
+(3,1,15,4),
+(3,5,5,2),
+(4,1,10,4),
+(4,4,5,2),
+(5,2,5,4),
+(5,6,3,2),
+(6,2,10,4),
+(6,7,5,8),
+(7,1,10,4),
+(7,8,5,2),
+(8,2,5,4),
+(8,4,5,2),
+(9,2,5,2),
+(9,5,5,2),
+(10,1,10,2),
+(10,3,10,2);
 /*!40000 ALTER TABLE `chitietcongthuc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +287,7 @@ CREATE TABLE `donvitinh` (
 
 LOCK TABLES `donvitinh` WRITE;
 /*!40000 ALTER TABLE `donvitinh` DISABLE KEYS */;
-INSERT INTO `donvitinh` VALUES (1,'Kg'),(2,'Gram'),(3,'Lít'),(4,'ml'),(5,'Chai'),(6,'Lon'),(7,'Gói'),(8,'Cái'),(9,'Thùng'),(10,'Hộp');
+INSERT INTO `donvitinh` VALUES (1,'Kg'),(2,'Gram'),(3,'Lít'),(4,'ml'),(7,'Gói'),(8,'Cái');
 /*!40000 ALTER TABLE `donvitinh` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -406,7 +428,7 @@ CREATE TABLE `loai` (
 
 LOCK TABLES `loai` WRITE;
 /*!40000 ALTER TABLE `loai` DISABLE KEYS */;
-INSERT INTO `loai` VALUES (1,'Trà sữa truyền thống','Trà sữa cơ bản'),(2,'Trà sữa matcha','Trà sữa vị matcha'),(3,'Trà sữa socola','Trà sữa vị socola'),(4,'Trà sữa trái cây','Trà sữa trái cây'),(5,'Trà sữa khoai','Trà sữa khoai'),(6,'Trà sữa đặc biệt','Trà sữa đặc biệt');
+INSERT INTO `loai` VALUES (1,'Trà sữa cơ bản','Trà sữa cơ bản'),(2,'Trà sữa nâng cao','Trà sữa '),(3,'Trà sữa extra','Trà sữa vị socola'),(4,'Trà sữa extra extra','Trà sữa trái cây'),(5,'Trà sữa extremely','Trà sữa khoai'),(6,'Trà sữa đặc biệt','Trà sữa đặc biệt');
 /*!40000 ALTER TABLE `loai` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -437,16 +459,16 @@ CREATE TABLE `nguyenlieu` (
 LOCK TABLES `nguyenlieu` WRITE;
 /*!40000 ALTER TABLE `nguyenlieu` DISABLE KEYS */;
 INSERT INTO `nguyenlieu` (`MaNL`, `SoLuong`, `Ten`, `GiaBan`, `MaDVT`, `TrangThai`) VALUES 
-(1, 85, 'Trà đen', 5000.00, 1, 1),
-(2, 75, 'Trà xanh', 6000.00, 1, 1),
-(3, 100, 'Sữa đặc', 10000.00, 6, 1),
-(4, 100, 'Đường', 2000.00, 1, 1),
-(5, 70, 'Trân châu đen', 15000.00, 1, 1),
-(6, 100, 'Trân châu trắng', 16000.00, 1, 1),
-(7, 100, 'Pudding', 12000.00, 10, 1),
-(8, 75, 'Thạch dừa', 10000.00, 1, 1),
-(9, 75, 'Đá viên', 1000.00, 7, 1),
-(10, 100, 'Matcha bột', 20000.00, 7, 1);
+(1, 85, 'Trà đen', 5000.00, 4, 1),
+(2, 75, 'Trà xanh', 6000.00, 4, 1),
+(3, 100, 'Sữa đặc', 10000.00, 4, 1),
+(4, 100, 'Đường', 2000.00, 2, 1),
+(5, 70, 'Trân châu đen', 15000.00, 2, 1),
+(6, 100, 'Trân châu trắng', 16000.00, 2, 1),
+(7, 100, 'Pudding', 12000.00, 8, 1),
+(8, 75, 'Thạch dừa', 10000.00, 2, 1),
+(9, 75, 'Đá viên', 1000.00, 2, 1),
+(10, 100, 'Matcha bột', 20000.00, 2, 1);
 /*!40000 ALTER TABLE `nguyenlieu` ENABLE KEYS */;
 UNLOCK TABLES;
 

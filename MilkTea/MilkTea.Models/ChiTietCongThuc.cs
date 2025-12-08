@@ -10,5 +10,7 @@ namespace MilkTea.Server.Models
 
         // Số lượng nguyên liệu cần dùng trong công thức
         public int SL { get; set; }
+
+        public int MaDVT { get; set; }
     }
 }
